@@ -17,6 +17,10 @@ public:
     Matrix(): rows(0),columns(0),matrix(nullptr){};
     ~Matrix();
 
+    T** getMatrix();
+    int getRows();
+    int getColumns();
+
     /**
      * Перегрузка операторов 
      */
@@ -48,6 +52,22 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Matrix<U>& M);
     
 };
+
+template <typename T>
+T** Matrix<T>::getMatrix() {
+    return matrix;
+}
+
+template <typename T>
+int Matrix<T>::getRows() {
+    return rows;
+}
+
+template <typename T>
+int Matrix<T>::getColumns() {
+    return columns;
+}
+
 
 /**
  * Опеределение конструктора

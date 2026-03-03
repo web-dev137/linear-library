@@ -23,6 +23,8 @@ For  run app enter in build folder and enter next command:
 
 ./app
 
+## Test
+After build project in build/tests you can run ./tests 
 ## Usage
 Choice operation.
 Enter number from menu.
