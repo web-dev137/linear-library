@@ -1,4 +1,4 @@
-#include "src/Matrix.hpp"
+#include "Matrix.hpp"
 #include <functional>
 #include <unordered_map>
 #include <windows.h>
