@@ -1,3 +1,5 @@
+#pragma once
+
 #include<iostream>
 #include <algorithm>
 #include <stdexcept>
@@ -12,8 +14,8 @@ public:
      * Объявление конструкторов
      */
     Matrix(int rows, int columns);
-    Matrix(const Matrix& B);
-    Matrix(Matrix&& B) noexcept;
+    Matrix(const Matrix<T>& B);
+    Matrix(Matrix<T>&& B) noexcept;
     Matrix(): rows(0),columns(0),matrix(nullptr){};
     ~Matrix();
 
@@ -24,7 +26,7 @@ public:
     /**
      * Перегрузка операторов 
      */
-    Matrix<T> operator*(const Matrix<T>& B);
+    Matrix<T> operator*(const Matrix<T>& B) const;
 
     Matrix<T> operator*(T number) const;
 
@@ -133,6 +135,7 @@ Matrix<T>& Matrix<T>::operator=(Matrix<T>&& B) noexcept {
  */
 template <typename U>
 std::istream& operator>>(std::istream& in,Matrix<U>& M) {
+    std::cout<<"Заполните матрицу(Enter matrix):"<<std::endl;
     for (int i = 0; i < M.rows; i++){
         for (int j = 0; j < M.columns; j++){
             std::cout<<"["<<i<<"]"<<"["<<j<<"]";
@@ -228,7 +231,7 @@ Matrix<T>::~Matrix(){
  * Перегрузка оператора умножения матриц
  */
 template <typename T>
-Matrix<T> Matrix<T>::operator*(const Matrix<T>& B) {
+Matrix<T> Matrix<T>::operator*(const Matrix<T>& B) const {
     if(columns != B.rows) {
         throw std::invalid_argument("num columns A not equal num rows B");
     }

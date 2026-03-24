@@ -1,46 +1,33 @@
 #include "Matrix.hpp"
 #include <functional>
+#include "MatrixOperation.h"
+#include "MultiplyOperation.hpp"
+#include "TransponseOperation.hpp"
+#include "ScalarMultiplyOperation.hpp"
 #include <unordered_map>
 #include <windows.h>
 #include <iostream>
-
-template <typename T>
-using Operation = std::function<void(Matrix<T>&)>;
+#include <memory>
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
+    Matrix<double> C;
 
-    std::unordered_map<int, Operation<int>> ops;
+    using factory = std::function<std::unique_ptr<MatrixOperation<double>>()>;
+    std::unordered_map<int, factory> ops;
 
     // Регистрация команд 
-    ops[1] = [](Matrix<int>& A) {
-        int rows, cols;
-        std::cout << "Введите размерность матрицы B: ";
-        std::cin >> rows >> cols;
+    ops[1] = [](){ return std::make_unique<MultiplyOperation<double>>();};
 
-        Matrix<int> B(rows, cols);
-        std::cout << "Введите данные в матрицу B: ";
-        std::cin >> B;
-
-        Matrix<int> C = A * B;
-
-        std::cout << "Результат:\n" << C;
-    };
-
-    ops[2] = [](Matrix<int>& A) {
-        int number;
+    ops[2] = []() {
+        double number;
         std::cout << "Введите число: ";
         std::cin >> number;
-
-        Matrix<int> C = A * number;
-        std::cout << "Результат:\n" << C;
+        return std::make_unique<ScalarMultiplyOperation<double>>(number);
     };
 
-    ops[3] = [](Matrix<int>& A) {
-        Matrix<int> C = !A;
-        std::cout << "Результат:\n" << C;
-    };
+    ops[3] = []() { return std::make_unique<TransponseOperation<double>>();};
 
     while (true) {
         std::cout << "\n1) Умножение A * B\n";
@@ -59,15 +46,25 @@ int main() {
             continue;
         }
 
+        auto op = ops[choice]();
+
         int rows, cols;
-        std::cout << "Введите размерность матрицы A: ";
+        std::cout << "Введите размерность матрицы A: <rows> <cols>";
         std::cin >> rows >> cols;
-
-        Matrix<int> A(rows, cols);
-        std::cout << "Введите данные в матрицу A: ";
+        Matrix<double> A(rows, cols);
         std::cin >> A;
-
-        ops[choice](A);
+        if(op->isBinary()) {
+            std::cout << "Введите размерность матрицы B: <rows> <cols>";
+            std::cin >> rows >> cols;
+            Matrix<double> B(rows, cols);
+            std::cin >> B;
+            C = op->execute(A, &B);
+        } else {
+            C = op->execute(A,nullptr);
+        }
+        std::cout<<"Результат:"<<std::endl;
+        std::cout<<C;
+        
     }
 
     return 0;
