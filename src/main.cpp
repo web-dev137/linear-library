@@ -2,6 +2,7 @@
 #include <functional>
 #include "MatrixOperation.h"
 #include "MultiplyOperation.hpp"
+#include "Calculator.hpp"
 #include "TransponseOperation.hpp"
 #include "ScalarMultiplyOperation.hpp"
 #include <unordered_map>
@@ -53,15 +54,19 @@ int main() {
         std::cin >> rows >> cols;
         Matrix<double> A(rows, cols);
         std::cin >> A;
-        if(op->isBinary()) {
+        Calculator<double> calc;
+
+        calc.setOperation(std::move(op));
+        if(calc.isBinary()) {
             std::cout << "Введите размерность матрицы B: <rows> <cols>";
             std::cin >> rows >> cols;
             Matrix<double> B(rows, cols);
             std::cin >> B;
-            C = op->execute(A, &B);
+            C = calc.calc(A,&B);
         } else {
-            C = op->execute(A,nullptr);
+            C = calc.calc(A,nullptr);
         }
+        
         std::cout<<"Результат:"<<std::endl;
         std::cout<<C;
         
