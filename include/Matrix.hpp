@@ -20,8 +20,8 @@ public:
     ~Matrix();
 
     T** getMatrix();
-    int getRows();
-    int getColumns();
+    int getRows() const;
+    int getColumns() const;
 
     /**
      * Перегрузка операторов 
@@ -61,12 +61,12 @@ T** Matrix<T>::getMatrix() {
 }
 
 template <typename T>
-int Matrix<T>::getRows() {
+int Matrix<T>::getRows() const {
     return rows;
 }
 
 template <typename T>
-int Matrix<T>::getColumns() {
+int Matrix<T>::getColumns() const {
     return columns;
 }
 
@@ -154,7 +154,8 @@ std::ostream& operator<<(std::ostream& os,const Matrix<U>& M) {
         for (int j = 0; j < M.columns; ++j){
             os<<M(i,j)<<" ";
         }
-        os<<std::endl;
+        if(i != M.rows-1)
+            os<<"\n";
     }
     return os;
 }

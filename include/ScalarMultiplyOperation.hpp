@@ -12,5 +12,21 @@ public:
     Matrix<T> execute(const Matrix<T>& a, const Matrix<T>* b) override {
         return a * scalar;
     }
-    bool isBinary() const override{ return false;}
+
+    T getScalar() {
+        return scalar;
+    }
+    
+    bool isBinary() const {
+        return false;
+    }
+
+    bool isUnary() const {
+        return false;
+    }
+
+    bool isScalar() const {
+        return true;
+    }
+    const char* getSymbol() const override { return "*"; }
 };

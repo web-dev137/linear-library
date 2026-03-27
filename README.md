@@ -1,10 +1,9 @@
-#Matrix calculator
+## Matrix calculator
 
-Simple matrix calculator with next actions:
-matrix multiplication, matrix multiply on number,transponse matrix.
+Matrix Calculator is built on top of an extensible matrix operations library that provides template‑based support for multiple numeric types, intuitive arithmetic through overloaded operators, a robust Rule‑of‑Five matrix implementation, and a flexible architecture using the Strategy and Factory patterns to enable adding new operations without switch statements.
 
 
-# Install
+## Install
 
 In first you should clone project.
 After this you need build project(from the root folder of the project):
@@ -17,7 +16,7 @@ make
 ```
 You see in builde executable file app.exe
 
-# Run
+## Run
 
 For  run app enter in build folder and enter next command:
 
@@ -28,49 +27,15 @@ After build project in build/tests you can run ./tests
 ## Usage
 Choice operation.
 Enter number from menu.
-## Example
-```text
+## Examples
+
 A*B
 Enter size of matrix A <rows> <columns> for example: 2 2
 Fill matrix:
-You will see position for every digital like this:
-```text
-[0][0]1
-[0][1]2
-[1][0]3
-[1][1]4
-```
-Enter size of matrix B <rows> <columns> for example: 2 2 
-Fill matrix:
-You will see position for every digital like this:
-```text
-[0][0]5
-[0][1]6
-[1][0]7
-[1][1]8
-```
-And you will see result:
- Результат(Result): 
- ```text
- 19 22
- 43 50
-```
+![Alt text](docs/multiply.png)
+
 A*number
+![Alt text](docs/scalar.png)
 
-Enter size of matrix A <rows> <columns> for example: 2 2
-Fill matrix:
-You will see position for every digital like this:
-```text
-[0][0]1
-[0][1]2
-[1][0]3
-[1][1]4
-```
-Enter number: <number> for example 2
-
-And you will see result:
- Результат(Result): 
- ```text
- 2 4
- 6 8
-```
+Transponse matrix
+![Alt text](docs/transponse.png)

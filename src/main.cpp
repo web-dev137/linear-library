@@ -3,6 +3,7 @@
 #include "MatrixOperation.h"
 #include "MultiplyOperation.hpp"
 #include "Calculator.hpp"
+#include "Formatter.hpp"
 #include "TransponseOperation.hpp"
 #include "ScalarMultiplyOperation.hpp"
 #include <unordered_map>
@@ -57,18 +58,32 @@ int main() {
         Calculator<double> calc;
 
         calc.setOperation(std::move(op));
-        if(calc.isBinary()) {
+        if(calc.getOp()->isBinary()) {
             std::cout << "Введите размерность матрицы B: <rows> <cols>";
             std::cin >> rows >> cols;
             Matrix<double> B(rows, cols);
             std::cin >> B;
+            
             C = calc.calc(A,&B);
-        } else {
+            BinaryExpr<double> expr = {A,B,C,calc.getOp()->getSymbol()};
+            std::cout<<"Результат:"<<std::endl;
+            std::cout<<expr;
+        } 
+
+        if(calc.getOp()->isUnary()) {
             C = calc.calc(A,nullptr);
+            UnaryExpr<double> expr = {A,C,calc.getOp()->getSymbol()};
+            std::cout<<"Результат:"<<std::endl;
+            std::cout<<expr;
         }
-        
-        std::cout<<"Результат:"<<std::endl;
-        std::cout<<C;
+
+        if(calc.getOp()->isScalar()) {
+            C = calc.calc(A,nullptr);
+            auto* smOperation = dynamic_cast<ScalarMultiplyOperation<double>*>(calc.getOp());
+            ScalarExpr<double> expr = {A,smOperation->getScalar(),C,smOperation->getSymbol()};
+            std::cout<<"Результат:"<<std::endl;
+            std::cout<<expr;
+        }
         
     }
 

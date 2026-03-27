@@ -14,7 +14,7 @@ public:
     void setOperation(std::unique_ptr<MatrixOperation<T>> op);
     Matrix<T> calc(const Matrix<T>& a, const Matrix<T>* b);
     virtual ~Calculator() = default;
-    bool isBinary() const;
+    MatrixOperation<T>* getOp() const;
 };
 
 template <typename T>
@@ -31,6 +31,6 @@ if(!operation)
 }
 
 template <typename T>
-bool Calculator<T>::isBinary()const {
-    return operation->isBinary();
+MatrixOperation<T>* Calculator<T>::getOp()const {
+    return operation.get();
 }

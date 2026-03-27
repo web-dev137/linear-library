@@ -9,6 +9,18 @@ public:
         return !a;
     }
 
-    bool isBinary() const override{ return false;}
+    bool isBinary() const {
+        return false;
+    }
+
+    bool isUnary() const {
+        return true;
+    }
+
+    bool isScalar() const {
+        return false;
+    }
+
+    const char* getSymbol() const override { return "T"; }
 };
 
