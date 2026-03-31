@@ -1,6 +1,6 @@
 #pragma once
 #include "MatrixOperation.h"
-#include "Matrix.hpp"
+#include "libs/matrix/Matrix.hpp"
 
 template <typename T>
 class ScalarMultiplyOperation : public MatrixOperation<T>
