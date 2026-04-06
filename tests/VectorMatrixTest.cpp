@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../include/libs/vector_matrix/VectorMatrix.hpp"
+#include "../include/linear-algebra/vector_matrix/VectorMatrix.hpp"
 
 class VectorMatrixTest : public ::testing::Test
 {

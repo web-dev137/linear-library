@@ -6,12 +6,12 @@ set(CMAKE_CXX_STANDART 17)
 set(CMAKE_AUTOMOC ON)
 add_library(LU_lib INTERFACE)
 target_include_directories(LU_lib INTERFACE
-    ${CMAKE_SOURCE_DIR}/libs/LU
+    ${CMAKE_SOURCE_DIR}/linear-algebra/LU
 )
 
 add_library(vector_matrix_lib INTERFACE)
 target_include_directories(vector_matrix_lib INTERFACE
-    ${CMAKE_SOURCE_DIR}/libs/vector_matrix
+    ${CMAKE_SOURCE_DIR}/linear-algebra/vector_matrix
 )
 
 enable_testing()
