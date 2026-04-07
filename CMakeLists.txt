@@ -30,9 +30,17 @@ target_include_directories(vector_matrix_lib INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
+
+target_link_libraries(LU_lib INTERFACE vector_matrix_lib)
+
+add_library( linear_lib INTERFACE)
+target_link_libraries(linear_lib INTERFACE vector_matrix_lib LU_lib)
 #====================== Add libraries End =========================
 
+#====================== Tests =====================================
 enable_testing()
 add_subdirectory(tests)
+# ===================== End tests =================================
 
+#====================== Install ===================================
 install(DIRECTORY include/ DESTINATION include)
