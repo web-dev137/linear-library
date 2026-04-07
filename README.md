@@ -12,6 +12,7 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 - Efficient memory management
 - CMake build system support
 - Unit tests included
+- Add doxygen documentation is planned
 
 ## Project Structure
 ```bash
