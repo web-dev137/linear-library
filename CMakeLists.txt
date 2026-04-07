@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION "4.2.3")
 
-project(MatrixLib)
-set(CMAKE_CXX_STANDART 17)
+project(LinearLib)
+set(CMAKE_CXX_STANDARD 17)
 
 #====================== GoogleTest ================================
 include(FetchContent)
@@ -21,12 +21,14 @@ FetchContent_MakeAvailable(googletest)
 #====================== Add libraries ============================= 
 add_library(LU_lib INTERFACE)
 target_include_directories(LU_lib INTERFACE
-    ${CMAKE_SOURCE_DIR}/linear-algebra/LU
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/linear-algebra/LU>
+    $<INSTALL_INTERFACE:include/LU>
 )
 
 add_library(vector_matrix_lib INTERFACE)
 target_include_directories(vector_matrix_lib INTERFACE
-    ${CMAKE_SOURCE_DIR}/linear-algebra/vector_matrix
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/linear-algebra/vector_matrix>
+    $<INSTALL_INTERFACE:include/vector_matrix>
 )
 #====================== Add libraries End =========================
 enable_testing()
