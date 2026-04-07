@@ -14,13 +14,14 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 - Unit tests included
 
 ## Project Structure
+```bash
 linear-library/
 ├── include/
 │   └── linear-algebra/     # Header-only library source
 ├── tests/                  # Test suite
 ├── CMakeLists.txt          # Build configuration
 └── README.md
-
+```
 ## Requirements
 
 - **C++17** or higher
