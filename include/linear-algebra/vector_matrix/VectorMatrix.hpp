@@ -49,6 +49,19 @@ public:
         }
         return matrix[i][j];
     }
+
+    std::vector<T>& operator[](int i) {
+    if (i < 0 || i >= rows)
+        throw std::out_of_range("Row index out of range");
+        return matrix[i];
+    }
+
+    const std::vector<T>& operator[](int i) const {
+        if (i < 0 || i >= rows)
+            throw std::out_of_range("Row index out of range");
+        return matrix[i];
+    }
+
     
 
     VectorMatrix<T> operator!()const;
@@ -134,14 +147,14 @@ VectorMatrix<T> VectorMatrix<T>::operator*(const VectorMatrix<T>& B) const {
         throw std::invalid_argument("num columns A not equal num rows B");
     }
 
-    int cols = B.getColumns();
     VectorMatrix<T> result(rows,cols);
 
-    for (int i = 0; i < rows; ++i){
-        for (int j = 0; j < cols; ++j)
+    int cols = B.getColumns();
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < cols; j++)
         {
             result.matrix[i][j] = 0;
-            for (int k = 0; k < cols; ++k)
+            for (int k = 0; k < this->cols; k++)
             {
                 result(i,j) += matrix[i][k] * B.matrix[k][j];
             }

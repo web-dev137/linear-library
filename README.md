@@ -12,15 +12,17 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 - Efficient memory management
 - CMake build system support
 - Unit tests included
+- Add doxygen documentation is planned
 
 ## Project Structure
+```bash
 linear-library/
 ├── include/
 │   └── linear-algebra/     # Header-only library source
 ├── tests/                  # Test suite
 ├── CMakeLists.txt          # Build configuration
 └── README.md
-
+```
 ## Requirements
 
 - **C++17** or higher

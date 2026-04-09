@@ -4,9 +4,10 @@
 #include <cmath>
 
 template<typename T>
-class LU {
+class DecomposeLU {
 private:
     VectorMatrix<T> matrix;
+    double detP;
     void elemination(int col);
     void initL() {
         int rows = matrix.getRows();
@@ -24,25 +25,32 @@ private:
     };
     void initP() {
         int n = matrix.getRows();
-        P = std::vector<T>(n);
-        for(int i; i < n; i++){ P[i] = i; }
+        P = std::vector<int>(n);
+        for(int i=0; i < n; i++){
+             P[i] = i; 
+        }
     };
     int pivoting(int col);
     std::vector<std::vector<T>> L;
     std::vector<std::vector<double>> U;
-    std::vector<T> P; //vector of swap
-public:
-    LU(VectorMatrix<T> m):matrix(m) {}
+    std::vector<int> P; //vector of swap
     void decomposition();
+public:
+    DecomposeLU(VectorMatrix<T> m):matrix(m) { 
+        detP = 1;
+        decomposition(); 
+    }
     double det() const ;
     VectorMatrix<T> inv();
-    std::vector<std::vector<double>> getU() { return U; }
+    const std::vector<std::vector<double>>& getU() const{ return U; }
+    const std::vector<std::vector<double>>& getL() const{ return L; }
+    const std::vector<int>& getP() const{ return P; }
 };
 
 
 
 template<typename T>
-int LU<T>::pivoting(int col) {
+int DecomposeLU<T>::pivoting(int col) {
     T pivotVal = abs(U[col][col]);
     int pivot = col;
     int rows = matrix.getRows();
@@ -63,14 +71,14 @@ int LU<T>::pivoting(int col) {
 
 
 template<typename T>
-void LU<T>::elemination(int col) {
+void DecomposeLU<T>::elemination(int col) {
     int cols = matrix.getColumns();
     for (int i = col+1; i < cols; i++)
     {
         L[i][col]=U[i][col]/U[col][col];
         for (int j = col+1; j < cols; j++)
         {
-            U[i][j] -= L[i][col] * U[col][j];
+            U[i][j] = U[i][j] - L[i][col] * U[col][j];
         }
         U[i][col] = 0;
     }
@@ -78,21 +86,43 @@ void LU<T>::elemination(int col) {
 }
 
 template<typename T>
-void LU<T>::decomposition() {
+void DecomposeLU<T>::decomposition() {
     int cols = matrix.getColumns();
     int rows = matrix.getRows();
     U = matrix.getMatrix();
     initL();
     initP();
-   
+    int swapCount = 0;
     for (int k = 0; k < cols; k++)
     {
         int pivot = pivoting(k);
-        using std::swap;
-        swap(U[pivot],U[k]);
-        swap(P[pivot],P[k]);
-
+        if(pivot != k) {
+            using std::swap;
+            swap(U[pivot],U[k]);
+            swap(P[pivot],P[k]);
+            for(int j = 0; j < k; ++j)
+                swap(L[k][j],L[pivot][j]);
+            swapCount++;
+        }
         elemination(k);
     }
-    
+    detP = swapCount % 2 == 0 ? 1 : -1;
+}
+
+
+template<typename T>
+double DecomposeLU<T>::det() const{
+    auto U = getU();
+    int rows = U.size();
+    int cols = U[0].size();
+    double det = 1;
+    for (int i = 0; i < rows; i++)
+    {
+        for(int j = 0; j < cols; j++) {
+            if (i == j) {
+                det*=U[i][j];
+            }
+        }
+    }
+    return det*detP;
 }
