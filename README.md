@@ -12,15 +12,20 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 - Efficient memory management
 - CMake build system support
 - Unit tests included
+- Add doxygen documentation is planned
 
 ## Project Structure
+```bash
 linear-library/
+├── docs/                     # For doxygen docs
 ├── include/
-│   └── linear-algebra/     # Header-only library source
+│   └── linear-algebra/LU     # Header-only library source
+│   └── linear-algebra/QR
+│   └── linear-algebra/vector_matrix  
 ├── tests/                  # Test suite
 ├── CMakeLists.txt          # Build configuration
 └── README.md
-
+```
 ## Requirements
 
 - **C++17** or higher
@@ -56,10 +61,13 @@ ctest
 #include <linear-algebra/vector_matrix/VectorMatrix.hpp>
 
 int main() {
-    VectorMatrix<double> A{{2,1,1},{4,-6,0},{-2,7,2}};
-    LU<double> lu(A);
-    lu.decomposition();
-
-    auto U = lu.getU();
-    return 0;
+    VectorMatrix<double> A;
+    std::unique_ptr<DecomposeLU<double>> lu;
+    A = VectorMatrix<double>({
+            {0, 2, 1},
+            {1, 1, 0},
+            {2, 1, 1}
+        });
+        lu = std::make_unique<DecomposeLU<double>>(A);
+    double det = lu->det();
 }
