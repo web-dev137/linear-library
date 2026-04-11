@@ -3,6 +3,17 @@
 #include <utility>
 #include <cmath>
 
+/**
+ * \brief LU decomposition with partial pivoting
+ * 
+ * Decompose matrix A such that:
+ * PA = LU
+ * 
+ * Where:
+ *  P is permutation matrix
+ *  L is lower triangular with unit diagonal
+ *  U is upper triangular
+ */ 
 template<typename T>
 class DecomposeLU {
 private:
@@ -69,7 +80,9 @@ int DecomposeLU<T>::pivoting(int col) {
 }
 
 
-
+/**
+ * 
+ */
 template<typename T>
 void DecomposeLU<T>::elemination(int col) {
     int cols = matrix.getColumns();
@@ -84,6 +97,7 @@ void DecomposeLU<T>::elemination(int col) {
     }
     
 }
+
 
 template<typename T>
 void DecomposeLU<T>::decomposition() {
@@ -109,7 +123,11 @@ void DecomposeLU<T>::decomposition() {
     detP = swapCount % 2 == 0 ? 1 : -1;
 }
 
-
+/**
+ * \brief Determinant matrix A
+ * Computed as:
+ *   det(A) = det(P) * product(diag(U))
+ */
 template<typename T>
 double DecomposeLU<T>::det() const{
     auto U = getU();

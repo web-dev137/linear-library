@@ -48,6 +48,9 @@ linear-library/
    cmake -G "MinGW Makefiles" ..
    make
 
+## Generate docs 
+cmake --build build --target doc
+
 ## Running Tests
 After building, you can run the tests from the build directory
 ```bash

@@ -5,15 +5,34 @@
 #include <vector>
 #include <stdexcept>
 
+/**
+ * \brief
+ * Examples:
+ * \code
+ *      VectorMatrix<int> A({
+ *          {1,2,3},
+ *          {4,5,6},
+ *          {7,8,9}
+ *      });
+ * 
+ *      VectorMatrix<int> B({
+ *          {11,12,13},
+ *          {14,15,16},
+ *          {17,18,19}
+ *      });
+ *      
+ *      auto C = A*3;
+ *      auto D = A*B;
+ *      auto E = !A
+ *      std::cout<<A;
+ * \endcode
+ */
 template <typename T>
 class VectorMatrix {
 private:
     int cols,rows;
     std::vector<std::vector<T>> matrix; // Матрица
 public:
-    /**
-     * Объявление конструкторов
-     */
     VectorMatrix(int rows, int cols):rows(rows), cols(cols){
         matrix.assign(rows,std::vector<T>(cols,0));
     };
@@ -25,12 +44,13 @@ public:
     ~VectorMatrix()=default;
 
     std::vector<std::vector<T>> getMatrix();
+    /// @brief return count rows
+    /// @return 
     int getRows() const;
+    
+    /// @brief return count columns
     int getColumns() const;
 
-    /**
-     * Перегрузка операторов 
-     */
     VectorMatrix<T> operator*(const VectorMatrix<T>& B) const;
 
     VectorMatrix<T> operator*(T number) const;
@@ -56,6 +76,16 @@ public:
         return matrix[i];
     }
 
+    /**
+     * \brief Return row of matrix
+     * \code
+     * A = [
+     *      [1,2],
+     *      [3,4]
+     *  ]
+     * A[0] return row under index 0:  [1,2]
+     * \endcode
+     */
     const std::vector<T>& operator[](int i) const {
         if (i < 0 || i >= rows)
             throw std::out_of_range("Row index out of range");
@@ -89,7 +119,7 @@ int VectorMatrix<T>::getColumns() const {
 
 
 /**
- * Перегрузка операции вывода
+ * Print matrix
  */
 template <typename U>
 std::ostream& operator<<(std::ostream& os,const VectorMatrix<U>& M) {
@@ -106,7 +136,12 @@ std::ostream& operator<<(std::ostream& os,const VectorMatrix<U>& M) {
 }
 
 /**
- * Перегрузка оператора транспонирования матрицы
+ * \brief Transponse matrix
+ * \code
+ * A = [[1,2,3],        At = [[1,4,7]
+ *      [4,5,6],   =>        [2,5,8],
+ *      [7,8,9]]             [9,6,3]]
+ * \endcode
  */
 template <typename T>
 VectorMatrix<T> VectorMatrix<T>::operator!() const {
@@ -121,7 +156,11 @@ VectorMatrix<T> VectorMatrix<T>::operator!() const {
 };
 
 /**
- * Перегрузка оператора умножения матрицы на число
+ * \brief Scalar multiplication
+ * A*a
+ * where:
+ * A is matrix of VectorMatrix type
+ * a is number of type that set in template
  */
 template <typename T>
 VectorMatrix<T> VectorMatrix<T>::operator*(T number) const {
@@ -139,7 +178,11 @@ VectorMatrix<T> VectorMatrix<T>::operator*(T number) const {
 
 
 /**
- * Перегрузка оператора умножения матриц
+ * \brief Matrix multiplication
+ * A*B
+ * where:
+ * A is matrix of VectorMatrix type
+ * B is matrix of VectorMatrix type
  */
 template <typename T>
 VectorMatrix<T> VectorMatrix<T>::operator*(const VectorMatrix<T>& B) const {

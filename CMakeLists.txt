@@ -37,6 +37,19 @@ add_library( linear_lib INTERFACE)
 target_link_libraries(linear_lib INTERFACE vector_matrix_lib LU_lib)
 #====================== Add libraries End =========================
 
+#====================== Add doxygen ===============================
+find_package(Doxygen REQUIRED)
+
+if(DOXYGEN_FOUND)
+set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/docs/Doxyfile)
+set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
+
+configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+
+add_custom_target(doc
+    COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+)
+endif()
 #====================== Tests =====================================
 enable_testing()
 add_subdirectory(tests)
