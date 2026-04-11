@@ -71,6 +71,6 @@ int main() {
             {1, 1, 0},
             {2, 1, 1}
         });
-        lu = std::make_unique<DecomposeLU<double>>(A);
+    lu = std::make_unique<DecomposeLU<double>>(A);
     double det = lu->det();
 }
