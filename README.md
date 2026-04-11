@@ -12,7 +12,8 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 - Efficient memory management
 - CMake build system support
 - Unit tests included
-- Add doxygen documentation is planned
+- Doxygen documentation
+- Automatic documentation publishing via CI is planned.
 
 ## Project Structure
 ```bash
@@ -44,6 +45,13 @@ linear-library/
    cd build
    cmake -G "MinGW Makefiles" ..
    make
+
+## Generate docs 
+cmake --build build --target doc
+## Examples docs
+![LU class](docs/screenshots/LU.png)
+![VectorMatrix class](docs/screenshots/VectorMatrix.png)
+![Example use](docs/screenshots/ExampleMatrixUse.png)
 
 ## Running Tests
 After building, you can run the tests from the build directory

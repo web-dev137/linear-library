@@ -1,0 +1,11 @@
+PROJECT_NAME           = "linear-library"
+OUTPUT_DIRECTORY       = .
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+
+INPUT                  = ../include
+RECURSIVE              = YES
+FILE_PATTERNS          = *.h *.hpp
+
+EXTRACT_ALL            = YES
+QUIET                  = YES
