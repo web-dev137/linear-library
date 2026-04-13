@@ -50,6 +50,10 @@ linear-library/
 
 ## Generate docs 
 cmake --build build --target doc
+## Examples docs
+![LU class](docs/screenshots/LU.png)
+![VectorMatrix class](docs/screenshots/VectorMatrix.png)
+![Example use](docs/screenshots/ExampleMatrixUse.png)
 
 ## Running Tests
 After building, you can run the tests from the build directory
