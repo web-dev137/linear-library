@@ -43,7 +43,7 @@ public:
     VectorMatrix(): rows(0),cols(0){};
     ~VectorMatrix()=default;
 
-    std::vector<std::vector<T>> getMatrix();
+   const std::vector<std::vector<T>>& getMatrix();
     /// @brief return count rows
     /// @return 
     int getRows() const;
@@ -103,7 +103,7 @@ public:
 };
 
 template <typename T>
-std::vector<std::vector<T>> VectorMatrix<T>::getMatrix() {
+const std::vector<std::vector<T>>& VectorMatrix<T>::getMatrix() {
     return matrix;
 }
 
@@ -145,7 +145,7 @@ std::ostream& operator<<(std::ostream& os,const VectorMatrix<U>& M) {
  */
 template <typename T>
 VectorMatrix<T> VectorMatrix<T>::operator!() const {
-    VectorMatrix<T> result(rows,cols); 
+    VectorMatrix<T> result(cols,rows); 
 
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < cols; j++){

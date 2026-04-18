@@ -1,6 +1,7 @@
 #include "../vector_matrix/VectorMatrix.hpp"
 #include <vector>
 #include <utility>
+#include <limits>
 #include <cmath>
 
 /**
@@ -45,8 +46,10 @@ private:
     std::vector<std::vector<T>> L;
     std::vector<std::vector<double>> U;
     std::vector<int> P; //vector of swap
+    static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
     void decomposition();
 public:
+    static_assert(std::is_floating_point_v<T>, "DecomposeLU requires floating-point T");
     DecomposeLU(VectorMatrix<T> m):matrix(m) { 
         detP = 1;
         decomposition(); 
@@ -74,8 +77,7 @@ int DecomposeLU<T>::pivoting(int col) {
             pivot = i;
         }
     }
-    if (pivotVal == 0.0)
-            throw std::runtime_error("Matrix is singular");
+    if (pivotVal <= eps) throw std::runtime_error("Matrix is singular");
     return pivot;
 }
 
@@ -85,8 +87,11 @@ int DecomposeLU<T>::pivoting(int col) {
  */
 template<typename T>
 void DecomposeLU<T>::elemination(int col) {
+    int rows = matrix.getRows();
     int cols = matrix.getColumns();
-    for (int i = col+1; i < cols; i++)
+    const T eps = std::numeric_limits<T>::epsilon() * 100;
+    if(std::abs(U[col][col]) <= eps) throw std::runtime_error("Pivot is zero");
+    for (int i = col+1; i < rows; i++)
     {
         L[i][col]=U[i][col]/U[col][col];
         for (int j = col+1; j < cols; j++)
@@ -101,6 +106,8 @@ void DecomposeLU<T>::elemination(int col) {
 
 template<typename T>
 void DecomposeLU<T>::decomposition() {
+    if (matrix.getRows() != matrix.getColumns())
+     throw std::runtime_error("Matrix must be square for LU decomposition");
     int cols = matrix.getColumns();
     int rows = matrix.getRows();
     U = matrix.getMatrix();
@@ -132,15 +139,8 @@ template<typename T>
 double DecomposeLU<T>::det() const{
     auto U = getU();
     int rows = U.size();
-    int cols = U[0].size();
     double det = 1;
-    for (int i = 0; i < rows; i++)
-    {
-        for(int j = 0; j < cols; j++) {
-            if (i == j) {
-                det*=U[i][j];
-            }
-        }
-    }
+    for (int i = 0; i < rows; i++) det*=static_cast<double>(U[i][i]);
+    
     return det*detP;
 }
