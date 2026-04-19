@@ -33,9 +33,13 @@ target_include_directories(vector_matrix_lib INTERFACE
 
 target_link_libraries(LU_lib INTERFACE vector_matrix_lib)
 
-add_library( linear_lib INTERFACE)
-target_link_libraries(linear_lib INTERFACE vector_matrix_lib LU_lib)
-add_library(linear::linear-lib ALIAS linear_lib)
+add_library(LinearAlgebra INTERFACE)
+add_library(LinearAlgebra::LinearAlgebra ALIAS LinearAlgebra)
+
+target_link_libraries(LinearAlgebra INTERFACE 
+    vector_matrix_lib 
+    LU_lib 
+)
 #====================== Add libraries End =========================
 
 #====================== Add doxygen ===============================
@@ -58,7 +62,7 @@ add_subdirectory(tests)
 
 #====================== Install ===================================
 install(DIRECTORY include/ DESTINATION include)
-install(TARGETS linear_lib
+install(TARGETS 
     EXPORT LinearAlgebraTargets
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
