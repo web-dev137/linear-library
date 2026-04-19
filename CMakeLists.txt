@@ -37,8 +37,8 @@ add_library(LinearAlgebra INTERFACE)
 add_library(LinearAlgebra::LinearAlgebra ALIAS LinearAlgebra)
 
 target_link_libraries(LinearAlgebra INTERFACE 
-    vector_matrix_lib 
-    LU_lib 
+    $<BUILD_INTERFACE:vector_matrix_lib>
+    $<BUILD_INTERFACE:LU_lib>
 )
 #====================== Add libraries End =========================
 
