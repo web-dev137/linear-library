@@ -46,7 +46,7 @@ target_link_libraries(LinearAlgebra INTERFACE
 find_package(Doxygen)
 
 if(DOXYGEN_FOUND)
-    set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/docs/Doxyfile)
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile)
     set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
     
     configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
