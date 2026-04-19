@@ -43,17 +43,18 @@ target_link_libraries(LinearAlgebra INTERFACE
 #====================== Add libraries End =========================
 
 #====================== Add doxygen ===============================
-find_package(Doxygen REQUIRED)
+find_package(Doxygen)
 
 if(DOXYGEN_FOUND)
-set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/docs/Doxyfile)
-set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
-
-configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-
-add_custom_target(doc
-    COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-)
+    set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/docs/Doxyfile)
+    set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
+    
+    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+    
+    add_custom_target(doc
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+        COMMENT "Generating API documentation with Doxygen"
+    )
 endif()
 #====================== Tests =====================================
 enable_testing()
