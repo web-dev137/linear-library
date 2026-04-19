@@ -35,6 +35,7 @@ target_link_libraries(LU_lib INTERFACE vector_matrix_lib)
 
 add_library( linear_lib INTERFACE)
 target_link_libraries(linear_lib INTERFACE vector_matrix_lib LU_lib)
+add_library(linear::linear-lib ALIAS linear_lib)
 #====================== Add libraries End =========================
 
 #====================== Add doxygen ===============================
@@ -57,3 +58,14 @@ add_subdirectory(tests)
 
 #====================== Install ===================================
 install(DIRECTORY include/ DESTINATION include)
+install(TARGETS linear_lib
+    EXPORT LinearAlgebraTargets
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+
+install(EXPORT LinearAlgebraTargets
+    FILE LinearAlgebraTargets.cmake
+    NAMESPACE LinearAlgebra::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/LinearAlgebra
+)
