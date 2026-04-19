@@ -19,14 +19,14 @@ FetchContent_MakeAvailable(googletest)
 #====================== GoogleTest End ============================
 
 #====================== Add libraries ============================= 
-add_library(LU_lib INTERFACE)
-target_include_directories(LU_lib INTERFACE
+add_library(vector_matrix_lib INTERFACE)
+target_include_directories(vector_matrix_lib INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
 
-add_library(vector_matrix_lib INTERFACE)
-target_include_directories(vector_matrix_lib INTERFACE
+add_library(LU_lib INTERFACE)
+target_include_directories(LU_lib INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
@@ -62,7 +62,7 @@ add_subdirectory(tests)
 
 #====================== Install ===================================
 install(DIRECTORY include/ DESTINATION include)
-install(TARGETS 
+install(TARGETS LinearAlgebra
     EXPORT LinearAlgebraTargets
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
