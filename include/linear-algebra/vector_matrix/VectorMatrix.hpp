@@ -175,11 +175,12 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(const V
         throw std::invalid_argument("num columns A not equal num rows B");
     }
 
-    VectorMatrix<T> result(rows,cols);
+    int colsB = B.getColumns();
+    VectorMatrix<T> result(rows,colsB);
 
-    int cols = B.getColumns();
+    
     for (int i = 0; i < rows; i++){
-        for (int j = 0; j < cols; j++)
+        for (int j = 0; j < colsB; j++)
         {
             result.matrix[i][j] = 0;
             for (int k = 0; k < this->cols; k++)
