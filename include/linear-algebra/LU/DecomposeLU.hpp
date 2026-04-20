@@ -66,15 +66,15 @@ namespace LinearAlgebra{
 
 template<typename T>
 int LinearAlgebra::DecomposeLU<T>::pivoting(int col) {
-    T pivotVal = abs(U[col][col]);
+    T pivotVal = std::abs(U[col][col]);
     int pivot = col;
     int rows = matrix.getRows();
     if (col < 0 || col >= matrix.getRows()) {
         throw std::runtime_error("Invalid column index");
     }
     for (int i = col+1; i < rows; i++) {
-        if(abs(U[i][col]) > pivotVal) {
-            pivotVal = abs(U[i][col]);
+        if(std::abs(U[i][col]) > pivotVal) {
+            pivotVal = std::abs(U[i][col]);
             pivot = i;
         }
     }
@@ -115,7 +115,7 @@ void LinearAlgebra::DecomposeLU<T>::decomposition() {
     initL();
     initP();
     int swapCount = 0;
-    for (int k = 0; k < cols; k++)
+    for (int k = 0; k < cols; ++k)
     {
         int pivot = pivoting(k);
         if(pivot != k) {
