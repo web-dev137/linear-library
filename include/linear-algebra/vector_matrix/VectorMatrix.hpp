@@ -38,8 +38,18 @@ namespace LinearAlgebra{
             matrix.assign(rows,std::vector<T>(cols,0));
         };
         VectorMatrix(const std::vector<std::vector<T>>& v):matrix(v) {
+            if (v.empty() || v[0].empty()) {
+                throw std::invalid_argument("Matrix is empty");
+            }
             rows = v.size();
             cols = matrix[0].size();
+            
+            for (const auto& row : v) {
+                if (row.size() != cols) {
+                    throw std::invalid_argument("All rows must have the same size");
+                }
+            }
+            
         }
         VectorMatrix(): rows(0),cols(0){};
         ~VectorMatrix()=default;
