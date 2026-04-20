@@ -19,7 +19,9 @@ namespace LinearAlgebra{
      */ 
     template<typename T>
     class DecomposeLU {
+        using FloatType = std::conditional_t<std::is_same_v<T, float>, float, double>;
     private:
+        
         VectorMatrix<T> matrix;
         double detP;
         void elemination(int col);
@@ -45,13 +47,13 @@ namespace LinearAlgebra{
             }
         };
         int pivoting(int col);
-        std::vector<std::vector<T>> L;
-        std::vector<std::vector<double>> U;
+        std::vector<std::vector<FloatType>> L;
+        std::vector<std::vector<FloatType>> U;
         std::vector<int> P; //vector of swap
         static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
         void decomposition();
     public:
-       using FloatType = std::conditional_t<std::is_same_v<T, float>, float, double>;
+
         DecomposeLU(VectorMatrix<T> m):matrix(m) { 
             detP = 1;
             decomposition(); 
