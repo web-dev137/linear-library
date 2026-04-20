@@ -43,7 +43,7 @@ namespace LinearAlgebra{
             }
             rows = v.size();
             cols = matrix[0].size();
-            
+
             for (const auto& row : v) {
                 if (row.size() != cols) {
                     throw std::invalid_argument("All rows must have the same size");
@@ -102,7 +102,7 @@ namespace LinearAlgebra{
         /// @brief return count columns
         int getColumns() const {return cols;}
         
-        const std::vector<std::vector<T>>& getMatrix() {return matrix;}
+        const std::vector<std::vector<T>>& getMatrix()const {return matrix;}
         
         VectorMatrix<T> operator!()const;
         template <typename U>
