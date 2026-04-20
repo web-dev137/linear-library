@@ -1,26 +1,27 @@
 #include <gtest/gtest.h>
 #include "../include/linear-algebra/LU/DecomposeLU.hpp"
 
+using namespace LinearAlgebra;
 class LU_Test : public ::testing::Test
 {
 protected:
-    LinearAlgebra::VectorMatrix<double> A;
-    std::unique_ptr<LinearAlgebra::DecomposeLU<double>> lu;
+    VectorMatrix<double> A;
+    std::unique_ptr<DecomposeLU<double>> lu;
     void SetUp() override {
-        A = LinearAlgebra::VectorMatrix<double>({
+        A = VectorMatrix<double>({
             {0, 2, 1},
             {1, 1, 0},
             {2, 1, 1}
         });
-        lu = std::make_unique<LinearAlgebra::DecomposeLU<double>>(A);
+        lu = std::make_unique<DecomposeLU<double>>(A);
     }
 
-    LinearAlgebra::VectorMatrix<double> reconstructA() {
+    VectorMatrix<double> reconstructA() {
  
         auto P = lu->getP();
     
         int rows = A.getRows();
-        LinearAlgebra::VectorMatrix<double> PA = A;
+        VectorMatrix<double> PA = A;
         for (int i = 0; i < rows; i++)
             PA[i] = A[P[i]];   // обратная перестановка
         
@@ -30,12 +31,12 @@ protected:
 
 TEST_F(LU_Test,decomposition) {
 
-    LinearAlgebra::VectorMatrix<double> PA = reconstructA();
+    VectorMatrix<double> PA = reconstructA();
     auto U = lu->getU();
     auto L = lu->getL();
-    LinearAlgebra::VectorMatrix<double> vU(U);
-    LinearAlgebra::VectorMatrix<double> vL(L);
-    LinearAlgebra::VectorMatrix<double> LU = vL*vU;
+    VectorMatrix<double> vU(U);
+    VectorMatrix<double> vL(L);
+    VectorMatrix<double> LU = vL*vU;
     for (int i = 0; i < PA.getRows(); i++)
     {
         for (int j = 0; j < PA.getColumns(); j++)
