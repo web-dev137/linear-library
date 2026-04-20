@@ -51,15 +51,15 @@ namespace LinearAlgebra{
         static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
         void decomposition();
     public:
-        static_assert(std::is_floating_point_v<T>, "DecomposeLU requires floating-point T");
+       using FloatType = std::conditional_t<std::is_same_v<T, float>, float, double>;
         DecomposeLU(VectorMatrix<T> m):matrix(m) { 
             detP = 1;
             decomposition(); 
         }
         double det() const ;
         VectorMatrix<T> inv();
-        const std::vector<std::vector<double>>& getU() const{ return U; }
-        const std::vector<std::vector<double>>& getL() const{ return L; }
+        const std::vector<std::vector<FloatType>>& getU() const{ return U; }
+        const std::vector<std::vector<FloatType>>& getL() const{ return L; }
         const std::vector<int>& getP() const{ return P; }
     };
 }
