@@ -22,6 +22,16 @@ protected:
         });
     }
 
+    void compare(VectorMatrix<double> res, VectorMatrix<double> expected) {
+        ASSERT_EQ(res.getRows(), expected.getRows());
+        ASSERT_EQ(res.getColumns(), expected.getColumns());
+
+        for (int i = 0; i < res.getRows(); i++) {
+            for (int j = 0; j < res.getColumns(); j++) {
+                EXPECT_DOUBLE_EQ(res(i,j), expected(i,j));
+            }
+        }
+    }
 };
 
 TEST_F(VectorMatrixTest,MatrixCorrect) {
@@ -36,7 +46,8 @@ TEST_F(VectorMatrixTest,MultiplyVectorMatrix) {
         {216,231,246},
         {342,366,390}
     });
-    EXPECT_EQ(res.getMatrix(),expected.getMatrix());
+    
+    compare(res,expected);
 };
 
 TEST_F(VectorMatrixTest,MultiplyOnScalar) {
@@ -46,7 +57,8 @@ TEST_F(VectorMatrixTest,MultiplyOnScalar) {
         {6, 7.5, 9},
         {10.5, 12, 13.5}
     });
-    EXPECT_EQ(res.getMatrix(),expected.getMatrix());
+    
+    compare(res,expected);
 }
 
 TEST_F(VectorMatrixTest, Transponse) {
@@ -58,5 +70,5 @@ TEST_F(VectorMatrixTest, Transponse) {
 
     VectorMatrix<double> res = !m1;
 
-    EXPECT_EQ(res.getMatrix(),expected.getMatrix());
+    compare(res,expected);
 }
