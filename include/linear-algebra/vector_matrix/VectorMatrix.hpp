@@ -38,8 +38,18 @@ namespace LinearAlgebra{
             matrix.assign(rows,std::vector<T>(cols,0));
         };
         VectorMatrix(const std::vector<std::vector<T>>& v):matrix(v) {
-            rows = matrix[0].size();
-            cols = v.size();
+            if (v.empty() || v[0].empty()) {
+                throw std::invalid_argument("Matrix is empty");
+            }
+            rows = v.size();
+            cols = matrix[0].size();
+
+            for (const auto& row : v) {
+                if (row.size() != cols) {
+                    throw std::invalid_argument("All rows must have the same size");
+                }
+            }
+            
         }
         VectorMatrix(): rows(0),cols(0){};
         ~VectorMatrix()=default;
@@ -92,7 +102,7 @@ namespace LinearAlgebra{
         /// @brief return count columns
         int getColumns() const {return cols;}
         
-        const std::vector<std::vector<T>>& getMatrix() {return matrix;}
+        const std::vector<std::vector<T>>& getMatrix()const {return matrix;}
         
         VectorMatrix<T> operator!()const;
         template <typename U>
@@ -134,7 +144,7 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator!() const
 
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < cols; j++){
-            result.matrix[j][i] = matrix[i][j];
+            result(j,i) = (*this)(i,j);
         }
     }
     return result;
@@ -154,7 +164,7 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(T numbe
 
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < cols; j++){
-            result.matrix[i][j] = matrix[i][j] * number;
+            result(i,j) = (*this)(i,j) * number;
         }
     }
     return result;
@@ -175,16 +185,17 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(const V
         throw std::invalid_argument("num columns A not equal num rows B");
     }
 
-    VectorMatrix<T> result(rows,cols);
+    int colsB = B.getColumns();
+    VectorMatrix<T> result(rows,colsB);
 
-    int cols = B.getColumns();
+    
     for (int i = 0; i < rows; i++){
-        for (int j = 0; j < cols; j++)
+        for (int j = 0; j < colsB; j++)
         {
-            result.matrix[i][j] = 0;
+            result(i,j) = 0;
             for (int k = 0; k < this->cols; k++)
             {
-                result(i,j) += matrix[i][k] * B.matrix[k][j];
+                result(i,j) += (*this)(i,k) * B(k,j);
             }
         }
         

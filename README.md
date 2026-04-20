@@ -62,14 +62,28 @@ ctest
 
 ## Usage of example
 ```c++
-#include <linear-algebra/LU/LU.hpp>
-#include <linear-algebra/vector_matrix/VectorMatrix.hpp>
+#include <iostream>
+#include <linear-algebra/LU/DecomposeLU.hpp>
+#include <memory>
 
 int main() {
+<<<<<<< HEAD
     VectorMatrix<double> A{{2,1,1},{4,-6,0},{-2,7,2}};
     LU<double> lu(A);
     lu.decomposition();
 
     auto U = lu.getU();
     return 0;
+=======
+    using namespace LinearAlgebra;
+    auto A = VectorMatrix<double>({
+            {0, 2, 1},
+            {1, 1, 0},
+            {2, 1, 1}
+    });
+
+    auto lu = std::make_unique<DecomposeLU<double>>(A);
+
+    std::cout << "\ndet:\n" << lu->det();
+>>>>>>> 246d66b (update readme using libary example)
 }

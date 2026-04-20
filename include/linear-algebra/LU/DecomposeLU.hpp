@@ -1,3 +1,4 @@
+#pragma once
 #include "../vector_matrix/VectorMatrix.hpp"
 #include <vector>
 #include <utility>
@@ -18,7 +19,9 @@ namespace LinearAlgebra{
      */ 
     template<typename T>
     class DecomposeLU {
+        using FloatType = std::conditional_t<std::is_same_v<T, float>, float, double>;
     private:
+        
         VectorMatrix<T> matrix;
         double detP;
         void elemination(int col);
@@ -44,21 +47,21 @@ namespace LinearAlgebra{
             }
         };
         int pivoting(int col);
-        std::vector<std::vector<T>> L;
-        std::vector<std::vector<double>> U;
+        std::vector<std::vector<FloatType>> L;
+        std::vector<std::vector<FloatType>> U;
         std::vector<int> P; //vector of swap
         static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
         void decomposition();
     public:
-        static_assert(std::is_floating_point_v<T>, "DecomposeLU requires floating-point T");
+
         DecomposeLU(VectorMatrix<T> m):matrix(m) { 
             detP = 1;
             decomposition(); 
         }
         double det() const ;
         VectorMatrix<T> inv();
-        const std::vector<std::vector<double>>& getU() const{ return U; }
-        const std::vector<std::vector<double>>& getL() const{ return L; }
+        const std::vector<std::vector<FloatType>>& getU() const{ return U; }
+        const std::vector<std::vector<FloatType>>& getL() const{ return L; }
         const std::vector<int>& getP() const{ return P; }
     };
 }
