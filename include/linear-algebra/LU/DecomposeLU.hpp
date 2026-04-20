@@ -93,7 +93,7 @@ template<typename T>
 void LinearAlgebra::DecomposeLU<T>::elemination(int col) {
     int rows = matrix.getRows();
     int cols = matrix.getColumns();
-    const T eps = std::numeric_limits<T>::epsilon() * 100;
+    
     if(std::abs(U[col][col]) <= eps) throw std::runtime_error("Pivot is zero");
     for (int i = col+1; i < rows; i++)
     {
