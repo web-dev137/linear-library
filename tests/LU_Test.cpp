@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "../include/linear-algebra/LU/DecomposeLU.hpp"
 
+using namespace LinearAlgebra;
 class LU_Test : public ::testing::Test
 {
 protected:
