@@ -65,17 +65,19 @@ ctest
 
 ## Usage of example
 ```c++
-#include <linear-algebra/LU/LU.hpp>
-#include <linear-algebra/vector_matrix/VectorMatrix.hpp>
+#include <iostream>
+#include <linear-algebra/LU/DecomposeLU.hpp>
+#include <memory>
 
 int main() {
-    VectorMatrix<double> A;
-    std::unique_ptr<DecomposeLU<double>> lu;
-    A = VectorMatrix<double>({
+    using namespace LinearAlgebra;
+    auto A = VectorMatrix<double>({
             {0, 2, 1},
             {1, 1, 0},
             {2, 1, 1}
-        });
-    lu = std::make_unique<DecomposeLU<double>>(A);
-    double det = lu->det();
+    });
+
+    auto lu = std::make_unique<DecomposeLU<double>>(A);
+
+    std::cout << "\ndet:\n" << lu->det();
 }
