@@ -5,124 +5,109 @@
 #include <vector>
 #include <stdexcept>
 
-/**
- * \brief
- * Examples:
- * \code
- *      VectorMatrix<int> A({
- *          {1,2,3},
- *          {4,5,6},
- *          {7,8,9}
- *      });
- * 
- *      VectorMatrix<int> B({
- *          {11,12,13},
- *          {14,15,16},
- *          {17,18,19}
- *      });
- *      
- *      auto C = A*3;
- *      auto D = A*B;
- *      auto E = !A
- *      std::cout<<A;
- * \endcode
- */
-template <typename T>
-class VectorMatrix {
-private:
-    int cols,rows;
-    std::vector<std::vector<T>> matrix; // Матрица
-public:
-    VectorMatrix(int rows, int cols):rows(rows), cols(cols){
-        matrix.assign(rows,std::vector<T>(cols,0));
-    };
-    VectorMatrix(const std::vector<std::vector<T>>& v):matrix(v) {
-        rows = matrix[0].size();
-        cols = v.size();
-    }
-    VectorMatrix(): rows(0),cols(0){};
-    ~VectorMatrix()=default;
-
-   const std::vector<std::vector<T>>& getMatrix();
-    /// @brief return count rows
-    /// @return 
-    int getRows() const;
-    
-    /// @brief return count columns
-    int getColumns() const;
-
-    VectorMatrix<T> operator*(const VectorMatrix<T>& B) const;
-
-    VectorMatrix<T> operator*(T number) const;
-
-    T& operator()(int i,int j) {
-        
-        if(i < 0 || i >= rows || j < 0 || j >=cols) {
-            throw std::out_of_range("Matrix index out of range");
-        }
-
-        return matrix[i][j]; 
-    }
-    const T& operator()(int i,int j) const { 
-        if(i < 0 || i >= rows || j < 0 || j >=cols) {
-            throw std::out_of_range("Matrix index out of range");
-        }
-        return matrix[i][j];
-    }
-
-    std::vector<T>& operator[](int i) {
-    if (i < 0 || i >= rows)
-        throw std::out_of_range("Row index out of range");
-        return matrix[i];
-    }
-
+namespace LinearAlgebra{
     /**
-     * \brief Return row of matrix
+     * \brief
+     * Examples:
      * \code
-     * A = [
-     *      [1,2],
-     *      [3,4]
-     *  ]
-     * A[0] return row under index 0:  [1,2]
+     *      VectorMatrix<int> A({
+     *          {1,2,3},
+     *          {4,5,6},
+     *          {7,8,9}
+     *      });
+     * 
+     *      VectorMatrix<int> B({
+     *          {11,12,13},
+     *          {14,15,16},
+     *          {17,18,19}
+     *      });
+     *      
+     *      auto C = A*3;
+     *      auto D = A*B;
+     *      auto E = !A
+     *      std::cout<<A;
      * \endcode
      */
-    const std::vector<T>& operator[](int i) const {
+    template <typename T>
+    class VectorMatrix {
+    private:
+        int cols,rows;
+        std::vector<std::vector<T>> matrix; // Матрица
+    public:
+        VectorMatrix(int rows, int cols):rows(rows), cols(cols){
+            matrix.assign(rows,std::vector<T>(cols,0));
+        };
+        VectorMatrix(const std::vector<std::vector<T>>& v):matrix(v) {
+            rows = matrix[0].size();
+            cols = v.size();
+        }
+        VectorMatrix(): rows(0),cols(0){};
+        ~VectorMatrix()=default;
+
+        VectorMatrix<T> operator*(const VectorMatrix<T>& B) const;
+
+        VectorMatrix<T> operator*(T number) const;
+
+        T& operator()(int i,int j) {
+            
+            if(i < 0 || i >= rows || j < 0 || j >=cols) {
+                throw std::out_of_range("Matrix index out of range");
+            }
+
+            return matrix[i][j]; 
+        }
+        const T& operator()(int i,int j) const { 
+            if(i < 0 || i >= rows || j < 0 || j >=cols) {
+                throw std::out_of_range("Matrix index out of range");
+            }
+            return matrix[i][j];
+        }
+
+        std::vector<T>& operator[](int i) {
         if (i < 0 || i >= rows)
             throw std::out_of_range("Row index out of range");
-        return matrix[i];
-    }
+            return matrix[i];
+        }
 
-    
+        /**
+         * \brief Return row of matrix
+         * \code
+         * A = [
+         *      [1,2],
+         *      [3,4]
+         *  ]
+         * A[0] return row under index 0:  [1,2]
+         * \endcode
+         */
+        const std::vector<T>& operator[](int i) const {
+            if (i < 0 || i >= rows)
+                throw std::out_of_range("Row index out of range");
+            return matrix[i];
+        }
 
-    VectorMatrix<T> operator!()const;
-    template <typename U>
-    friend std::istream& operator>>(std::istream& in, VectorMatrix<U>& M);
-    template <typename U>
-    friend std::ostream& operator<<(std::ostream& os, const VectorMatrix<U>& M);
-    
-};
+        /// @brief return count rows
+        /// @return 
+        int getRows() const {return rows;}
 
-template <typename T>
-const std::vector<std::vector<T>>& VectorMatrix<T>::getMatrix() {
-    return matrix;
+        /// @brief return count columns
+        int getColumns() const {return cols;}
+        
+        const std::vector<std::vector<T>>& getMatrix() {return matrix;}
+        
+        VectorMatrix<T> operator!()const;
+        template <typename U>
+        friend std::istream& operator>>(std::istream& in, VectorMatrix<U>& M);
+        template <typename U>
+        friend std::ostream& operator<<(std::ostream& os, const VectorMatrix<U>& M);
+        
+    };
 }
-
-template <typename T>
-int VectorMatrix<T>::getRows() const {
-    return rows; 
-}
-
-template <typename T>
-int VectorMatrix<T>::getColumns() const {
-    return cols;
-}
-
 
 /**
  * Print matrix
  */
 template <typename U>
-std::ostream& operator<<(std::ostream& os,const VectorMatrix<U>& M) {
+std::ostream& operator<<(std::ostream& os,const LinearAlgebra::VectorMatrix<U>& M) {
     int rows = M.getRows();
     int cols = M.getColumns();
     for (int i = 0; i < rows; ++i){
@@ -144,7 +129,7 @@ std::ostream& operator<<(std::ostream& os,const VectorMatrix<U>& M) {
  * \endcode
  */
 template <typename T>
-VectorMatrix<T> VectorMatrix<T>::operator!() const {
+LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator!() const {
     VectorMatrix<T> result(cols,rows); 
 
     for (int i = 0; i < rows; i++){
@@ -163,7 +148,7 @@ VectorMatrix<T> VectorMatrix<T>::operator!() const {
  * a is number of type that set in template
  */
 template <typename T>
-VectorMatrix<T> VectorMatrix<T>::operator*(T number) const {
+LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(T number) const {
 
     VectorMatrix<T> result(rows,cols);
 
@@ -185,7 +170,7 @@ VectorMatrix<T> VectorMatrix<T>::operator*(T number) const {
  * B is matrix of VectorMatrix type
  */
 template <typename T>
-VectorMatrix<T> VectorMatrix<T>::operator*(const VectorMatrix<T>& B) const {
+LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(const VectorMatrix<T>& B) const {
     if(cols != B.getRows()) {
         throw std::invalid_argument("num columns A not equal num rows B");
     }

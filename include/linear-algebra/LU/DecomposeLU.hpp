@@ -4,67 +4,68 @@
 #include <limits>
 #include <cmath>
 
-/**
- * \brief LU decomposition with partial pivoting
- * 
- * Decompose matrix A such that:
- * PA = LU
- * 
- * Where:
- *  P is permutation matrix
- *  L is lower triangular with unit diagonal
- *  U is upper triangular
- */ 
-template<typename T>
-class DecomposeLU {
-private:
-    VectorMatrix<T> matrix;
-    double detP;
-    void elemination(int col);
-    void initL() {
-        int rows = matrix.getRows();
-        int cols = matrix.getColumns();
-        L = std::vector<std::vector<T>>(rows, std::vector<T>(cols, 0));
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
+namespace LinearAlgebra{
+    /**
+     * \brief LU decomposition with partial pivoting
+     * 
+     * Decompose matrix A such that:
+     * PA = LU
+     * 
+     * Where:
+     *  P is permutation matrix
+     *  L is lower triangular with unit diagonal
+     *  U is upper triangular
+     */ 
+    template<typename T>
+    class DecomposeLU {
+    private:
+        VectorMatrix<T> matrix;
+        double detP;
+        void elemination(int col);
+        void initL() {
+            int rows = matrix.getRows();
+            int cols = matrix.getColumns();
+            L = std::vector<std::vector<T>>(rows, std::vector<T>(cols, 0));
+            for (int i = 0; i < rows; i++)
             {
-                L[i][j] = (i == j) ? 1 : 0;
+                for (int j = 0; j < cols; j++)
+                {
+                    L[i][j] = (i == j) ? 1 : 0;
+                }
+                
             }
             
+        };
+        void initP() {
+            int n = matrix.getRows();
+            P = std::vector<int>(n);
+            for(int i=0; i < n; i++){
+                P[i] = i; 
+            }
+        };
+        int pivoting(int col);
+        std::vector<std::vector<T>> L;
+        std::vector<std::vector<double>> U;
+        std::vector<int> P; //vector of swap
+        static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
+        void decomposition();
+    public:
+        static_assert(std::is_floating_point_v<T>, "DecomposeLU requires floating-point T");
+        DecomposeLU(VectorMatrix<T> m):matrix(m) { 
+            detP = 1;
+            decomposition(); 
         }
-        
+        double det() const ;
+        VectorMatrix<T> inv();
+        const std::vector<std::vector<double>>& getU() const{ return U; }
+        const std::vector<std::vector<double>>& getL() const{ return L; }
+        const std::vector<int>& getP() const{ return P; }
     };
-    void initP() {
-        int n = matrix.getRows();
-        P = std::vector<int>(n);
-        for(int i=0; i < n; i++){
-             P[i] = i; 
-        }
-    };
-    int pivoting(int col);
-    std::vector<std::vector<T>> L;
-    std::vector<std::vector<double>> U;
-    std::vector<int> P; //vector of swap
-    static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
-    void decomposition();
-public:
-    static_assert(std::is_floating_point_v<T>, "DecomposeLU requires floating-point T");
-    DecomposeLU(VectorMatrix<T> m):matrix(m) { 
-        detP = 1;
-        decomposition(); 
-    }
-    double det() const ;
-    VectorMatrix<T> inv();
-    const std::vector<std::vector<double>>& getU() const{ return U; }
-    const std::vector<std::vector<double>>& getL() const{ return L; }
-    const std::vector<int>& getP() const{ return P; }
-};
-
+}
 
 
 template<typename T>
-int DecomposeLU<T>::pivoting(int col) {
+int LinearAlgebra::DecomposeLU<T>::pivoting(int col) {
     T pivotVal = abs(U[col][col]);
     int pivot = col;
     int rows = matrix.getRows();
@@ -86,7 +87,7 @@ int DecomposeLU<T>::pivoting(int col) {
  * 
  */
 template<typename T>
-void DecomposeLU<T>::elemination(int col) {
+void LinearAlgebra::DecomposeLU<T>::elemination(int col) {
     int rows = matrix.getRows();
     int cols = matrix.getColumns();
     const T eps = std::numeric_limits<T>::epsilon() * 100;
@@ -105,7 +106,7 @@ void DecomposeLU<T>::elemination(int col) {
 
 
 template<typename T>
-void DecomposeLU<T>::decomposition() {
+void LinearAlgebra::DecomposeLU<T>::decomposition() {
     if (matrix.getRows() != matrix.getColumns())
      throw std::runtime_error("Matrix must be square for LU decomposition");
     int cols = matrix.getColumns();
@@ -136,7 +137,7 @@ void DecomposeLU<T>::decomposition() {
  *   det(A) = det(P) * product(diag(U))
  */
 template<typename T>
-double DecomposeLU<T>::det() const{
+double LinearAlgebra::DecomposeLU<T>::det() const{
     auto U = getU();
     int rows = U.size();
     double det = 1;
