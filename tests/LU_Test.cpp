@@ -16,6 +16,9 @@ protected:
         lu = std::make_unique<DecomposeLU<double>>(A);
     }
 
+    /**
+     * Rebuilds A with row permutations (from P) to validate that PA = LU
+     */
     VectorMatrix<double> reconstructA() {
  
         auto P = lu->getP();
@@ -23,7 +26,7 @@ protected:
         int rows = A.getRows();
         VectorMatrix<double> PA = A;
         for (int i = 0; i < rows; i++)
-            PA[i] = A[P[i]];   // обратная перестановка
+            PA[i] = A[P[i]];
         
         return PA;
     }
