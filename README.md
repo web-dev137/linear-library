@@ -77,7 +77,7 @@ int main() {
             {2, 1, 1}
     });
 
-    auto lu = std::make_unique<DecomposeLU<double>>(A);
+    auto lu = DecomposeLU<double>(A);
 
-    std::cout << "\ndet:\n" << lu->det();
+    std::cout << "\ndet:\n" << lu.det();
 }
