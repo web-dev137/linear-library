@@ -81,6 +81,7 @@ int main() {
 
     std::cout << "\ndet:\n" << lu.det();
 }
+```
 ## Example of client Cmake:
 ```cmake
 cmake_minimum_required(VERSION 3.14)
