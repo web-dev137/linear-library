@@ -63,25 +63,6 @@ ctest
 # or run the test executable directly if available
 ```
 ## Clients
-## Usage of example
-```c++
-#include <iostream>
-#include <linear-algebra/LU/DecomposeLU.hpp>
-#include <memory>
-
-int main() {
-    using namespace LinearAlgebra;
-    auto A = VectorMatrix<double>({
-            {0, 2, 1},
-            {1, 1, 0},
-            {2, 1, 1}
-    });
-
-    auto lu = DecomposeLU<double>(A);
-
-    std::cout << "\ndet:\n" << lu.det();
-}
-```
 ## Example of client Cmake:
 ```cmake
 cmake_minimum_required(VERSION 3.14)
@@ -101,4 +82,24 @@ add_executable(random_math_app main.cpp)
 
 target_link_libraries(random_math_app PRIVATE LinearAlgebra::LinearAlgebra)
 target_compile_features(random_math_app PRIVATE cxx_std_17)
+```
+
+## Usage of example
+```c++
+#include <iostream>
+#include <linear-algebra/LU/DecomposeLU.hpp>
+#include <memory>
+
+int main() {
+    using namespace LinearAlgebra;
+    auto A = VectorMatrix<double>({
+            {0, 2, 1},
+            {1, 1, 0},
+            {2, 1, 1}
+    });
+
+    auto lu = DecomposeLU<double>(A);
+
+    std::cout << "\ndet:\n" << lu.det();
+}
 ```
