@@ -31,7 +31,7 @@ linear-library/
 
 - **C++17** or higher
 - CMake 3.10+
-
+## Contributors
 ## Building the Project
 
 1. Clone the repository:
@@ -62,7 +62,7 @@ After building, you can run the tests from the build directory
 ctest
 # or run the test executable directly if available
 ```
-
+## Clients
 ## Usage of example
 ```c++
 #include <iostream>
