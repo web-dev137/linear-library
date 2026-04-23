@@ -81,3 +81,23 @@ int main() {
 
     std::cout << "\ndet:\n" << lu.det();
 }
+## Example of client Cmake:
+```cmake
+cmake_minimum_required(VERSION 3.14)
+project(RandomMathApp LANGUAGES CXX)
+
+include(FetchContent)
+
+FetchContent_Declare(
+    LinearAlgebra
+    GIT_REPOSITORY https://github.com/web-dev137/linear-library.git
+    GIT_TAG linear-library
+)
+
+FetchContent_MakeAvailable(LinearAlgebra)
+
+add_executable(random_math_app main.cpp)
+
+target_link_libraries(random_math_app PRIVATE LinearAlgebra::LinearAlgebra)
+target_compile_features(random_math_app PRIVATE cxx_std_17)
+```
