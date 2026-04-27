@@ -29,13 +29,8 @@ namespace LinearAlgebra{
             int rows = matrix.getRows();
             int cols = matrix.getColumns();
             L = std::vector<std::vector<T>>(rows, std::vector<T>(cols, 0));
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    L[i][j] = (i == j) ? 1 : 0;
-                }
-                
+            for (int i = 0; i < rows; i++) {
+                L[i][i] = 1;  
             }
             
         };
