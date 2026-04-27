@@ -82,7 +82,7 @@ namespace LinearAlgebra{
         T pivotVal = std::abs(U[col][col]);
         int pivot = col;
         int rows = matrix.getRows();
-        if (col < 0 || col >= matrix.getRows()) {
+        if (col < 0 || col >= rows) {
             throw std::runtime_error("Invalid column index");
         }
         for (int i = col+1; i < rows; i++) {
