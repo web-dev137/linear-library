@@ -60,7 +60,12 @@ namespace LinearAlgebra{
         void decomposition();
     public:
 
-        DecomposeLU(VectorMatrix<T> m):matrix(m) { 
+        DecomposeLU(const VectorMatrix<T>& m) : matrix(m) { 
+            detP = 1;
+            decomposition(); 
+        }
+
+        DecomposeLU(VectorMatrix<T>&& m) : matrix(std::move(m)) { 
             detP = 1;
             decomposition(); 
         }
