@@ -163,25 +163,26 @@ namespace LinearAlgebra{
         int cols = matrix.getColumns();
         std::vector<std::vector<T>> X(rows, std::vector<T>(cols));
         std::vector<int> invP = initInvP();
-        
+        std::vector<double> b(rows), y(rows), x(rows);
         for(int i = 0; i < rows; ++i) {
-           std::vector<double> b(rows, 0);
-           b[invP[i]] = 1.0;
-           std::vector<double> y(rows, 0);
-           std::vector<double> x(rows, 0);
-           for (int j = 0; j < cols; ++j) {
-                double sum = 0;
-                for (int k = 0; k < j; ++k) sum += L[j][k] * y[k];
-                y[j] = (b[j] - sum)/L[j][j];
-           }
+            std::fill(b.begin(), b.end(), 0.0);
+            std::fill(y.begin(), y.end(), 0.0);
+            std::fill(x.begin(), x.end(), 0.0);
+            b[invP[i]] = 1.0;
+            
+            for (int j = 0; j < cols; ++j) {
+                    double sum = 0;
+                    for (int k = 0; k < j; ++k) sum += L[j][k] * y[k];
+                    y[j] = (b[j] - sum)/L[j][j];
+            }
 
-           for (int k = rows-1; k >= 0; --k){
-                double sum = 0;
-                for (int s = k+1; s < cols; ++s) sum += U[k][s] * x[s];
-                x[k] = (y[k] - sum)/U[k][k];
-           }
+            for (int k = rows-1; k >= 0; --k){
+                    double sum = 0;
+                    for (int s = k+1; s < cols; ++s) sum += U[k][s] * x[s];
+                    x[k] = (y[k] - sum)/U[k][k];
+            }
 
-           for (int k = 0; k < rows; ++k) X[k][i] = std::round(x[k]*100)/100;
+            for (int k = 0; k < rows; ++k) X[k][i] = std::round(x[k]*100)/100;
         }
 
 
