@@ -193,16 +193,17 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(const V
 
     int colsB = B.getColumns();
     VectorMatrix<T> result(rows,colsB);
-
+    auto BT = !B;
     
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < colsB; j++)
         {
-            result[i][j] = 0;
+            T sum = 0;
             for (int k = 0; k < this->cols; k++)
             {
-                result.matrix[i][j] += matrix[i][k] * B.matrix[k][j];
+                sum += matrix[i][k] * BT.matrix[j][k];
             }
+            result.matrix[i][j] = sum;
         }
         
     }
