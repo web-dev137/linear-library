@@ -149,8 +149,8 @@ template <typename T>
 LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator!() const {
     VectorMatrix<T> result(cols,rows); 
 
-    for (int i = 0; i < rows; i++){
-        for (int j = 0; j < cols; j++){
+    for (int i = 0; i < cols; i++){
+        for (int j = 0; j < rows; j++){
             result(j,i) = (*this)(i,j);
         }
     }
