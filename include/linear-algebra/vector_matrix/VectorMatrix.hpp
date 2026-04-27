@@ -148,10 +148,9 @@ std::ostream& operator<<(std::ostream& os,const LinearAlgebra::VectorMatrix<U>& 
 template <typename T>
 LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator!() const {
     VectorMatrix<T> result(cols,rows); 
-
     for (int i = 0; i < cols; i++){
         for (int j = 0; j < rows; j++){
-            result(j,i) = (*this)(i,j);
+            result.matrix[j][i] = matrix[i][j];
         }
     }
     return result;
@@ -171,7 +170,7 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(T numbe
 
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < cols; j++){
-            result(i,j) = (*this)(i,j) * number;
+            result.matrix[i][j] = matrix[i][j] * number;
         }
     }
     return result;
@@ -199,10 +198,10 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(const V
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < colsB; j++)
         {
-            result(i,j) = 0;
+            result[i][j] = 0;
             for (int k = 0; k < this->cols; k++)
             {
-                result(i,j) += (*this)(i,k) * B(k,j);
+                result.matrix[i][j] += matrix[i][k] * B.matrix[k][j];
             }
         }
         
