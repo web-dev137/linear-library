@@ -44,12 +44,19 @@ namespace LinearAlgebra{
             rows = v.size();
             cols = matrix[0].size();
 
-            for (const auto& row : v) {
-                if (row.size() != cols) {
+            validation();
+        }
+          VectorMatrix(std::vector<std::vector<T>>&& v)
+      : matrix(std::move(v)) {
+            if (matrix.empty() || matrix[0].empty()) throw std::invalid_argument("Matrix is empty");
+            rows = static_cast<int>(matrix.size());
+            cols = static_cast<int>(matrix[0].size());
+            validation();
+        }
+        void validation() {
+            for (const auto& row : matrix)
+                if (static_cast<int>(row.size()) != cols) 
                     throw std::invalid_argument("All rows must have the same size");
-                }
-            }
-            
         }
         VectorMatrix(): rows(0),cols(0){};
         ~VectorMatrix()=default;
