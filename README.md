@@ -7,7 +7,7 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 - **Matrix & Vector classes** with intuitive operator overloading
 - Basic operations: transpose of matrix, multiplication,multiplication on scalar
 - Advanced linear algebra methods:
-  - LU Decomposition
+  - LU Decomposition+determinant+inversion matrix
   - Other matrix decompositions (in progress)
 - Efficient memory management
 - CMake build system support
@@ -31,7 +31,7 @@ linear-library/
 
 - **C++17** or higher
 - CMake 3.10+
-
+## Contributors
 ## Building the Project
 
 1. Clone the repository:
@@ -62,6 +62,27 @@ After building, you can run the tests from the build directory
 ctest
 # or run the test executable directly if available
 ```
+## Clients
+## Example of client Cmake:
+```cmake
+cmake_minimum_required(VERSION 3.14)
+project(RandomMathApp LANGUAGES CXX)
+
+include(FetchContent)
+
+FetchContent_Declare(
+    LinearAlgebra
+    GIT_REPOSITORY https://github.com/web-dev137/linear-library.git
+    GIT_TAG linear-library
+)
+
+FetchContent_MakeAvailable(LinearAlgebra)
+
+add_executable(random_math_app main.cpp)
+
+target_link_libraries(random_math_app PRIVATE LinearAlgebra::LinearAlgebra)
+target_compile_features(random_math_app PRIVATE cxx_std_17)
+```
 
 ## Usage of example
 ```c++
@@ -77,7 +98,8 @@ int main() {
             {2, 1, 1}
     });
 
-    auto lu = std::make_unique<DecomposeLU<double>>(A);
+    auto lu = DecomposeLU<double>(A);
 
-    std::cout << "\ndet:\n" << lu->det();
+    std::cout << "\ndet:\n" << lu.det();
 }
+```
