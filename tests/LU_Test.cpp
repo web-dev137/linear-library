@@ -9,9 +9,9 @@ protected:
     std::unique_ptr<DecomposeLU<double>> lu;
     void SetUp() override {
         A = VectorMatrix<double>({
-            {0, 2, 1},
-            {1, 1, 0},
-            {2, 1, 1}
+            {2, 5, 7},
+            {6, 3, 4},
+            {5, -2, -3}
         });
         lu = std::make_unique<DecomposeLU<double>>(A);
     }
@@ -30,6 +30,17 @@ protected:
         
         return PA;
     }
+
+    template <typename T>
+    void compare(std::vector<std::vector<T>> A, std::vector<std::vector<T>> B) {
+        for (int i = 0; i < A[0].size(); i++)
+        {
+            for (int j = 0; j < A.size(); j++)
+            {
+                EXPECT_DOUBLE_EQ(A[i][j],B[i][j]);
+            }    
+        }
+    }
 };
 
 TEST_F(LU_Test,decomposition) {
@@ -40,19 +51,24 @@ TEST_F(LU_Test,decomposition) {
     VectorMatrix<double> vU(U);
     VectorMatrix<double> vL(L);
     VectorMatrix<double> LU = vL*vU;
-    for (int i = 0; i < PA.getRows(); i++)
-    {
-        for (int j = 0; j < PA.getColumns(); j++)
-        {
-            EXPECT_DOUBLE_EQ(PA[i][j],LU[i][j]);
-        }
-        
-    }
+    compare<double>(PA.getMatrix(),LU.getMatrix());
     
 }
 
 TEST_F(LU_Test, det) {
     double det = lu->det();
+    det = std::round(det*100)/100;
+    EXPECT_DOUBLE_EQ(-1.0,det);
+}
 
-    EXPECT_DOUBLE_EQ(-3,det);
+TEST_F(LU_Test, inv) {
+    auto D = lu->inv();
+    auto data = std::vector<std::vector<double>>{
+        {1.0, -1.0, 1.0},
+        {-38.0, 41.0, -34.0},
+        {27.0, -29.0, 24.0}
+    };
+    auto E = VectorMatrix<double>(std::move(data));
+
+    compare<double>(D.getMatrix(),E.getMatrix());
 }
