@@ -69,7 +69,6 @@ project(RandomMathApp LANGUAGES CXX)
 
 find_package(LinearAlgebra REQUIRED)
 
-FetchContent_MakeAvailable(LinearAlgebra)
 
 add_executable(random_math_app main.cpp)
 
