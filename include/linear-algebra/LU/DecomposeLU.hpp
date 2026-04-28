@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <limits>
+//#include <type_traits>
 #include <cmath>
 
 namespace LinearAlgebra{
@@ -19,7 +20,8 @@ namespace LinearAlgebra{
      */ 
     template<typename T>
     class DecomposeLU {
-        using FloatType = std::conditional_t<std::is_same_v<T, float>, float, double>;
+        static_assert(std::is_floating_point_v<T>, 
+          "T must be a floating-point type (float or double)");
     private:
         
         VectorMatrix<T> matrix;
@@ -53,8 +55,8 @@ namespace LinearAlgebra{
             return invP;
         };
         int pivoting(int col);
-        std::vector<std::vector<FloatType>> L;
-        std::vector<std::vector<FloatType>> U;
+        std::vector<std::vector<T>> L;
+        std::vector<std::vector<T>> U;
         std::vector<int> P; //vector of swap
         static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
         void decomposition();
@@ -71,8 +73,8 @@ namespace LinearAlgebra{
         }
         double det() const;
         VectorMatrix<T> inv() const;
-        const std::vector<std::vector<FloatType>>& getU() const{ return U; }
-        const std::vector<std::vector<FloatType>>& getL() const{ return L; }
+        const std::vector<std::vector<T>>& getU() const{ return U; }
+        const std::vector<std::vector<T>>& getL() const{ return L; }
         const std::vector<int>& getP() const{ return P; }
     };
 
@@ -152,7 +154,7 @@ namespace LinearAlgebra{
         auto U = getU();
         int rows = U.size();
         double det = 1;
-        for (int i = 0; i < rows; i++) det*=static_cast<double>(U[i][i]);
+        for (int i = 0; i < rows; i++) det*=U[i][i];
         
         return det*detP;
     }

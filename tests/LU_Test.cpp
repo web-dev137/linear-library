@@ -8,10 +8,10 @@ protected:
     VectorMatrix<double> A;
     std::unique_ptr<DecomposeLU<double>> lu;
     void SetUp() override {
-        A = VectorMatrix<double>({
-            {2, 5, 7},
-            {6, 3, 4},
-            {5, -2, -3}
+         A = VectorMatrix<double>({
+            {2.0, 5.0, 7.0},
+            {6.0, 3.0, 4.0},
+            {5.0, -2.0, -3.0}
         });
         lu = std::make_unique<DecomposeLU<double>>(A);
     }
@@ -54,6 +54,8 @@ TEST_F(LU_Test,decomposition) {
     compare<double>(PA.getMatrix(),LU.getMatrix());
     
 }
+
+
 
 TEST_F(LU_Test, det) {
     double det = lu->det();
