@@ -68,6 +68,9 @@ install(TARGETS LinearAlgebra
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
+install(FILES LinearAlgebraConfig.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/LinearAlgebra
+)
 
 install(EXPORT LinearAlgebraTargets
     FILE LinearAlgebraTargets.cmake
