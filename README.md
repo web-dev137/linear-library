@@ -40,6 +40,7 @@ linear-library/
    mkdir build && cd build
    cmake ..
    cmake --build .
+   cmake --install .
    ```
    Windows:
    ```bash
@@ -61,7 +62,7 @@ After building, you can run the tests from the build directory
 ctest
 # or run the test executable directly if available
 ```
-## Clients
+
 ## Example of client Cmake:
 ```cmake
 cmake_minimum_required(VERSION 3.14)
