@@ -31,7 +31,6 @@ linear-library/
 
 - **C++17** or higher
 - CMake 3.10+
-## Contributors
 ## Building the Project
 
 1. Clone the repository:
@@ -68,13 +67,7 @@ ctest
 cmake_minimum_required(VERSION 3.14)
 project(RandomMathApp LANGUAGES CXX)
 
-include(FetchContent)
-
-FetchContent_Declare(
-    LinearAlgebra
-    GIT_REPOSITORY https://github.com/web-dev137/linear-library.git
-    GIT_TAG linear-library
-)
+find_package(LinearAlgebra REQUIRED)
 
 FetchContent_MakeAvailable(LinearAlgebra)
 
