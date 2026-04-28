@@ -85,10 +85,10 @@ target_compile_features(random_math_app PRIVATE cxx_std_17)
 
 int main() {
     using namespace LinearAlgebra;
-    auto A = VectorMatrix<double>({
-            {0, 2, 1},
-            {1, 1, 0},
-            {2, 1, 1}
+    aauto A = VectorMatrix<double>({
+            {2.0, 5.0, 7.0},
+            {6.0, 3.0, 4.0},
+            {5.0, -2.0, -3.0}
     });
 
     auto lu = DecomposeLU<double>(A);
