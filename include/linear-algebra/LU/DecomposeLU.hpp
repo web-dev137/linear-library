@@ -3,7 +3,7 @@
 #include <vector>
 #include <utility>
 #include <limits>
-//#include <type_traits>
+#include <type_traits>
 #include <cmath>
 
 namespace LinearAlgebra{
