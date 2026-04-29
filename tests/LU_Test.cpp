@@ -59,8 +59,7 @@ TEST_F(LU_Test,decomposition) {
 
 TEST_F(LU_Test, det) {
     double det = lu->det();
-    det = std::round(det*100)/100;
-    EXPECT_DOUBLE_EQ(-1.0,det);
+    EXPECT_NEAR(-1.0, det, 1e-9);
 }
 
 TEST_F(LU_Test, inv) {
