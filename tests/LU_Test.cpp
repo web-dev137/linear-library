@@ -33,9 +33,11 @@ protected:
 
     template <typename T>
     void compare(std::vector<std::vector<T>> A, std::vector<std::vector<T>> B) {
-        for (int i = 0; i < A[0].size(); i++)
+        int rows = A.size();
+        int cols = A[0].size();
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < A.size(); j++)
+            for (int j = 0; j < cols; j++)
             {
                 EXPECT_DOUBLE_EQ(A[i][j],B[i][j]);
             }    
