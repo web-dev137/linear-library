@@ -46,10 +46,8 @@ protected:
 TEST_F(LU_Test,decomposition) {
 
     VectorMatrix<double> PA = reconstructA();
-    auto U = lu->getU();
-    auto L = lu->getL();
-    VectorMatrix<double> vU(U);
-    VectorMatrix<double> vL(L);
+    auto U = lu->getU(), L = lu->getL();
+    VectorMatrix<double> vU(U), vL(L);
     VectorMatrix<double> LU = vL*vU;
     compare<double>(PA.getMatrix(),LU.getMatrix());
     

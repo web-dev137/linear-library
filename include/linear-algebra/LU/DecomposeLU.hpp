@@ -3,7 +3,7 @@
 #include <vector>
 #include <utility>
 #include <limits>
-//#include <type_traits>
+#include <type_traits>
 #include <cmath>
 
 namespace LinearAlgebra{
@@ -132,14 +132,17 @@ namespace LinearAlgebra{
         int swapCount = 0;
         for (int k = 0; k < cols; ++k)
         {
-            elemination(k);
             int pivot = pivoting(k);
+         
             if(pivot != k) {
                 using std::swap;
                 swap(U[pivot],U[k]);
                 swap(P[pivot],P[k]);
+                for (int j = 0; j < k; j++)
+                    swap(L[pivot][j], L[k][j]);
                 swapCount++;
             }
+            elemination(k);
         }
         detP = swapCount % 2 == 0 ? 1 : -1;
     }
