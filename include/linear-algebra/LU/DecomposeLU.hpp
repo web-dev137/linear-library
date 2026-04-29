@@ -187,7 +187,7 @@ namespace LinearAlgebra{
                     x[k] = (y[k] - sum)/U[k][k];
             }
 
-            for (int k = 0; k < rows; ++k) X[k][i] = std::round(x[k]*100)/100;
+            for (int k = 0; k < rows; ++k) X[k][i] = x[k];
         }
 
 
