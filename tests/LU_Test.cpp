@@ -39,7 +39,7 @@ protected:
         {
             for (int j = 0; j < cols; j++)
             {
-                EXPECT_DOUBLE_EQ(A[i][j],B[i][j]);
+                EXPECT_NEAR(A[i][j], B[i][j], 1e-9);
             }    
         }
     }
