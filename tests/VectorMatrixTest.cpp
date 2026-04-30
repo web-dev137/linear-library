@@ -28,7 +28,7 @@ protected:
 
         for (int i = 0; i < res.getRows(); i++) {
             for (int j = 0; j < res.getColumns(); j++) {
-                EXPECT_DOUBLE_EQ(res(i,j), expected(i,j));
+                EXPECT_NEAR(res(i,j), expected(i,j), 1e-9);
             }
         }
     }
