@@ -99,7 +99,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <a class="code hl_class" href="classLinearAlgebra_1_1VectorMatrix.html">VectorMatrix&lt;T&gt;</a> matrix;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        T detP;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordtype">double</span> detP;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keywordtype">void</span> elemination(<span class="keywordtype">int</span> col);</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordtype">void</span> initL() {</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            <span class="keywordtype">int</span> rows = matrix.<a class="code hl_function" href="classLinearAlgebra_1_1VectorMatrix.html#ad6d424ab8c81a123d64053595c47e5f9">getRows</a>();</div>
@@ -244,9 +244,9 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        std::vector&lt;int&gt; invP = initInvP();</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        std::vector&lt;T&gt; b(rows), y(rows), x(rows);</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; rows; ++i) {</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            std::fill(b.begin(), b.end(), 0.0);</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            std::fill(y.begin(), y.end(), 0.0);</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>            std::fill(x.begin(), x.end(), 0.0);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            std::fill(b.begin(), b.end(), T(0));</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            std::fill(y.begin(), y.end(), T(0));</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>            std::fill(x.begin(), x.end(), T(0));</div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>            b[invP[i]] = T(1);</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            </div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; cols; ++j) {</div>
@@ -258,18 +258,17 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = rows-1; k &gt;= 0; --k){</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                    T sum = 0;</div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> s = k+1; s &lt; cols; ++s) sum += U[k][s] * x[s];</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                    <span class="keywordflow">if</span>(std::abs(U[k][k]) &lt;= eps) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Matrix is singular or wrong&quot;</span>);</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                    x[k] = (y[k] - sum)/U[k][k];</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            }</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; rows; ++k) X[k][i] = x[k];</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        }</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                    x[k] = (y[k] - sum)/U[k][k];</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            }</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; rows; ++k) X[k][i] = x[k];</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        }</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="classLinearAlgebra_1_1VectorMatrix.html">VectorMatrix&lt;T&gt;</a>(std::move(<a class="code hl_class" href="classLinearAlgebra_1_1VectorMatrix.html">X</a>));</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    }</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="classLinearAlgebra_1_1VectorMatrix.html">VectorMatrix&lt;T&gt;</a>(std::move(<a class="code hl_class" href="classLinearAlgebra_1_1VectorMatrix.html">X</a>));</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    }</div>
 </div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>}</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>}</div>
 </div>
 <div class="ttc" id="aclassLinearAlgebra_1_1DecomposeLU_html"><div class="ttname"><a href="classLinearAlgebra_1_1DecomposeLU.html">LinearAlgebra::DecomposeLU</a></div><div class="ttdoc">LU decomposition with partial pivoting.</div><div class="ttdef"><b>Definition</b> DecomposeLU.hpp:22</div></div>
 <div class="ttc" id="aclassLinearAlgebra_1_1DecomposeLU_html_a09bc124d3621f2141763848c69fda074"><div class="ttname"><a href="classLinearAlgebra_1_1DecomposeLU.html#a09bc124d3621f2141763848c69fda074">LinearAlgebra::DecomposeLU::getP</a></div><div class="ttdeci">const std::vector&lt; int &gt; &amp; getP() const</div><div class="ttdef"><b>Definition</b> DecomposeLU.hpp:78</div></div>
