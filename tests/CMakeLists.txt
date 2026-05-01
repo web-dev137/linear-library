@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION "4.2.3")
+cmake_minimum_required(VERSION "3.31.6")
 
 add_executable(test_lu
     LU_Test.cpp
