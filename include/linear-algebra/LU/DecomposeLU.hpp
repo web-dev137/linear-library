@@ -156,7 +156,7 @@ namespace LinearAlgebra{
     double DecomposeLU<T>::det() const{
         const auto& U = getU();
         int rows = U.size();
-        double det = 1;
+        T det = 1;
         for (int i = 0; i < rows; i++) det*=U[i][i];
         
         return det*detP;
@@ -168,7 +168,7 @@ namespace LinearAlgebra{
         int cols = matrix.getColumns();
         std::vector<std::vector<T>> X(rows, std::vector<T>(cols));
         std::vector<int> invP = initInvP();
-        std::vector<double> b(rows), y(rows), x(rows);
+        std::vector<T> b(rows), y(rows), x(rows);
         for(int i = 0; i < rows; ++i) {
             std::fill(b.begin(), b.end(), 0.0);
             std::fill(y.begin(), y.end(), 0.0);
@@ -176,13 +176,13 @@ namespace LinearAlgebra{
             b[invP[i]] = 1.0;
             
             for (int j = 0; j < cols; ++j) {
-                    double sum = 0;
+                    T sum = 0;
                     for (int k = 0; k < j; ++k) sum += L[j][k] * y[k];
                     y[j] = (b[j] - sum)/L[j][j];
             }
 
             for (int k = rows-1; k >= 0; --k){
-                    double sum = 0;
+                    T sum = 0;
                     for (int s = k+1; s < cols; ++s) sum += U[k][s] * x[s];
                     x[k] = (y[k] - sum)/U[k][k];
             }
