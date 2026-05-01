@@ -154,7 +154,7 @@ namespace LinearAlgebra{
      */
     template<typename T>
     double DecomposeLU<T>::det() const{
-        auto U = getU();
+        const auto& U = getU();
         int rows = U.size();
         double det = 1;
         for (int i = 0; i < rows; i++) det*=U[i][i];
