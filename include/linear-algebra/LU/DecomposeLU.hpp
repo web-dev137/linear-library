@@ -71,7 +71,7 @@ namespace LinearAlgebra{
             detP = 1;
             decomposition(); 
         }
-        double det() const;
+        T det() const;
         VectorMatrix<T> inv() const;
         const std::vector<std::vector<T>>& getU() const{ return U; }
         const std::vector<std::vector<T>>& getL() const{ return L; }
@@ -153,7 +153,7 @@ namespace LinearAlgebra{
      *   det(A) = det(P) * product(diag(U))
      */
     template<typename T>
-    double DecomposeLU<T>::det() const{
+    T DecomposeLU<T>::det() const{
         const auto& U = getU();
         int rows = U.size();
         T det = 1;
@@ -170,10 +170,10 @@ namespace LinearAlgebra{
         std::vector<int> invP = initInvP();
         std::vector<T> b(rows), y(rows), x(rows);
         for(int i = 0; i < rows; ++i) {
-            std::fill(b.begin(), b.end(), 0.0);
-            std::fill(y.begin(), y.end(), 0.0);
-            std::fill(x.begin(), x.end(), 0.0);
-            b[invP[i]] = 1.0;
+            std::fill(b.begin(), b.end(), T(0));
+            std::fill(y.begin(), y.end(), T(0));
+            std::fill(x.begin(), x.end(), T(0));
+            b[invP[i]] = T(1);
             
             for (int j = 0; j < cols; ++j) {
                     T sum = 0;
