@@ -226,7 +226,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="foldopen" id="foldopen00156" data-start="{" data-end="}">
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="classLinearAlgebra_1_1DecomposeLU.html#a465793ac252c5d284578361fa7cea362">  156</a></span>    <span class="keywordtype">double</span> <a class="code hl_function" href="classLinearAlgebra_1_1DecomposeLU.html#a465793ac252c5d284578361fa7cea362">DecomposeLU&lt;T&gt;::det</a>()<span class="keyword"> const</span>{</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keyword">auto</span> U = getU();</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; U = getU();</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keywordtype">int</span> rows = U.size();</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordtype">double</span> det = 1;</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; rows; i++) det*=U[i][i];</div>
