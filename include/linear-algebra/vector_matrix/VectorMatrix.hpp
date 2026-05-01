@@ -110,6 +110,7 @@ namespace LinearAlgebra{
         int getColumns() const {return cols;}
         
         const std::vector<std::vector<T>>& getMatrix()const {return matrix;}
+        std::vector<std::vector<T>>& getMatrix() { return matrix; }
         
         VectorMatrix<T> operator!()const;
         template <typename U>
