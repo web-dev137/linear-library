@@ -74,3 +74,14 @@ install(EXPORT LinearAlgebraTargets
     NAMESPACE LinearAlgebra::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/LinearAlgebra
 )
+
+option(BUILD_BENCHMARKS "Build benchmark targets" OFF)
+
+if(BUILD_BENCHMARKS)
+    add_executable(my_benchmark_exe benchmarks/benchmark.cpp)
+    find_package(benchmark CONFIG REQUIRED)
+    target_link_libraries(my_benchmark_exe PRIVATE 
+        benchmark::benchmark 
+        LinearAlgebra::LinearAlgebra
+    )
+endif()
