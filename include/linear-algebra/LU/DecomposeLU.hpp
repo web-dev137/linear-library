@@ -88,8 +88,9 @@ namespace LinearAlgebra{
             throw std::runtime_error("Invalid column index");
         }
         for (int i = col+1; i < rows; i++) {
-            if(std::abs(U[i][col]) > pivotVal) {
-                pivotVal = std::abs(U[i][col]);
+            auto &Ui = U[i];
+            if(std::abs(Ui[col]) > pivotVal) {
+                pivotVal = std::abs(Ui[col]);
                 pivot = i;
             }
         }
@@ -107,14 +108,19 @@ namespace LinearAlgebra{
         int cols = matrix.getColumns();
         
         if(std::abs(U[col][col]) <= eps) throw std::runtime_error("Pivot is zero");
+        T pivot = U[col][col];
         for (int i = col+1; i < rows; i++)
         {
-            L[i][col]=U[i][col]/U[col][col];
+            auto &Ui = U[i];
+            T& Li_col = L[i][col];
+            Li_col=Ui[col]/pivot;
+            const auto &Ucol = U[col]; 
+
             for (int j = col+1; j < cols; j++)
             {
-                U[i][j] = U[i][j] - L[i][col] * U[col][j];
+                Ui[j] -= Li_col * Ucol[j];
             }
-            U[i][col] = 0;
+            Ui[col] = static_cast<T>(0);
         }
         
     }
@@ -138,8 +144,8 @@ namespace LinearAlgebra{
                 using std::swap;
                 swap(U[pivot],U[k]);
                 swap(P[pivot],P[k]);
-                for (int j = 0; j < k; j++)
-                    swap(L[pivot][j], L[k][j]);
+                if (k > 0)
+                swap_ranges(L[pivot].begin(), L[pivot].begin() + k, L[k].begin());
                 swapCount++;
             }
             elemination(k);
@@ -154,9 +160,9 @@ namespace LinearAlgebra{
      */
     template<typename T>
     T DecomposeLU<T>::det() const{
-        const auto& U = getU();
+        const auto& U = getU();   
         int rows = U.size();
-        T det = 1;
+        T det = T(1);
         for (int i = 0; i < rows; i++) det*=U[i][i];
         
         return det*detP;
@@ -169,25 +175,31 @@ namespace LinearAlgebra{
         std::vector<std::vector<T>> X(rows, std::vector<T>(cols));
         std::vector<int> invP = initInvP();
         std::vector<T> b(rows), y(rows), x(rows);
+
         for(int i = 0; i < rows; ++i) {
-            std::fill(b.begin(), b.end(), T(0));
-            std::fill(y.begin(), y.end(), T(0));
-            std::fill(x.begin(), x.end(), T(0));
+            b.assign(rows,0);
             b[invP[i]] = T(1);
             
             for (int j = 0; j < cols; ++j) {
                     T sum = 0;
-                    for (int k = 0; k < j; ++k) sum += L[j][k] * y[k];
-                    y[j] = (b[j] - sum)/L[j][j];
+                    auto& Lj = L[j];
+                    auto& Ljj = L[j][j];
+                    for (int k = 0; k < j; ++k) sum += Lj[k] * y[k];
+                    y[j] = (b[j] - sum)/Ljj;
             }
 
             for (int k = rows-1; k >= 0; --k){
                     T sum = 0;
-                    for (int s = k+1; s < cols; ++s) sum += U[k][s] * x[s];
-                    x[k] = (y[k] - sum)/U[k][k];
+                    auto& Uk = U[k];
+                    auto& Ukk = U[k][k];
+                    for (int s = k+1; s < cols; ++s) sum += Uk[s] * x[s];
+                    x[k] = (y[k] - sum)/Ukk;
             }
 
-            for (int k = 0; k < rows; ++k) X[k][i] = x[k];
+            for (int k = 0; k < rows; ++k) {
+                auto& Xki = X[k][i];
+                Xki = x[k];
+            }
         }
 
 
