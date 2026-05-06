@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION "3.31.6")
 
 project(LinearLib)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O23 -march=native")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -march=native")
 
 #====================== GoogleTest ================================
 include(FetchContent)
