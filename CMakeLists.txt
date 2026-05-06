@@ -4,7 +4,7 @@ project(LinearLib)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -march=native")
+
 
 #====================== GoogleTest ================================
 include(FetchContent)
@@ -84,10 +84,14 @@ install(EXPORT LinearAlgebraTargets
 option(BUILD_BENCHMARKS "Build benchmark targets" OFF)
 
 if(BUILD_BENCHMARKS)
-    add_executable(my_benchmark_exe benchmarks/benchmark.cpp)
+    add_executable(benchmark_exe benchmarks/benchmark.cpp)
     find_package(benchmark CONFIG REQUIRED)
-    target_link_libraries(my_benchmark_exe PRIVATE 
+    target_link_libraries(benchmark_exe PRIVATE 
         benchmark::benchmark 
         LinearAlgebra::LinearAlgebra
     )
+endif()
+
+if(NOT CMAKE_BUILD_TYPE MATCHES Debug) 
+    add_compile_options(-O2 -march=native)
 endif()
