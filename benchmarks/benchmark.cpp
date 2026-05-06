@@ -23,10 +23,10 @@ LinearAlgebra::VectorMatrix<double> GenMatrix(int size,int seed) {
 static void BM_Matrix_Multiply(benchmark::State &state) {
     auto A = GenMatrix(1000,12345);
     auto B = GenMatrix(1000,54321);
-    //LinearAlgebra::VectorMatrix<double> C(3,3);
+    
     for (auto _:state) {
         state.PauseTiming();
-        auto E = A;   // имитируем новую матрицу в памяти
+        auto E = A; 
         auto F = B;
         state.ResumeTiming();
         auto C = E*F;
@@ -41,7 +41,7 @@ static void BM_LU(benchmark::State &state) {
     auto A = GenMatrix(1000,12345);
     for (auto _:state) {
         state.PauseTiming();
-        auto B = A;   // имитируем новую матрицу в памяти
+        auto B = A;   
         state.ResumeTiming();
         auto LU = LinearAlgebra::DecomposeLU<double>(B);
         benchmark::DoNotOptimize(LU);
@@ -56,7 +56,7 @@ static void BM_Inv_Matrix(benchmark::State &state) {
 
     for (auto _:state) {
         state.PauseTiming();
-        auto Q = A;   // имитируем новую матрицу в памяти
+        auto Q = A;   
         state.ResumeTiming();
         auto LU = LinearAlgebra::DecomposeLU<double>(Q);
         auto C = LU.inv();
