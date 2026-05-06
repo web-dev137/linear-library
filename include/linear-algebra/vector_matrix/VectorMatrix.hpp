@@ -151,7 +151,8 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator!() const
     VectorMatrix<T> result(cols,rows); 
     for (int i = 0; i < cols; i++){
         for (int j = 0; j < rows; j++){
-            result.matrix[j][i] = matrix[i][j];
+            auto &Aij = (*this)(i,j);
+            result(j,i) = Aij;
         }
     }
     return result;
@@ -170,8 +171,10 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(T numbe
     VectorMatrix<T> result(rows,cols);
 
     for (int i = 0; i < rows; i++){
+        auto &Ri = result.matrix[i];
         for (int j = 0; j < cols; j++){
-            result.matrix[i][j] = matrix[i][j] * number;
+            auto &Aij = matrix[i][j];
+            Ri[j] = Aij  * number;
         }
     }
     return result;
@@ -196,16 +199,16 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(const V
     VectorMatrix<T> result(rows,colsB);
     
     for (int i = 0; i < rows; i++){
+        auto &Ri = result.matrix[i];
         for (int j = 0; j < colsB; j++)
         {
-            T sum = 0;
+            auto &Aij = matrix[i][j];
+            auto &Bj = B.matrix[j];
             for (int k = 0; k < this->cols; k++)
             {
-                sum += matrix[i][k] * B.matrix[k][j];
+                Ri[k] += Aij * Bj[k];
             }
-            result.matrix[i][j] = sum;
         }
-        
     }
 
     return result;
