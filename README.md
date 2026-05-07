@@ -14,15 +14,6 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 - Unit tests included
 - Doxygen documentation(https://web-dev137.github.io/linear-library/annotated.html)
 
-## Project Structure
-```bash
-linear-library/
-├── include/
-│   └── linear-algebra/     # Header-only library source
-├── tests/                  # Test suite
-├── CMakeLists.txt          # Build configuration
-└── README.md
-```
 ## Requirements
 
 - **C++17** or higher
@@ -41,6 +32,7 @@ linear-library/
    ```bash
    cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
    cmake --build build --target all
+   ```
 
 ## Generate docs 
 cmake --build build --target doc
@@ -51,10 +43,6 @@ After building, you can run the tests from the build directory
 ctest
 # or run the test executable directly if available
 ```
-<<<<<<< HEAD
-=======
-
->>>>>>> b679f9e (fix readme instruction)
 ## Example of client Cmake:
 ```cmake
 cmake_minimum_required(VERSION 3.14)
@@ -78,9 +66,9 @@ target_compile_features(random_math_app PRIVATE cxx_std_17)
 int main() {
     using namespace LinearAlgebra;
     auto A = VectorMatrix<double>({
-            {2.0, 5.0, 7.0},
-            {6.0, 3.0, 4.0},
-            {5.0, -2.0, -3.0}
+        {2.0, 5.0, 7.0},
+        {6.0, 3.0, 4.0},
+        {5.0, -2.0, -3.0}
     });
 
     auto lu = DecomposeLU<double>(A);
