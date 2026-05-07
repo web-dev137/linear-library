@@ -40,17 +40,11 @@ linear-library/
    ```
    Windows:
    ```bash
-   mkdir build
-   cd build
-   cmake -G "MinGW Makefiles" ..
-   make
+   cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
+   cmake --build build --target all
 
 ## Generate docs 
 cmake --build build --target doc
-## Examples docs
-![LU class](docs/screenshots/LU.png)
-![VectorMatrix class](docs/screenshots/VectorMatrix.png)
-![Example use](docs/screenshots/ExampleMatrixUse.png)
 
 ## Running Tests
 After building, you can run the tests from the build directory
