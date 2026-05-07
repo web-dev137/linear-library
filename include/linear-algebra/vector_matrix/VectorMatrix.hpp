@@ -197,27 +197,32 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(const V
 
     int colsB = B.getColumns();
     VectorMatrix<T> result(rows,colsB);
-    const int bs = 16;
-    for (int i = 0; i < rows; i += bs) {
-        for(int j = 0; j < colsB; j += bs) {
-            for(int k = 0; k < this->cols; k += bs) {
-                const int i_end = std::min(i + bs, rows);
-                const int j_end = std::min(j + bs, colsB);
-                const int k_end = std::min(k + bs, this->cols);
-                for (int ii = i; ii < i_end; ii++){
-                    auto &Rii = result.matrix[ii];
-                    auto &Aii = matrix[ii];
-                    for (int jj = j; jj < j_end; jj++) {
-                        double sum = Rii[jj];
-                        for (int kk = k; kk < k_end; kk++){
-                            sum += Aii[kk] * B[kk][jj];
-                        }
-                        Rii[jj] = sum;
+const int bs = 32;
+
+for (int i = 0; i < rows; i += bs) {
+    for (int k = 0; k < this->cols; k += bs) {
+        for (int j = 0; j < colsB; j += bs) {
+
+            int i_end = std::min(i + bs, rows);
+            int k_end = std::min(k + bs, this->cols);
+            int j_end = std::min(j + bs, colsB);
+
+            for (int ii = i; ii < i_end; ++ii) {
+                auto &Rii = result.matrix[ii];
+                auto &Aii = matrix[ii];
+
+                for (int kk = k; kk < k_end; ++kk) {
+                    T a = T(Aii[kk]);
+                    auto &Bkk = B[kk];
+
+                    for (int jj = j; jj < j_end; ++jj) {
+                        Rii[jj] += a * Bkk[jj];
                     }
                 }
             }
         }
     }
+}
 
     return result;
 };
