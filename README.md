@@ -43,10 +43,8 @@ linear-library/
    ```
    Windows:
    ```bash
-   mkdir build
-   cd build
-   cmake -G "MinGW Makefiles" ..
-   make
+   cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
+   cmake --build build --target all
 
 ## Generate docs 
 cmake --build build --target doc
