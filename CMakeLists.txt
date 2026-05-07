@@ -92,6 +92,6 @@ if(BUILD_BENCHMARKS)
     )
 endif()
 
-if(NOT CMAKE_BUILD_TYPE MATCHES Release) 
+if(CMAKE_BUILD_TYPE MATCHES Release) 
     add_compile_options(-O2 -march=native)
 endif()
