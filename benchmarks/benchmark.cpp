@@ -21,14 +21,9 @@ LinearAlgebra::VectorMatrix<double> GenMatrix(int size,int seed) {
 
 
 static void BM_Matrix_Multiply(benchmark::State &state) {
-    auto A = GenMatrix(1000,12345);
-    auto B = GenMatrix(1000,54321);
-    
+    auto E = GenMatrix(1000,12345); 
+    auto F = GenMatrix(1000,54321);
     for (auto _:state) {
-        state.PauseTiming();
-        auto E = A; 
-        auto F = B;
-        state.ResumeTiming();
         auto C = E*F;
         benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
@@ -38,11 +33,8 @@ BENCHMARK(BM_Matrix_Multiply);
 
 
 static void BM_LU(benchmark::State &state) {
-    auto A = GenMatrix(1000,12345);
+    auto B = GenMatrix(1000,12345);
     for (auto _:state) {
-        state.PauseTiming();
-        auto B = A;   
-        state.ResumeTiming();
         auto LU = LinearAlgebra::DecomposeLU<double>(B);
         benchmark::DoNotOptimize(LU);
         benchmark::ClobberMemory();
@@ -52,12 +44,8 @@ static void BM_LU(benchmark::State &state) {
 BENCHMARK(BM_LU);
 
 static void BM_Inv_Matrix(benchmark::State &state) {
-    auto A = GenMatrix(1000,12345);
-
+    auto Q = GenMatrix(1000,12345);
     for (auto _:state) {
-        state.PauseTiming();
-        auto Q = A;   
-        state.ResumeTiming();
         auto LU = LinearAlgebra::DecomposeLU<double>(Q);
         auto C = LU.inv();
         benchmark::DoNotOptimize(C);
