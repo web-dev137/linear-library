@@ -14,18 +14,6 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 - Unit tests included
 - Doxygen documentation(https://web-dev137.github.io/linear-library/annotated.html)
 
-## Project Structure
-```bash
-linear-library/
-├── docs/                     # For doxygen docs
-├── include/
-│   └── linear-algebra/LU     # Header-only library source
-│   └── linear-algebra/QR
-│   └── linear-algebra/vector_matrix  
-├── tests/                  # Test suite
-├── CMakeLists.txt          # Build configuration
-└── README.md
-```
 ## Requirements
 
 - **C++17** or higher
