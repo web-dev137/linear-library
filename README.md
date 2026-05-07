@@ -36,10 +36,9 @@ linear-library/
    ```bash
    git clone https://github.com/web-dev137/linear-library.git
    cd linear-library
-   mkdir build && cd build
-   cmake ..
+   mkdir build && cd build 
+   cmake -DCMAKE_BUILD_TYPE=Release ..
    cmake --build .
-   cmake --install .
    ```
    Windows:
    ```bash
