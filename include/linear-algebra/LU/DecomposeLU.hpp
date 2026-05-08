@@ -55,6 +55,8 @@ namespace LinearAlgebra{
             return invP;
         };
         int pivoting(int col);
+        void forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const;
+        void backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const;
         std::vector<std::vector<T>> L;
         std::vector<std::vector<T>> U;
         std::vector<int> P; //vector of swap
@@ -130,22 +132,20 @@ namespace LinearAlgebra{
     void DecomposeLU<T>::decomposition() {
         if (matrix.getRows() != matrix.getColumns())
         throw std::runtime_error("Matrix must be square for LU decomposition");
-        int cols = matrix.getColumns();
-        int rows = matrix.getRows();
+        int n = matrix.getRows();
         U = matrix.getMatrix();
         initL();
         initP();
         int swapCount = 0;
-        for (int k = 0; k < cols; ++k)
-        {
+        for (int k = 0; k < n; ++k) {
             int pivot = pivoting(k);
          
             if(pivot != k) {
                 using std::swap;
                 swap(U[pivot],U[k]);
                 swap(P[pivot],P[k]);
-                if (k > 0)
-                swap_ranges(L[pivot].begin(), L[pivot].begin() + k, L[k].begin());
+                if (k > 0) 
+                    swap_ranges(L[pivot].begin(), L[pivot].begin() + k, L[k].begin());
                 swapCount++;
             }
             elimination(k);
@@ -169,39 +169,53 @@ namespace LinearAlgebra{
     }
 
     template<typename T>
+    void DecomposeLU<T>::forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const{
+        for (int j = 0; j < n; ++j) {
+            T sum = 0;
+            auto& Lj = L[j];
+            auto& Ljj = L[j][j];
+            for (int k = 0; k < j; ++k) sum += Lj[k] * y[k];
+            y[j] = (b[j] - sum)/Ljj;
+        }
+    }
+
+    template<typename T>
+    void DecomposeLU<T>::backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const{
+        for (int k = n-1; k >= 0; --k){
+            T sum = 0;
+            auto& Uk = U[k];
+            auto& Ukk = U[k][k];
+            for (int s = k+1; s < n; ++s) sum += Uk[s] * x[s];
+            x[k] = (y[k] - sum)/Ukk;
+        }
+    }
+
+    template<typename T>
     VectorMatrix<T> DecomposeLU<T>::inv() const{
-        int rows = matrix.getRows();
-        int cols = matrix.getColumns();
-        std::vector<std::vector<T>> X(rows, std::vector<T>(cols));
+        int n = matrix.getRows();
+        std::vector<std::vector<T>> X(n, std::vector<T>(n));
         std::vector<int> invP = initInvP();
-        std::vector<T> b(rows), y(rows), x(rows);
+        std::vector<T> b(n), y(n), x(n);
+        int prev = invP[0];
+        b[prev] = T(1);
+        for(int i = 0; i < n; ++i) {
+            int curr = invP[i];
 
-        for(int i = 0; i < rows; ++i) {
-            b.assign(rows,0);
-            b[invP[i]] = T(1);
+            if (i > 0) {
+                b[prev] = T(0);
+                b[curr] = T(1);
+            }
             
-            for (int j = 0; j < cols; ++j) {
-                    T sum = 0;
-                    auto& Lj = L[j];
-                    auto& Ljj = L[j][j];
-                    for (int k = 0; k < j; ++k) sum += Lj[k] * y[k];
-                    y[j] = (b[j] - sum)/Ljj;
-            }
+            forwardSubstitution(y, b, n);
+            backwardSubstitution(x, y, n);
 
-            for (int k = rows-1; k >= 0; --k){
-                    T sum = 0;
-                    auto& Uk = U[k];
-                    auto& Ukk = U[k][k];
-                    for (int s = k+1; s < cols; ++s) sum += Uk[s] * x[s];
-                    x[k] = (y[k] - sum)/Ukk;
-            }
-
-            for (int k = 0; k < rows; ++k) {
+            for (int k = 0; k < n; ++k) {
                 auto& Xki = X[k][i];
                 Xki = x[k];
             }
-        }
 
+            prev = curr;
+        }
 
         return VectorMatrix<T>(std::move(X));
     }
