@@ -26,7 +26,7 @@ namespace LinearAlgebra{
         
         VectorMatrix<T> matrix;
         double detP;
-        void elemination(int col);
+        void elimination(int col);
         void initL() {
             int rows = matrix.getRows();
             int cols = matrix.getColumns();
@@ -103,7 +103,7 @@ namespace LinearAlgebra{
      * 
      */
     template<typename T>
-    void DecomposeLU<T>::elemination(int col) {
+    void DecomposeLU<T>::elimination(int col) {
         int rows = matrix.getRows();
         int cols = matrix.getColumns();
         
@@ -148,7 +148,7 @@ namespace LinearAlgebra{
                 swap_ranges(L[pivot].begin(), L[pivot].begin() + k, L[k].begin());
                 swapCount++;
             }
-            elemination(k);
+            elimination(k);
         }
         detP = swapCount % 2 == 0 ? 1 : -1;
     }
