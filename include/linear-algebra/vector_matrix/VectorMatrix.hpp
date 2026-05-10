@@ -114,8 +114,6 @@ namespace LinearAlgebra{
         
         VectorMatrix<T> operator!()const;
         template <typename U>
-        friend std::istream& operator>>(std::istream& in, VectorMatrix<U>& M);
-        template <typename U>
         friend std::ostream& operator<<(std::ostream& os, const VectorMatrix<U>& M);
         
     };
