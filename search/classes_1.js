@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['qr_0',['QR',['../classQR.html',1,'']]]
+  ['flatmatrix_0',['FlatMatrix',['../classLinearAlgebra_1_1FlatMatrix.html',1,'LinearAlgebra']]]
 ];
