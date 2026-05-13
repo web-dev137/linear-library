@@ -63,6 +63,30 @@ static void BM_FlatMatrix_Multiply(benchmark::State &state) {
 }
 BENCHMARK(BM_FlatMatrix_Multiply);
 
+static void BM_FlatMatrix_Transponse(benchmark::State &state) {
+    for (auto _:state) {
+        state.PauseTiming();
+        auto E = GenFlatMatrix(1000,12345); 
+        state.ResumeTiming();
+        auto C = ~E;
+        benchmark::DoNotOptimize(C);
+        benchmark::ClobberMemory();
+    }
+}
+BENCHMARK(BM_FlatMatrix_Transponse);
+
+static void BM_VectorMatrix_Transponse(benchmark::State &state) {
+    for (auto _:state) {
+        state.PauseTiming();
+        auto E = GenMatrix(1000,12345); 
+        state.ResumeTiming();
+        auto C = !E;
+        benchmark::DoNotOptimize(C);
+        benchmark::ClobberMemory();
+    }
+}
+BENCHMARK(BM_VectorMatrix_Transponse);
+
 static void BM_LU(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
