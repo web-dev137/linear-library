@@ -118,7 +118,19 @@ namespace LinearAlgebra {
         friend std::ostream& operator<<(std::ostream& os, FlatMatrix<U>& m);
 
     };
+    
+    template<typename T>
+    FlatMatrix<T> FlatMatrix<T>::operator~() const {
+        FlatMatrix result(rows,cols);
 
+        for(int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
+                result.flatMatrix[j*cols + i] = flatMatrix[i*cols +j];
+            }
+        }
+
+        return result;
+    }
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator*(const T scalar) const {
         FlatMatrix result(rows,cols);

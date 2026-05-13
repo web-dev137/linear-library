@@ -16,10 +16,26 @@ protected:
         };
 
         B = {
-            {10,11,12},
-            {13,14,15},
-            {16,17,18}
+            {11,12,13},
+            {14,15,16},
+            {17,18,19}
         };
+    }
+
+    template<typename T>
+    void compare(FlatMatrix<T> res, FlatMatrix<T> exp) {
+        int resRows = res.getRows();
+        int resCols = res.getCols();
+        int expRows = exp.getRows();
+        int expCols = exp.getCols();
+        ASSERT_EQ(resRows, expRows);
+        ASSERT_EQ(resCols, expCols);
+
+        for(int i = 0; i < resRows; i++) {
+            for(int j = 0; j < resRows; j++) {
+                EXPECT_NEAR(res(i,j),exp(i,j),1e-9);
+            }
+        }
     }
 };
 
@@ -28,22 +44,31 @@ TEST_F(FlatMatrixTest,operatorGet) {
     EXPECT_EQ(val,3);
 }
 
+TEST_F(FlatMatrixTest, operatorTnasponse) {
+    FlatMatrix<int> Exp({
+        { 1, 4, 7 },
+        { 2, 5, 8 },
+        { 3, 6, 9 }
+    });
+
+    int rows = A.getRows();
+    int cols = A.getCols();
+    const auto& C = ~A;
+    compare<int>(C,Exp);
+}
+
 TEST_F(FlatMatrixTest, operatorMultiply) {
 
     FlatMatrix<int> Exp({
-        {84,  90,  96},
-        {201, 216, 231},
-        {318, 342, 366}
+         {90,96,102},
+        {216,231,246},
+        {342,366,390}
     });
     const auto& C = A*B;
     int rows = A.getRows();
     int cols = B.getCols();
     
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < cols; j++) {
-            EXPECT_NEAR(C(i,j),Exp(i,j),1e-9);
-        }
-    }
+    compare<int>(C,Exp);
 }
 
 TEST(FlatMatrixTest,operatorOstream) {
