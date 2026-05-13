@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION "3.31")
-
 add_executable(test_lu
     LU_Test.cpp
 )
@@ -32,9 +30,6 @@ target_link_libraries(test_flat_matrix
 
 include(GoogleTest)
 
-add_test(NAME test_lu COMMAND test_lu)
-add_test(NAME test_vector_matrix COMMAND test_vector_matrix)
-add_test(NAME test_flat_matrix COMMAND test_flat_matrix)
 
 gtest_discover_tests(test_lu)
 gtest_discover_tests(test_vector_matrix)
