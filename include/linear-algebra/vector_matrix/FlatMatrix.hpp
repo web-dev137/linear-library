@@ -131,6 +131,7 @@ namespace LinearAlgebra {
 
         return result;
     }
+    
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator*(const T scalar) const {
         FlatMatrix result(rows,cols);
