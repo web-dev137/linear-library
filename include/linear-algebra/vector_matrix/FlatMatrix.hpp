@@ -34,21 +34,26 @@ namespace LinearAlgebra {
     private:
         int cols,rows;
         std::vector<T> flatMatrix;
+        void validation(std::vector<std::vector<T>> v) {
+            for (const auto& row : v)
+                if (static_cast<int>(row.size()) != cols) 
+                    throw std::invalid_argument("All rows must have the same size");
+        }
     public:
         FlatMatrix(const std::vector<std::vector<T>>& v) {
             if (v.empty() || v[0].empty()) {
                 throw std::invalid_argument("Matrix is empty");
             }
 
-            validation(v);
-
             rows = v.size();
             cols = v[0].size();
-            flatMatrix.reserve(static_cast<size_t>(rows) * cols);
-            for (auto& row : flatMatrix) {
+            validation(v);
+        
+            flatMatrix.reserve(rows * cols);
+            for (const auto& row : v) {
                 flatMatrix.insert(flatMatrix.end(),
-                    flatMatrix.begin(),
-                    flatMatrix.end()
+                    row.begin(),
+                    row.end()
                 );
             }
             
@@ -69,25 +74,111 @@ namespace LinearAlgebra {
 
         FlatMatrix(std::initializer_list<std::initializer_list<T>> v){
             rows = v.size();
-            cols = (rows>0)?v.begin()->size() : 0;
+            cols = v.begin()->size();
 
-            flatMatrix.reserve(rows*cols);
+            flatMatrix.clear();
+            flatMatrix.reserve(rows * cols);
 
             for (const auto& row : v) {
-                if(row.size( ! cols)) {
+                if(row.size()!=cols) {
                     throw std::invalid_argument("All rows must have the same size");
                 }
                 flatMatrix.insert(flatMatrix.end(),row.begin(),row.end());
             }
         }
 
-        T operator()(int i, int j) {
-            if((i < 0 || i > rows) || (j < 0 || j > cols)) {
-                throw std::out_of_range("Matrix index out of range");
-            }
+        FlatMatrix(int i,int j):flatMatrix(rows*cols,0.0),rows(i),cols(j) {}
+        FlatMatrix() = default;
 
+        int getRows() const{
+            return rows;
+        }
+
+        int getCols() const{
+            return cols;
+        }
+
+        T& operator()(int i, int j) {
+            assert(i >= 0 && i < rows && j >= 0 && j < cols && "FlatMatrix: index out of range");
             return flatMatrix[i * cols + j];
         }
-        
+
+        const T& operator()(int i, int j) const{
+            assert(i >= 0 && i < rows && j >= 0 && j < cols && "FlatMatrix: index out of range");
+            return flatMatrix[i * cols + j];
+        }
+
+        FlatMatrix<T> operator*(const FlatMatrix<T>& B) const;
+        FlatMatrix<T> operator+(const FlatMatrix<T>& B) const;
+        FlatMatrix<T> operator*(const T scalar) const;
+        FlatMatrix<T> operator~() const;
+
+
+        template<typename U>
+        friend std::ostream& operator<<(std::ostream& os, FlatMatrix<U>& m);
+
     };
+
+    template<typename T>
+    FlatMatrix<T> FlatMatrix<T>::operator*(const T scalar) const {
+        FlatMatrix result(rows,cols);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result.flatMatrix[i] = flatMatrix[i] * scalar;
+            }
+        }
+        return result;
+    }
+
+    template<typename T>
+    FlatMatrix<T> FlatMatrix<T>::operator*(const FlatMatrix<T>& B) const {
+        if(cols != B.getCols()) {
+            throw std::invalid_argument("num columns A not equal num rows B");
+        }
+        
+        int colsB = B.getCols();
+        FlatMatrix result(rows,colsB);
+        const int bs = 32;
+
+        for (int i = 0; i < rows; i += bs) {
+            for (int k = 0; k < cols; k += bs) {
+                for (int j = 0; j < colsB; j += bs) {
+
+                    int i_end = std::min(i + bs, rows);
+                    int k_end = std::min(k + bs, cols);
+                    int j_end = std::min(j + bs, colsB);
+
+                    for (int ii = i; ii < i_end; ++ii) {
+                        for (int kk = k; kk < k_end; ++kk) {
+                            for (int jj = j; jj < j_end; ++jj) {
+                                result.flatMatrix[ii*cols+jj] += 
+                                    flatMatrix[ii*cols+kk] * B.flatMatrix[kk*cols+jj];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+       return result; 
+    }
+
+    template<typename U>
+    std::ostream& operator<<(std::ostream& os, FlatMatrix<U>& m) {
+        int rows = m.rows;
+        int cols = m.cols;
+        for(int i =0; i < rows; ++i) {
+            for(int j = 0; j < rows; ++j) {
+                os<<m(i,j);
+                if (j + 1 < cols)
+                os << ' ';
+            }
+            if (i + 1 < rows)
+            os << '\n';
+        }
+        return os;
+    }
+
+
+
 }
