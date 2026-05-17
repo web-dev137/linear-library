@@ -125,7 +125,7 @@ namespace LinearAlgebra{
             res *= matrix(i,i);
         }
 
-        return res;
+        return res*detP;
     }
 
     template<typename T>
