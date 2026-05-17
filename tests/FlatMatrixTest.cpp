@@ -44,6 +44,17 @@ TEST_F(FlatMatrixTest,operatorGet) {
     EXPECT_EQ(val,3);
 }
 
+TEST_F(FlatMatrixTest,MultiplyOnScalar) {
+    auto res = A * 3;
+    FlatMatrix<int> expected = {
+        {3, 6, 9},
+        {12, 15, 18},
+        {21, 24, 27}
+    };
+    
+    compare<int>(res,expected);
+}
+
 TEST_F(FlatMatrixTest, operatorTnasponse) {
     FlatMatrix<int> Exp({
         { 1, 4, 7 },

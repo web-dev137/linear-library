@@ -136,11 +136,9 @@ namespace LinearAlgebra {
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator*(const T scalar) const {
         FlatMatrix result(rows,cols);
-
-        for (int i = 0; i < rows; i++) {
-            for(int j = 0; j < cols; j++) {
-                result.flatMatrix[i*cols +j] = flatMatrix[i*cols +j] * scalar;
-            }
+        const int size = rows * cols;
+        for (int i = 0; i < size; i++) {
+            result.flatMatrix[i] = flatMatrix[i] * scalar;
         }
         return result;
     }
