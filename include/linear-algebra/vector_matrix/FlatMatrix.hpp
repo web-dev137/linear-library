@@ -122,7 +122,7 @@ namespace LinearAlgebra {
     
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator~() const {
-        FlatMatrix result(rows,cols);
+        FlatMatrix result(cols,rows);
 
         for(int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
