@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vectormatrix_2ehpp_0',['VectorMatrix.hpp',['../VectorMatrix_8hpp.html',1,'']]]
+  ['qr_2ehpp_0',['QR.hpp',['../QR_8hpp.html',1,'']]]
 ];

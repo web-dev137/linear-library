@@ -1,10 +1,10 @@
 var indexSectionsWithContent =
 {
   0: "dfgiloqv~",
-  1: "dfqv",
+  1: "dflqv",
   2: "l",
-  3: "dfqv",
-  4: "dfgioqv~",
+  3: "dflqv",
+  4: "dfgiloqv~",
   5: "o"
 };
 

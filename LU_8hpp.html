@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>linear-library: /home/runner/work/linear-library/linear-library/include/linear-algebra/LU/DecomposeLU.hpp File Reference</title>
+<title>linear-library: /home/runner/work/linear-library/linear-library/include/linear-algebra/LU/LU.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,49 +76,54 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a>  </div>
-  <div class="headertitle"><div class="title">DecomposeLU.hpp File Reference</div></div>
+  <div class="headertitle"><div class="title">LU.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="VectorMatrix_8hpp_source.html">../vector_matrix/VectorMatrix.hpp</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="FlatMatrix_8hpp_source.html">../vector_matrix/FlatMatrix.hpp</a>&quot;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;limits&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;numeric&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for DecomposeLU.hpp:</div>
+Include dependency graph for LU.hpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="DecomposeLU_8hpp__incl.png" border="0" usemap="#a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2DecomposeLU_8hpp" alt=""/></div>
-<map name="a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2DecomposeLU_8hpp" id="a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2DecomposeLU_8hpp">
-<area shape="rect" title=" " alt="" coords="377,5,564,75"/>
-<area shape="rect" href="VectorMatrix_8hpp.html" title=" " alt="" coords="84,123,324,148"/>
-<area shape="poly" title=" " alt="" coords="378,76,251,121,249,116,376,71"/>
-<area shape="rect" title=" " alt="" coords="330,196,393,221"/>
-<area shape="poly" title=" " alt="" coords="431,77,409,99,390,124,377,154,368,183,363,182,372,152,386,121,405,95,427,73"/>
-<area shape="rect" title=" " alt="" coords="399,123,459,148"/>
-<area shape="poly" title=" " alt="" coords="458,76,442,111,438,109,453,74"/>
-<area shape="rect" title=" " alt="" coords="484,123,543,148"/>
-<area shape="poly" title=" " alt="" coords="488,74,505,109,500,111,484,76"/>
-<area shape="rect" title=" " alt="" coords="567,123,659,148"/>
-<area shape="poly" title=" " alt="" coords="524,73,586,113,583,117,521,77"/>
-<area shape="rect" title=" " alt="" coords="683,123,746,148"/>
-<area shape="poly" title=" " alt="" coords="560,72,673,115,671,120,558,77"/>
+<div class="center"><img src="LU_8hpp__incl.png" border="0" usemap="#a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2LU_8hpp" alt=""/></div>
+<map name="a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2LU_8hpp" id="a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2LU_8hpp">
+<area shape="rect" title=" " alt="" coords="536,5,723,75"/>
+<area shape="rect" href="FlatMatrix_8hpp.html" title=" " alt="" coords="199,123,423,148"/>
+<area shape="poly" title=" " alt="" coords="537,71,364,121,362,116,535,66"/>
+<area shape="rect" title=" " alt="" coords="465,196,527,221"/>
+<area shape="poly" title=" " alt="" coords="556,77,528,98,506,124,497,153,496,183,490,183,491,152,502,121,524,94,553,73"/>
+<area shape="rect" title=" " alt="" coords="515,123,575,148"/>
+<area shape="poly" title=" " alt="" coords="601,77,567,114,563,110,597,73"/>
+<area shape="rect" title=" " alt="" coords="600,123,659,148"/>
+<area shape="poly" title=" " alt="" coords="632,75,632,109,627,109,627,75"/>
+<area shape="rect" title=" " alt="" coords="683,123,775,148"/>
+<area shape="poly" title=" " alt="" coords="667,73,709,111,705,115,664,77"/>
+<area shape="rect" title=" " alt="" coords="799,123,862,148"/>
+<area shape="poly" title=" " alt="" coords="703,72,795,114,792,119,701,77"/>
+<area shape="rect" title=" " alt="" coords="887,123,961,148"/>
+<area shape="poly" title=" " alt="" coords="724,68,875,116,874,121,722,73"/>
 <area shape="rect" title=" " alt="" coords="5,196,85,221"/>
-<area shape="poly" title=" " alt="" coords="180,150,85,193,83,188,177,146"/>
+<area shape="poly" title=" " alt="" coords="269,151,100,196,98,190,267,145"/>
 <area shape="rect" title=" " alt="" coords="109,196,195,221"/>
-<area shape="poly" title=" " alt="" coords="198,150,171,186,166,183,193,147"/>
-<area shape="poly" title=" " alt="" coords="230,146,324,188,322,193,228,150"/>
-<area shape="rect" title=" " alt="" coords="219,196,306,221"/>
-<area shape="poly" title=" " alt="" coords="216,147,247,184,243,187,212,150"/>
+<area shape="poly" title=" " alt="" coords="286,150,191,193,189,188,284,146"/>
+<area shape="poly" title=" " alt="" coords="341,146,454,189,452,193,339,151"/>
+<area shape="rect" title=" " alt="" coords="219,196,330,221"/>
+<area shape="poly" title=" " alt="" coords="307,150,289,185,284,182,302,147"/>
+<area shape="rect" title=" " alt="" coords="354,196,441,221"/>
+<area shape="poly" title=" " alt="" coords="326,146,374,185,371,189,323,150"/>
 </map>
 </div>
 </div>
-<p><a href="DecomposeLU_8hpp_source.html">Go to the source code of this file.</a></p>
+<p><a href="LU_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLinearAlgebra_1_1DecomposeLU.html">LinearAlgebra::DecomposeLU&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classLinearAlgebra_1_1LU.html" title="LU decomposition with partial pivoting.">LU</a> decomposition with partial pivoting.  <a href="classLinearAlgebra_1_1DecomposeLU.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLinearAlgebra_1_1LU.html">LinearAlgebra::LU&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classLinearAlgebra_1_1LU.html" title="LU decomposition with partial pivoting.">LU</a> decomposition with partial pivoting.  <a href="classLinearAlgebra_1_1LU.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
