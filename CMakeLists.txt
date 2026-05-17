@@ -96,7 +96,7 @@ install(EXPORT LinearAlgebraTargets
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/LinearAlgebra
 )
 
-option(BUILD_BENCHMARKS "Build benchmark targets" ON)
+option(BUILD_BENCHMARKS "Build benchmark targets" OFF)
 
 if(BUILD_BENCHMARKS)
     add_executable(benchmark_exe benchmarks/benchmark.cpp)

@@ -116,4 +116,15 @@ namespace LinearAlgebra{
         }
         
     }
+
+    template<typename T>
+    T LU<T>::det() const {
+        int n = matrix.getRows();
+        T res = T(1);
+        for(int i = 0; i < n; i++) {
+            res *= matrix(i,i);
+        }
+
+        return res;
+    }
 }

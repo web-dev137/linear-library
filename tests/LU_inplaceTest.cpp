@@ -87,3 +87,8 @@ TEST_F(LU_Inplace_Test,decomposition) {
     auto LUproduct = L*U;
     compare(PA,LUproduct);
 }
+
+TEST_F(LU_Inplace_Test, det) {
+    double det = lu->det();
+    EXPECT_NEAR(-1.0, det, 1e-9);
+}
