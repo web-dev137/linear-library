@@ -87,7 +87,7 @@ namespace LinearAlgebra {
             }
         }
 
-        FlatMatrix(int i,int j,T val):flatMatrix(rows*cols,val),rows(i),cols(j) {}
+ 
         FlatMatrix(int i,int j):flatMatrix(rows*cols,T(0)),rows(i),cols(j) {}
         FlatMatrix() = default;
 
@@ -122,7 +122,7 @@ namespace LinearAlgebra {
     
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator~() const {
-        FlatMatrix result(rows,cols,T(0));
+        FlatMatrix result(rows,cols);
 
         for(int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
@@ -152,7 +152,7 @@ namespace LinearAlgebra {
         }
         
         int colsB = B.getCols();
-        FlatMatrix result(rows,colsB,T(0));
+        FlatMatrix result(rows,colsB);
         const int bs = 32;
 
         for (int i = 0; i < rows; i += bs) {
