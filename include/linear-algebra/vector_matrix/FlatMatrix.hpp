@@ -59,12 +59,12 @@ namespace LinearAlgebra {
             
         }
 
-        FlatMatrix(int rows,int cols,std::vector<T>& m) {
-            if(rows == 0 || cols == 0) {
+        FlatMatrix(int r,int c,std::vector<T>& m):rows(r),cols(c) {
+            if(r == 0 || c == 0) {
                 throw std::invalid_argument("rows or cols params is 0");
             }
 
-            size_t expected = rows * cols;
+            int expected = r * c;
             if(m.size() != expected) {
                 throw std::invalid_argument("wrong size");
             }
@@ -87,7 +87,8 @@ namespace LinearAlgebra {
             }
         }
 
-        FlatMatrix(int i,int j,T val):flatMatrix(rows*cols,val),rows(i),cols(j) {}
+ 
+        FlatMatrix(int r,int c):rows(r),cols(c),flatMatrix(r*c,T{}) {}
         FlatMatrix() = default;
 
         int getRows() const{
@@ -121,7 +122,7 @@ namespace LinearAlgebra {
     
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator~() const {
-        FlatMatrix result(rows,cols,T(0));
+        FlatMatrix result(cols,rows);
 
         for(int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
@@ -135,11 +136,9 @@ namespace LinearAlgebra {
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator*(const T scalar) const {
         FlatMatrix result(rows,cols);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                result.flatMatrix[i] = flatMatrix[i] * scalar;
-            }
+        const int size = rows * cols;
+        for (int i = 0; i < size; i++) {
+            result.flatMatrix[i] = flatMatrix[i] * scalar;
         }
         return result;
     }
@@ -151,7 +150,7 @@ namespace LinearAlgebra {
         }
         
         int colsB = B.getCols();
-        FlatMatrix result(rows,colsB,T(0));
+        FlatMatrix result(rows,colsB);
         const int bs = 32;
 
         for (int i = 0; i < rows; i += bs) {

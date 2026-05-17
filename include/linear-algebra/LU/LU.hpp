@@ -26,7 +26,7 @@ namespace LinearAlgebra{
     private:
         
         FlatMatrix<T> matrix;
-        double detP;
+        int signP = 1;
         void elimination(int col);
         void initP() {
             P.resize(matrix.getRows());
@@ -51,18 +51,16 @@ namespace LinearAlgebra{
     public:
 
         LU(const FlatMatrix<T>& m) : matrix(m) { 
-            detP = 1;
             decomposition(); 
         }
 
         LU(FlatMatrix<T>&& m) : matrix(std::move(m)) { 
-            detP = 1;
             decomposition(); 
         }
         T det() const;
         FlatMatrix<T> inv() const;
         const std::vector<int>& getP() const{ return P; }
-        FlatMatrix<T> getMatrix() const{ return matrix;}
+        const FlatMatrix<T>& getMatrix() const{ return matrix;}
     };
 
 
@@ -103,6 +101,7 @@ namespace LinearAlgebra{
         throw std::runtime_error("Matrix must be square for LU decomposition");
         int n = matrix.getRows();
         initP();
+        int swapCount = 0;
         for (int k = 0; k < n; ++k) {
             int pivot = pivoting(k);
             if(pivot != k) {
@@ -111,10 +110,14 @@ namespace LinearAlgebra{
                 }
                 
                 std::swap(P[k], P[pivot]);
+                swapCount++;
+            }
+            if (std::abs(matrix(k,k)) <= eps) {
+                throw std::runtime_error("Matrix is singular or nearly singular at pivot " + std::to_string(k));
             }
             elimination(k);
         }
-        
+        signP = swapCount % 2 == 0 ? 1 : -1;
     }
 
     template<typename T>
@@ -125,6 +128,58 @@ namespace LinearAlgebra{
             res *= matrix(i,i);
         }
 
-        return res;
+        return res*T(signP);
+    }
+
+    template<typename T>
+    void LU<T>::forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const {
+        y[0] = b[0];
+        for (int i = 1; i < n; ++i) {
+            T sum = 0;
+            for (int j = 0; j < i; ++j) {
+                sum += matrix(i,j) * y[j];
+            }
+            y[i] = (b[i] - sum);
+        }
+    }
+
+    template<typename T>
+    void LU<T>::backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const {
+        for (int i = n-1; i >= 0; --i){
+            T sum = 0;
+            for (int j = i+1; j < n; ++j) {
+                sum += matrix(i,j) * x[j];
+            }
+            x[i] = (y[i] - sum)/matrix(i,i);
+        }
+    }
+
+    template<typename T>
+    FlatMatrix<T> LU<T>::inv() const {
+        int n = matrix.getRows();
+        FlatMatrix<T> X(n,n);
+        std::vector<int> invP = initInvP();
+        std::vector<T> b(n), y(n), x(n);
+        int prev = invP[0];
+        b[prev] = T(1);
+
+        for(int i = 0; i < n; ++i) {
+            int curr = invP[i];
+
+            if (i > 0) {
+                b[prev] = T(0);
+                b[curr] = T(1);
+            }
+
+            forwardSubstitution(y, b, n);
+            backwardSubstitution(x, y, n);
+
+            for (int k = 0; k < n; ++k) {
+                X(k,i) = x[k];
+            }
+
+            prev = curr;
+        }
+        return X;
     }
 }

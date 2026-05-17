@@ -23,7 +23,7 @@ LinearAlgebra::VectorMatrix<double> GenMatrix(int size,int seed) {
 
 template<typename T>
 LinearAlgebra::FlatMatrix<T> GenFlatMatrix(int size,int seed) {
-    LinearAlgebra::FlatMatrix<T> matrix(size,size,T(0));
+    LinearAlgebra::FlatMatrix<T> matrix(size,size);
 
     std::mt19937 gen(seed);
 
@@ -120,7 +120,7 @@ BENCHMARK(BM_LU_Flat);
 static void BM_Inv_Matrix(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
-        auto Q = GenMatrix(1000,12345);
+        auto Q = GenMatrix(2000,12345);
         auto LU = LinearAlgebra::DecomposeLU<double>(Q);
         state.ResumeTiming();
         auto C = LU.inv();
@@ -130,4 +130,18 @@ static void BM_Inv_Matrix(benchmark::State &state) {
 }
 
 BENCHMARK(BM_Inv_Matrix);
+
+static void BM_Inv_Flat_Matrix(benchmark::State &state) {
+    for (auto _:state) {
+        state.PauseTiming();
+        auto Q = GenFlatMatrix<double>(2000,12345);
+        auto LU = LinearAlgebra::LU<double>(Q);
+        state.ResumeTiming();
+        auto C = LU.inv();
+        benchmark::DoNotOptimize(C);
+        benchmark::ClobberMemory();
+    }
+}
+
+BENCHMARK(BM_Inv_Flat_Matrix);
 BENCHMARK_MAIN();
