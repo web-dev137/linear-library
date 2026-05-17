@@ -138,7 +138,9 @@ namespace LinearAlgebra {
         FlatMatrix result(rows,cols);
 
         for (int i = 0; i < rows; i++) {
-            result.flatMatrix[i] = flatMatrix[i] * scalar;
+            for(int j = 0; j < cols; j++) {
+                result.flatMatrix[i*cols +j] = flatMatrix[i*cols +j] * scalar;
+            }
         }
         return result;
     }
