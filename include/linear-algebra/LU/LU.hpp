@@ -103,6 +103,7 @@ namespace LinearAlgebra{
         throw std::runtime_error("Matrix must be square for LU decomposition");
         int n = matrix.getRows();
         initP();
+        int swapCount = 0;
         for (int k = 0; k < n; ++k) {
             int pivot = pivoting(k);
             if(pivot != k) {
@@ -111,10 +112,11 @@ namespace LinearAlgebra{
                 }
                 
                 std::swap(P[k], P[pivot]);
+                swapCount++;
             }
             elimination(k);
         }
-        
+        detP = swapCount % 2 == 0 ? 1 : -1;
     }
 
     template<typename T>

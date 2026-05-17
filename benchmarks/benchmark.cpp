@@ -23,7 +23,7 @@ LinearAlgebra::VectorMatrix<double> GenMatrix(int size,int seed) {
 
 template<typename T>
 LinearAlgebra::FlatMatrix<T> GenFlatMatrix(int size,int seed) {
-    LinearAlgebra::FlatMatrix<T> matrix(size,size,T(0));
+    LinearAlgebra::FlatMatrix<T> matrix(size,size);
 
     std::mt19937 gen(seed);
 
