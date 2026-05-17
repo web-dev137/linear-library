@@ -35,7 +35,7 @@ protected:
     template<typename T>
     FlatMatrix<T> extractL(const FlatMatrix<T>& A) {   
         int n = A.getRows();
-        FlatMatrix<T> L(n, n, T(0.0));             
+        FlatMatrix<T> L(n, n);             
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -52,7 +52,7 @@ protected:
     template<typename T>
     FlatMatrix<T> extractU(const FlatMatrix<T>& A) {
         int n = A.getRows();
-        FlatMatrix<T> U(n, n, T(0.0));
+        FlatMatrix<T> U(n, n);
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -91,4 +91,16 @@ TEST_F(LU_Inplace_Test,decomposition) {
 TEST_F(LU_Inplace_Test, det) {
     double det = lu->det();
     EXPECT_NEAR(-1.0, det, 1e-9);
+}
+
+TEST_F(LU_Inplace_Test, inv) {
+    FlatMatrix<double>exp = {
+        {1.0, -1.0, 1.0},
+        {-38.0, 41.0, -34.0},
+        {27.0, -29.0, 24.0}
+    };
+    
+    auto D = lu->inv();
+
+    compare(D,exp);
 }

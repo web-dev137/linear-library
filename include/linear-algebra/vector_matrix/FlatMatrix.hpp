@@ -88,6 +88,7 @@ namespace LinearAlgebra {
         }
 
         FlatMatrix(int i,int j,T val):flatMatrix(rows*cols,val),rows(i),cols(j) {}
+        FlatMatrix(int i,int j):flatMatrix(rows*cols,T(0)),rows(i),cols(j) {}
         FlatMatrix() = default;
 
         int getRows() const{
