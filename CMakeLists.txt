@@ -34,6 +34,12 @@ target_include_directories(LU_lib INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
+add_library(LU_flat_lib INTERFACE)
+target_include_directories(LU_flat_lib INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
 add_library(flat_matrix_lib INTERFACE)
 target_include_directories(flat_matrix_lib INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -41,6 +47,7 @@ target_include_directories(flat_matrix_lib INTERFACE
 )
 
 target_link_libraries(LU_lib INTERFACE vector_matrix_lib)
+target_link_libraries(LU_flat_lib INTERFACE vector_matrix_lib flat_matrix_lib)
 
 add_library(LinearAlgebra INTERFACE)
 add_library(LinearAlgebra::LinearAlgebra ALIAS LinearAlgebra)
@@ -49,6 +56,7 @@ target_link_libraries(LinearAlgebra INTERFACE
     $<BUILD_INTERFACE:vector_matrix_lib>
     $<BUILD_INTERFACE:flat_matrix_lib>
     $<BUILD_INTERFACE:LU_lib>
+    $<BUILD_INTERFACE:LU_flat_lib>
 )
 #====================== Add libraries End =========================
 
@@ -88,7 +96,7 @@ install(EXPORT LinearAlgebraTargets
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/LinearAlgebra
 )
 
-option(BUILD_BENCHMARKS "Build benchmark targets" OFF)
+option(BUILD_BENCHMARKS "Build benchmark targets" ON)
 
 if(BUILD_BENCHMARKS)
     add_executable(benchmark_exe benchmarks/benchmark.cpp)
