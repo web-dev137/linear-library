@@ -1,6 +1,7 @@
 #include "benchmark/benchmark.h"
 #include <random>
 #include <linear-algebra/LU/DecomposeLU.hpp>
+#include <linear-algebra/LU/LU.hpp>
 #include <linear-algebra/vector_matrix/VectorMatrix.hpp>
 #include <linear-algebra/vector_matrix/FlatMatrix.hpp>
 
@@ -20,12 +21,13 @@ LinearAlgebra::VectorMatrix<double> GenMatrix(int size,int seed) {
     return matrix;
 }
 
-LinearAlgebra::FlatMatrix<double> GenFlatMatrix(int size,int seed) {
-    LinearAlgebra::FlatMatrix<double> matrix(size,size);
+template<typename T>
+LinearAlgebra::FlatMatrix<T> GenFlatMatrix(int size,int seed) {
+    LinearAlgebra::FlatMatrix<T> matrix(size,size,T(0));
 
     std::mt19937 gen(seed);
 
-    std::uniform_real_distribution<double> dis(0.0,1.0);
+    std::uniform_real_distribution<T> dis(0.0,1.0);
     for(int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++)
         {
@@ -53,8 +55,8 @@ BENCHMARK(BM_Matrix_Multiply);
 static void BM_FlatMatrix_Multiply(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
-        auto E = GenFlatMatrix(1000,12345); 
-        auto F = GenFlatMatrix(1000,54321);
+        auto E = GenFlatMatrix<double>(1000,12345); 
+        auto F = GenFlatMatrix<double>(1000,54321);
         state.ResumeTiming();
         auto C = E*F;
         benchmark::DoNotOptimize(C);
@@ -66,7 +68,7 @@ BENCHMARK(BM_FlatMatrix_Multiply);
 static void BM_FlatMatrix_Transponse(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
-        auto E = GenFlatMatrix(1000,12345); 
+        auto E = GenFlatMatrix<double>(1000,12345); 
         state.ResumeTiming();
         auto C = ~E;
         benchmark::DoNotOptimize(C);
@@ -90,7 +92,7 @@ BENCHMARK(BM_VectorMatrix_Transponse);
 static void BM_LU(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
-        auto B = GenMatrix(1000,12345);
+        auto B = GenMatrix(2000,12345);
         state.ResumeTiming();
         auto LU = LinearAlgebra::DecomposeLU<double>(B);
         benchmark::DoNotOptimize(LU);
@@ -100,10 +102,25 @@ static void BM_LU(benchmark::State &state) {
 
 BENCHMARK(BM_LU);
 
+static void BM_LU_Flat(benchmark::State &state) {
+    for (auto _:state) {
+        state.PauseTiming();
+        auto B = GenFlatMatrix<double>(2000,12345);
+        state.ResumeTiming();
+        auto LU = LinearAlgebra::LU<double>(B);
+        benchmark::DoNotOptimize(LU);
+        benchmark::ClobberMemory();
+    }
+}
+
+BENCHMARK(BM_LU_Flat);
+
+
+
 static void BM_Inv_Matrix(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
-        auto Q = GenMatrix(1000,12345);
+        auto Q = GenMatrix(2000,12345);
         auto LU = LinearAlgebra::DecomposeLU<double>(Q);
         state.ResumeTiming();
         auto C = LU.inv();
@@ -113,4 +130,18 @@ static void BM_Inv_Matrix(benchmark::State &state) {
 }
 
 BENCHMARK(BM_Inv_Matrix);
+
+static void BM_Inv_Flat_Matrix(benchmark::State &state) {
+    for (auto _:state) {
+        state.PauseTiming();
+        auto Q = GenFlatMatrix<double>(2000,12345);
+        auto LU = LinearAlgebra::LU<double>(Q);
+        state.ResumeTiming();
+        auto C = LU.inv();
+        benchmark::DoNotOptimize(C);
+        benchmark::ClobberMemory();
+    }
+}
+
+BENCHMARK(BM_Inv_Flat_Matrix);
 BENCHMARK_MAIN();
