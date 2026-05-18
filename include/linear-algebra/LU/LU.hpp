@@ -26,7 +26,7 @@ namespace LinearAlgebra{
     private:
         
         FlatMatrix<T> matrix;
-        double detP;
+        int signP = 1;
         void elimination(int col);
         void initP() {
             P.resize(matrix.getRows());
@@ -51,18 +51,16 @@ namespace LinearAlgebra{
     public:
 
         LU(const FlatMatrix<T>& m) : matrix(m) { 
-            detP = 1;
             decomposition(); 
         }
 
         LU(FlatMatrix<T>&& m) : matrix(std::move(m)) { 
-            detP = 1;
             decomposition(); 
         }
         T det() const;
         FlatMatrix<T> inv() const;
         const std::vector<int>& getP() const{ return P; }
-        FlatMatrix<T> getMatrix() const{ return matrix;}
+        const FlatMatrix<T>& getMatrix() const{ return matrix;}
     };
 
 
@@ -116,7 +114,7 @@ namespace LinearAlgebra{
             }
             elimination(k);
         }
-        detP = swapCount % 2 == 0 ? 1 : -1;
+        signP = swapCount % 2 == 0 ? 1 : -1;
     }
 
     template<typename T>
@@ -127,7 +125,7 @@ namespace LinearAlgebra{
             res *= matrix(i,i);
         }
 
-        return res*detP;
+        return res*T(signP);
     }
 
     template<typename T>
