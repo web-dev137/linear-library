@@ -112,6 +112,9 @@ namespace LinearAlgebra{
                 std::swap(P[k], P[pivot]);
                 swapCount++;
             }
+            if (std::abs(matrix(k,k)) <= eps) {
+                throw std::runtime_error("Matrix is singular or nearly singular at pivot " + std::to_string(k));
+            }
             elimination(k);
         }
         signP = swapCount % 2 == 0 ? 1 : -1;
