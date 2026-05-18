@@ -59,12 +59,12 @@ namespace LinearAlgebra {
             
         }
 
-        FlatMatrix(int rows,int cols,std::vector<T>& m) {
-            if(rows == 0 || cols == 0) {
+        FlatMatrix(int r,int c,std::vector<T>& m):rows(r),cols(c) {
+            if(r == 0 || c == 0) {
                 throw std::invalid_argument("rows or cols params is 0");
             }
 
-            size_t expected = rows * cols;
+            int expected = r * c;
             if(m.size() != expected) {
                 throw std::invalid_argument("wrong size");
             }
@@ -88,7 +88,7 @@ namespace LinearAlgebra {
         }
 
  
-        FlatMatrix(int i,int j):rows(i),cols(j),flatMatrix(rows*cols,T(0)) {}
+        FlatMatrix(int r,int c):rows(r),cols(c),flatMatrix(r*c,T{}) {}
         FlatMatrix() = default;
 
         int getRows() const{
