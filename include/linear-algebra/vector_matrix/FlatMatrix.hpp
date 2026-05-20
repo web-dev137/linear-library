@@ -7,28 +7,6 @@
 #include <stdexcept>
 
 namespace LinearAlgebra {
-    /**
-     * \brief
-     * Examples:
-     * \code
-     *      VectorMatrix<int> A({
-     *          {1,2,3},
-     *          {4,5,6},
-     *          {7,8,9}
-     *      });
-     * 
-     *      VectorMatrix<int> B({
-     *          {11,12,13},
-     *          {14,15,16},
-     *          {17,18,19}
-     *      });
-     *      
-     *      auto C = A*3;
-     *      auto D = A*B;
-     *      auto E = !A
-     *      std::cout<<A;
-     * \endcode
-     */
     template <typename T>
     class FlatMatrix {
     private:
@@ -59,6 +37,21 @@ namespace LinearAlgebra {
             
         }
 
+        /**
+         * \brief Constructs a FlatMatrix from given dimensions and a flat data vector.
+         *
+         * Creates a matrix with `r` rows and `c` columns, initialized from a flat vector `m`
+         * stored in row-major order.
+         *
+         * \param r Number of rows (must be > 0).
+         * \param c Number of columns (must be > 0).
+         * \param m Flat vector containing matrix elements in row-major order.
+         *
+         * \throws std::invalid_argument if r == 0 or c == 0.
+         * \throws std::invalid_argument if m.size() != r * c.
+         *
+         * \note The vector `m` is moved into the internal storage (no copy is made).
+         */
         FlatMatrix(int r,int c,std::vector<T>& m):rows(r),cols(c) {
             if(r == 0 || c == 0) {
                 throw std::invalid_argument("rows or cols params is 0");
@@ -72,9 +65,25 @@ namespace LinearAlgebra {
             flatMatrix = std::move(m);
         }
 
+        /**
+         * \brief Constructs a matrix from nested initializer lists.
+         *
+         * All rows must have the same number of elements.
+         *
+         * Example:
+         * \code
+         * FlatMatrix<int> m = {
+         *     {1, 2, 3},
+         *     {4, 5, 6}
+         * };
+         * \endcode
+         *
+         * \param v Nested initializer list representing matrix rows.
+         * \throws std::invalid_argument If rows have different sizes.
+         */
         FlatMatrix(std::initializer_list<std::initializer_list<T>> v){
             rows = v.size();
-            cols = v.begin()->size();
+            cols = rows ? v.begin()->size() : 0;
 
             flatMatrix.clear();
             flatMatrix.reserve(rows * cols);
@@ -120,19 +129,63 @@ namespace LinearAlgebra {
 
     };
     
+    /**
+     * \brief Returns a transposed copy of the matrix.
+     *
+     * Implements matrix transposition operator (~).
+     * For a matrix A of size r x c, returns a new matrix At of size c x r
+     * such that At[i][j] = A[j][i].
+     *
+     * \code
+     * A  = [[1,2,3],        At = [[1,4,7],
+     *       [4,5,6],  =>          [2,5,8],
+     *       [7,8,9]]              [3,6,9]]
+     * \endcode
+     *
+     * \return Transposed matrix (original matrix is not modified).
+     */
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator~() const {
         FlatMatrix result(cols,rows);
 
         for(int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
-                result.flatMatrix[j*cols + i] = flatMatrix[i*cols +j];
+                result.flatMatrix[i*rows + j] = flatMatrix[j*cols + i];
             }
         }
 
         return result;
     }
     
+    /**
+     * \brief Scalar multiplication
+     * Operation:
+     * \f[
+     * C = A \cdot a
+     * \f]
+     * where:
+     * - \c A is a matrix of type \c FlatMatrix
+     * - \c a is a scalar value of the matrix element type
+     * - \c C is the resulting matrix
+     * 
+     * Example:
+     * \code
+     * int a = 3;
+     * FlatMatrix<int> A = {   
+     *      {1,2,3},       
+     *      {4,5,6},
+     *      {7,8,9}
+     * };
+     * 
+     * auto C = A * a;
+     * // Result:
+     * // {
+     * //     { 3,  6,  9},
+     * //     {12, 15, 18},
+     * //     {21, 24, 27}
+     * // }
+     * \endcode
+     */
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator*(const T scalar) const {
         FlatMatrix result(rows,cols);
@@ -143,6 +196,39 @@ namespace LinearAlgebra {
         return result;
     }
 
+    /**
+     * \brief Matrix multiplication
+      * Operation:
+     * \f[
+     * C = A \cdot B
+     * \f]
+     * where:
+     * - \c A is a matrix of type \c FlatMatrix
+     * - \c B is a matrix of type \c FlatMatrix
+     * Example:
+     * \code
+     * int a = 3;
+     * FlatMatrix<int> A = {   
+     *      {1,2,3},       
+     *      {4,5,6},
+     *      {7,8,9}
+     * };
+     * 
+     * FlatMatrix<int> B = {
+     *      {11,12,13},
+     *      {14,15,16},
+     *      {17,18,19}
+     * };
+     * 
+     * auto C = A * B;
+     * // Result:
+     * // {
+     * //  {90,96,102},
+     * //  {216,231,246},
+     * //  {342,366,390}
+     * // }
+     * \endcode
+    */
     template<typename T>
     FlatMatrix<T> FlatMatrix<T>::operator*(const FlatMatrix<T>& B) const {
         if(cols != B.getCols()) {
