@@ -80,7 +80,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="classLinearAlgebra_1_1LU.html" title="LU decomposition with partial pivoting.">LU</a> decomposition with partial pivoting.  
+<p><a class="el" href="classLinearAlgebra_1_1LU.html" title="LU decomposition with partial pivoting in-place.">LU</a> decomposition with partial pivoting in-place.  
  <a href="classLinearAlgebra_1_1LU.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="LU_8hpp_source.html">LU.hpp</a>&gt;</code></p>
@@ -92,8 +92,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adc3682d10fd123e07da70b4894f65cc1" id="r_adc3682d10fd123e07da70b4894f65cc1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLinearAlgebra_1_1LU.html#adc3682d10fd123e07da70b4894f65cc1">LU</a> (<a class="el" href="classLinearAlgebra_1_1FlatMatrix.html">FlatMatrix</a>&lt; <a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">T</a> &gt; &amp;&amp;<a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">m</a>)</td></tr>
 <tr class="separator:adc3682d10fd123e07da70b4894f65cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14b9b689977f0a33ec76cb926cb3bbf8" id="r_a14b9b689977f0a33ec76cb926cb3bbf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLinearAlgebra_1_1LU.html#a14b9b689977f0a33ec76cb926cb3bbf8">det</a> () <a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">const</a></td></tr>
+<tr class="memdesc:a14b9b689977f0a33ec76cb926cb3bbf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the determinant of the matrix.  <br /></td></tr>
 <tr class="separator:a14b9b689977f0a33ec76cb926cb3bbf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b47a73fe5027ea02cace632e6b9246e" id="r_a9b47a73fe5027ea02cace632e6b9246e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLinearAlgebra_1_1FlatMatrix.html">FlatMatrix</a>&lt; <a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">T</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLinearAlgebra_1_1LU.html#a9b47a73fe5027ea02cace632e6b9246e">inv</a> () <a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">const</a></td></tr>
+<tr class="memdesc:a9b47a73fe5027ea02cace632e6b9246e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the inverse matrix.  <br /></td></tr>
 <tr class="separator:a9b47a73fe5027ea02cace632e6b9246e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade9425d0eb3348ca18fc36ccfbc92c36" id="r_ade9425d0eb3348ca18fc36ccfbc92c36"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">const</a> std::vector&lt; <a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">int</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLinearAlgebra_1_1LU.html#ade9425d0eb3348ca18fc36ccfbc92c36">getP</a> () <a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">const</a></td></tr>
 <tr class="separator:ade9425d0eb3348ca18fc36ccfbc92c36"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -102,9 +104,14 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">typename</a> <a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">T</a>&gt;<br />
-class LinearAlgebra::LU&lt; T &gt;</div><p><a class="el" href="classLinearAlgebra_1_1LU.html" title="LU decomposition with partial pivoting.">LU</a> decomposition with partial pivoting. </p>
-<p>Decompose matrix A such that: PA = <a class="el" href="classLinearAlgebra_1_1LU.html" title="LU decomposition with partial pivoting.">LU</a></p>
-<p>Where: P is permutation matrix L is lower triangular with unit diagonal U is upper triangular </p>
+class LinearAlgebra::LU&lt; T &gt;</div><p><a class="el" href="classLinearAlgebra_1_1LU.html" title="LU decomposition with partial pivoting in-place.">LU</a> decomposition with partial pivoting in-place. </p>
+<p>Decomposes the matrix <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$A$" src="form_0.png"/></picture> such that  </p><p class="formulaDsp">
+<picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[
+P A = L U
+\]" src="form_1.png"/></picture>
+</p>
+<p> where <picture><source srcset="form_2_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$P$" src="form_2.png"/></picture> is a permutation matrix, <picture><source srcset="form_3_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$L$" src="form_3.png"/></picture> is a unit lower triangular matrix, and <picture><source srcset="form_4_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$U$" src="form_4.png"/></picture> is an upper triangular matrix.</p>
+<p>The decomposition is stored in-place. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8c8450fa46372661b47051931c816042" name="a8c8450fa46372661b47051931c816042"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8c8450fa46372661b47051931c816042">&#9670;&#160;</a></span>LU() <span class="overload">[1/2]</span></h2>
@@ -180,6 +187,9 @@ template&lt;<a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">typenam
       </table>
 </div><div class="memdoc">
 
+<p>Returns the determinant of the matrix. </p>
+<dl class="section return"><dt>Returns</dt><dd>The determinant of the matrix. </dd></dl>
+
 </div>
 </div>
 <a id="a102922a04c213191148186c3fde0973b" name="a102922a04c213191148186c3fde0973b"></a>
@@ -252,6 +262,9 @@ template&lt;<a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">typenam
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the inverse matrix. </p>
+<dl class="section return"><dt>Returns</dt><dd>The inverse matrix computed from the <a class="el" href="classLinearAlgebra_1_1LU.html" title="LU decomposition with partial pivoting in-place.">LU</a> decomposition. </dd></dl>
 
 </div>
 </div>
