@@ -12,6 +12,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -105,12 +112,12 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">typename</a> <a class="el" href="classLinearAlgebra_1_1VectorMatrix.html">T</a>&gt;<br />
 class LinearAlgebra::LU&lt; T &gt;</div><p><a class="el" href="classLinearAlgebra_1_1LU.html" title="LU decomposition with partial pivoting in-place.">LU</a> decomposition with partial pivoting in-place. </p>
-<p>Decomposes the matrix <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$A$" src="form_0.png"/></picture> such that  </p><p class="formulaDsp">
-<picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[
+<p>Decomposes the matrix \(A\) such that  </p><p class="formulaDsp">
+\[
 P A = L U
-\]" src="form_1.png"/></picture>
+\]
 </p>
-<p> where <picture><source srcset="form_2_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$P$" src="form_2.png"/></picture> is a permutation matrix, <picture><source srcset="form_3_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$L$" src="form_3.png"/></picture> is a unit lower triangular matrix, and <picture><source srcset="form_4_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$U$" src="form_4.png"/></picture> is an upper triangular matrix.</p>
+<p> where \(P\) is a permutation matrix, \(L\) is a unit lower triangular matrix, and \(U\) is an upper triangular matrix.</p>
 <p>The decomposition is stored in-place. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8c8450fa46372661b47051931c816042" name="a8c8450fa46372661b47051931c816042"></a>
