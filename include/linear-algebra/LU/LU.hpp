@@ -9,16 +9,17 @@
 
 namespace LinearAlgebra{
     /**
-     * \brief LU decomposition with partial pivoting
-     * 
-     * Decompose matrix A such that:
-     * PA = LU
-     * 
-     * Where:
-     *  P is permutation matrix
-     *  L is lower triangular with unit diagonal
-     *  U is upper triangular
-     */ 
+     * \brief LU decomposition with partial pivoting in-place.
+    *
+    * Decomposes the matrix \f$A\f$ such that
+    * \f[
+    * P A = L U
+    * \f]
+    * where \f$P\f$ is a permutation matrix, \f$L\f$ is a unit lower
+    * triangular matrix, and \f$U\f$ is an upper triangular matrix.
+    *
+    * The decomposition is stored in-place.
+    */ 
     template<typename T>
     class LU {
         static_assert(std::is_floating_point_v<T>, 
@@ -119,6 +120,11 @@ namespace LinearAlgebra{
         detP = swapCount % 2 == 0 ? 1 : -1;
     }
 
+    /**
+     * \brief Returns the determinant of the matrix.
+     *
+     * \returns The determinant of the matrix.
+     */
     template<typename T>
     T LU<T>::det() const {
         int n = matrix.getRows();
@@ -153,6 +159,11 @@ namespace LinearAlgebra{
         }
     }
 
+    /**
+     * \brief Returns the inverse matrix.
+     *
+     * \return The inverse matrix computed from the LU decomposition.
+     */
     template<typename T>
     FlatMatrix<T> LU<T>::inv() const {
         int n = matrix.getRows();
