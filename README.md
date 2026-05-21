@@ -1,3 +1,5 @@
+**Активная разработка идёт в ветке `main`**.
+Ветка `archive-main` содержит архивную версию проекта.
 # Linear Algebra Library
 
 A lightweight, header-only C++ library for linear algebra operations, focused on vector matrix, and common decompositions.
