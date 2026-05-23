@@ -65,59 +65,121 @@ static void BM_FlatMatrix_Multiply(benchmark::State &state) {
 }
 BENCHMARK(BM_FlatMatrix_Multiply);
 
-static void BM_FlatMatrix_Transponse(benchmark::State &state) {
+
+static void BM_Inv_Matrix_100_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
-        auto E = GenFlatMatrix<double>(1000,12345); 
+        auto Q = GenMatrix(100,12345);
+        auto LU = LinearAlgebra::DecomposeLU<double>(Q);
         state.ResumeTiming();
-        auto C = ~E;
+        auto C = LU.inv();
         benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
     }
 }
-BENCHMARK(BM_FlatMatrix_Transponse);
 
-static void BM_VectorMatrix_Transponse(benchmark::State &state) {
+BENCHMARK(BM_Inv_Matrix_100_size);
+
+static void BM_Inv_Flat_Matrix_100_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
-        auto E = GenMatrix(1000,12345); 
+        auto Q = GenFlatMatrix<double>(100,12345);
+        auto LU = LinearAlgebra::LU<double>(Q);
         state.ResumeTiming();
-        auto C = !E;
+        auto C = LU.inv();
         benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
     }
 }
-BENCHMARK(BM_VectorMatrix_Transponse);
 
-static void BM_LU(benchmark::State &state) {
+BENCHMARK(BM_Inv_Flat_Matrix_100_size);
+
+static void BM_Inv_Matrix_200_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
-        auto B = GenMatrix(2000,12345);
+        auto Q = GenMatrix(200,12345);
+        auto LU = LinearAlgebra::DecomposeLU<double>(Q);
         state.ResumeTiming();
-        auto LU = LinearAlgebra::DecomposeLU<double>(B);
-        benchmark::DoNotOptimize(LU);
+        auto C = LU.inv();
+        benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
     }
 }
 
-BENCHMARK(BM_LU);
+BENCHMARK(BM_Inv_Matrix_200_size);
 
-static void BM_LU_Flat(benchmark::State &state) {
+static void BM_Inv_Flat_Matrix_200_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
-        auto B = GenFlatMatrix<double>(2000,12345);
+        auto Q = GenFlatMatrix<double>(200,12345);
+        auto LU = LinearAlgebra::LU<double>(Q);
         state.ResumeTiming();
-        auto LU = LinearAlgebra::LU<double>(B);
-        benchmark::DoNotOptimize(LU);
+        auto C = LU.inv();
+        benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
     }
 }
 
-BENCHMARK(BM_LU_Flat);
+BENCHMARK(BM_Inv_Flat_Matrix_200_size);
 
 
+static void BM_Inv_Matrix_500_size(benchmark::State &state) {
+    for (auto _:state) {
+        state.PauseTiming();
+        auto Q = GenMatrix(500,12345);
+        auto LU = LinearAlgebra::DecomposeLU<double>(Q);
+        state.ResumeTiming();
+        auto C = LU.inv();
+        benchmark::DoNotOptimize(C);
+        benchmark::ClobberMemory();
+    }
+}
 
-static void BM_Inv_Matrix(benchmark::State &state) {
+BENCHMARK(BM_Inv_Matrix_500_size);
+
+static void BM_Inv_Flat_Matrix_500_size(benchmark::State &state) {
+    for (auto _:state) {
+        state.PauseTiming();
+        auto Q = GenFlatMatrix<double>(500,12345);
+        auto LU = LinearAlgebra::LU<double>(Q);
+        state.ResumeTiming();
+        auto C = LU.inv();
+        benchmark::DoNotOptimize(C);
+        benchmark::ClobberMemory();
+    }
+}
+
+BENCHMARK(BM_Inv_Flat_Matrix_500_size);
+
+static void BM_Inv_Matrix_1000_size(benchmark::State &state) {
+    for (auto _:state) {
+        state.PauseTiming();
+        auto Q = GenMatrix(1000,12345);
+        auto LU = LinearAlgebra::DecomposeLU<double>(Q);
+        state.ResumeTiming();
+        auto C = LU.inv();
+        benchmark::DoNotOptimize(C);
+        benchmark::ClobberMemory();
+    }
+}
+
+BENCHMARK(BM_Inv_Matrix_1000_size);
+
+static void BM_Inv_Flat_Matrix_1000_size(benchmark::State &state) {
+    for (auto _:state) {
+        state.PauseTiming();
+        auto Q = GenFlatMatrix<double>(1000,12345);
+        auto LU = LinearAlgebra::LU<double>(Q);
+        state.ResumeTiming();
+        auto C = LU.inv();
+        benchmark::DoNotOptimize(C);
+        benchmark::ClobberMemory();
+    }
+}
+
+BENCHMARK(BM_Inv_Flat_Matrix_1000_size);
+
+static void BM_Inv_Matrix_2000_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
         auto Q = GenMatrix(2000,12345);
@@ -129,9 +191,9 @@ static void BM_Inv_Matrix(benchmark::State &state) {
     }
 }
 
-BENCHMARK(BM_Inv_Matrix);
+BENCHMARK(BM_Inv_Matrix_2000_size);
 
-static void BM_Inv_Flat_Matrix(benchmark::State &state) {
+static void BM_Inv_Flat_Matrix_2000_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
         auto Q = GenFlatMatrix<double>(2000,12345);
@@ -143,5 +205,5 @@ static void BM_Inv_Flat_Matrix(benchmark::State &state) {
     }
 }
 
-BENCHMARK(BM_Inv_Flat_Matrix);
+BENCHMARK(BM_Inv_Flat_Matrix_2000_size);
 BENCHMARK_MAIN();

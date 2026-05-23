@@ -53,10 +53,10 @@ add_library(LinearAlgebra INTERFACE)
 add_library(LinearAlgebra::LinearAlgebra ALIAS LinearAlgebra)
 
 target_link_libraries(LinearAlgebra INTERFACE 
-    $<BUILD_INTERFACE:vector_matrix_lib>
-    $<BUILD_INTERFACE:flat_matrix_lib>
-    $<BUILD_INTERFACE:LU_lib>
-    $<BUILD_INTERFACE:LU_flat_lib>
+    vector_matrix_lib
+    flat_matrix_lib
+    LU_lib
+    LU_flat_lib
 )
 #====================== Add libraries End =========================
 
@@ -81,12 +81,31 @@ add_subdirectory(tests)
 
 #====================== Install ===================================
 install(DIRECTORY include/ DESTINATION include)
-install(TARGETS LinearAlgebra
+include(GNUInstallDirs)
+install(TARGETS
+    vector_matrix_lib
+    flat_matrix_lib
+    LU_lib
+    LU_flat_lib
+    LinearAlgebra
     EXPORT LinearAlgebraTargets
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/LinearAlgebraConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/LinearAlgebraConfig.cmake"
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/LinearAlgebra
+)
 
-install(FILES LinearAlgebraConfig.cmake
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/LinearAlgebraConfigVersion.cmake"
+    VERSION 0.1.0
+    COMPATIBILITY SameMajorVersion
+)
+install(FILES 
+    "${CMAKE_CURRENT_BINARY_DIR}/LinearAlgebraConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/LinearAlgebraConfigVersion.cmake"
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/LinearAlgebra
 )
 
