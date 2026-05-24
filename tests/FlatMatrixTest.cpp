@@ -82,6 +82,14 @@ TEST_F(FlatMatrixTest, operatorMultiply) {
     compare<int>(C,Exp);
 }
 
+TEST_F(FlatMatrixTest, operatorMultiplyVector) {
+
+    ColumnVector<int> exp = {14, 32, 50};
+    ColumnVector<int> v = {1,2,3};
+    const auto& res = A*v;
+        EXPECT_EQ(exp,res);
+}
+
 TEST(FlatMatrixTest,operatorOstream) {
     std::vector<int> v = {1, 2, 3, 4, 5, 6};
     FlatMatrix<int> A(2,3,v);
