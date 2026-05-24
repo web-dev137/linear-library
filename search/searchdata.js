@@ -1,11 +1,12 @@
 var indexSectionsWithContent =
 {
-  0: "dfgiloqv~",
+  0: "cdfgiloqv~",
   1: "dflqv",
   2: "l",
   3: "dflqv",
   4: "dfgiloqv~",
-  5: "o"
+  5: "c",
+  6: "o"
 };
 
 var indexSectionNames =
@@ -15,7 +16,8 @@ var indexSectionNames =
   2: "namespaces",
   3: "files",
   4: "functions",
-  5: "related"
+  5: "typedefs",
+  6: "related"
 };
 
 var indexSectionLabels =
@@ -25,6 +27,7 @@ var indexSectionLabels =
   2: "Namespaces",
   3: "Files",
   4: "Functions",
-  5: "Friends"
+  5: "Typedefs",
+  6: "Friends"
 };
 
