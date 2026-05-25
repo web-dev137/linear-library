@@ -267,7 +267,7 @@ namespace LinearAlgebra {
         int rows = m.rows;
         int cols = m.cols;
         for(int i =0; i < rows; ++i) {
-            for(int j = 0; j < rows; ++j) {
+            for(int j = 0; j < cols; ++j) {
                 os<<m(i,j);
                 if (j + 1 < cols)
                 os << ' ';
