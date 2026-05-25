@@ -9,6 +9,9 @@
 
 namespace LinearAlgebra {
     template <typename T>
+    using ColumnVector = std::vector<T>;
+
+    template <typename T>
     class FlatMatrix {
     private:
         int cols,rows;
@@ -119,9 +122,6 @@ namespace LinearAlgebra {
             return flatMatrix[i * cols + j];
         }
 
-        FlatMatrix<T> operator*(const FlatMatrix<T>& B) const;
-        FlatMatrix<T> operator+(const FlatMatrix<T>& B) const;
-        FlatMatrix<T> operator*(const T scalar) const;
         FlatMatrix<T> operator~() const;
 
 
@@ -151,7 +151,7 @@ namespace LinearAlgebra {
 
         for(int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
-                result.flatMatrix[i*rows + j] = flatMatrix[j*cols + i];
+                result(i,j) = flatMatrix[j*cols+i];
             }
         }
 
@@ -188,11 +188,15 @@ namespace LinearAlgebra {
      * \endcode
      */
     template<typename T>
-    FlatMatrix<T> FlatMatrix<T>::operator*(const T scalar) const {
-        FlatMatrix result(rows,cols);
+    FlatMatrix<T> operator*(const FlatMatrix<T>& m,const T scalar) {
+        int rows = m.getRows();
+        int cols = m.getCols();
+        FlatMatrix<T> result(rows,cols);
         const int size = rows * cols;
-        for (int i = 0; i < size; i++) {
-            result.flatMatrix[i] = flatMatrix[i] * scalar;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                result(i, j) = m(i, j) * scalar;
+            }
         }
         return result;
     }
@@ -231,28 +235,30 @@ namespace LinearAlgebra {
      * \endcode
     */
     template<typename T>
-    FlatMatrix<T> FlatMatrix<T>::operator*(const FlatMatrix<T>& B) const {
-        if(cols != B.getCols()) {
+    FlatMatrix<T> operator*(const FlatMatrix<T>& A,const FlatMatrix<T>& B) {
+        int rowsA = A.getRows();
+        int rowsB = B.getRows();
+        int colsA = A.getCols();
+        int colsB = B.getCols();
+        if(colsA != rowsB) {
             throw std::invalid_argument("num columns A not equal num rows B");
         }
-        
-        int colsB = B.getCols();
-        FlatMatrix result(rows,colsB);
+
+        FlatMatrix<T> result(rowsA,colsB);
         const int bs = 32;
 
-        for (int i = 0; i < rows; i += bs) {
-            for (int k = 0; k < cols; k += bs) {
+        for (int i = 0; i < rowsA; i += bs) {
+            for (int k = 0; k < colsA; k += bs) {
                 for (int j = 0; j < colsB; j += bs) {
 
-                    int i_end = std::min(i + bs, rows);
-                    int k_end = std::min(k + bs, cols);
+                    int i_end = std::min(i + bs, rowsA);
+                    int k_end = std::min(k + bs, colsA);
                     int j_end = std::min(j + bs, colsB);
 
                     for (int ii = i; ii < i_end; ++ii) {
                         for (int kk = k; kk < k_end; ++kk) {
                             for (int jj = j; jj < j_end; ++jj) {
-                                result.flatMatrix[ii*cols+jj] += 
-                                    flatMatrix[ii*cols+kk] * B.flatMatrix[kk*cols+jj];
+                                result(ii,jj) += A(ii,kk) * B(kk,jj);
                             }
                         }
                     }
@@ -260,6 +266,22 @@ namespace LinearAlgebra {
             }
         }
        return result; 
+    }
+
+    template<typename T>
+    ColumnVector<T> operator*(FlatMatrix<T>& m, ColumnVector<T>& v) {
+        if(v.size() != m.getCols()) {
+            throw std::invalid_argument("vector must be same as columns in matrix");
+        }
+
+        ColumnVector<T> result(m.getRows());
+        for(int i = 0; i < m.getRows(); i++) {
+            for (int j = 0; j < m.getCols(); j++)
+            {
+                result[i] += m(i,j) * v[j];
+            }
+        }
+        return result;
     }
 
     template<typename U>
