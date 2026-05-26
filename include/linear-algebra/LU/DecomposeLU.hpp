@@ -29,7 +29,7 @@ namespace LinearAlgebra{
         void elimination(int col);
         void initL() {
             int rows = matrix.getRows();
-            int cols = matrix.getColumns();
+            int cols = matrix.getCols();
             L = std::vector<std::vector<T>>(rows, std::vector<T>(cols, 0));
             for (int i = 0; i < rows; i++) {
                 L[i][i] = 1;  
@@ -107,7 +107,7 @@ namespace LinearAlgebra{
     template<typename T>
     void DecomposeLU<T>::elimination(int col) {
         int rows = matrix.getRows();
-        int cols = matrix.getColumns();
+        int cols = matrix.getCols();
         
         if(std::abs(U[col][col]) <= eps) throw std::runtime_error("Pivot is zero");
         T pivot = U[col][col];
@@ -130,7 +130,7 @@ namespace LinearAlgebra{
 
     template<typename T>
     void DecomposeLU<T>::decomposition() {
-        if (matrix.getRows() != matrix.getColumns())
+        if (matrix.getRows() != matrix.getCols())
         throw std::runtime_error("Matrix must be square for LU decomposition");
         int n = matrix.getRows();
         U = matrix.getMatrix();

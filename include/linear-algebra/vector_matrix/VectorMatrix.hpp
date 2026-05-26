@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <vector>
 #include <stdexcept>
+#include <initializer_list>
+#include "MatrixBase.hpp"
 
 namespace LinearAlgebra{
     /**
@@ -29,7 +31,7 @@ namespace LinearAlgebra{
      * \endcode
      */
     template <typename T>
-    class VectorMatrix {
+    class VectorMatrix:public MatrixBase<VectorMatrix<T>,T>  {
     private:
         int cols,rows;
         std::vector<std::vector<T>> matrix; // Матрица
@@ -37,6 +39,20 @@ namespace LinearAlgebra{
         VectorMatrix(int rows, int cols):rows(rows), cols(cols){
             matrix.assign(rows,std::vector<T>(cols,0));
         };
+
+        VectorMatrix(std::initializer_list<std::initializer_list<T>> v){
+            rows = v.size();
+            cols = v.begin()->size();
+
+            matrix.reserve(rows);
+            
+            for (const auto& row : v) {
+                if (row.size() != static_cast<size_t>(cols)) {
+                    throw std::invalid_argument("All rows must have the same size");
+                }
+                matrix.emplace_back(row.begin(), row.end());
+            }
+        }
         VectorMatrix(const std::vector<std::vector<T>>& v):matrix(v) {
             if (v.empty() || v[0].empty()) {
                 throw std::invalid_argument("Matrix is empty");
@@ -107,7 +123,7 @@ namespace LinearAlgebra{
         int getRows() const {return rows;}
 
         /// @brief return count columns
-        int getColumns() const {return cols;}
+        int getCols() const {return cols;}
         
         const std::vector<std::vector<T>>& getMatrix()const {return matrix;}
         std::vector<std::vector<T>>& getMatrix() { return matrix; }
@@ -125,7 +141,7 @@ namespace LinearAlgebra{
 template <typename U>
 std::ostream& operator<<(std::ostream& os,const LinearAlgebra::VectorMatrix<U>& M) {
     int rows = M.getRows();
-    int cols = M.getColumns();
+    int cols = M.getCols();
     for (int i = 0; i < rows; ++i){
         for (int j = 0; j < cols; ++j){
             os<<M(i,j)<<" ";
@@ -193,7 +209,7 @@ LinearAlgebra::VectorMatrix<T> LinearAlgebra::VectorMatrix<T>::operator*(const V
         throw std::invalid_argument("num columns A not equal num rows B");
     }
 
-    int colsB = B.getColumns();
+    int colsB = B.getCols();
     VectorMatrix<T> result(rows,colsB);
     const int bs = 32;
 

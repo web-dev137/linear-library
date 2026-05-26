@@ -97,12 +97,6 @@ int main() {
     };
 
     ColumnVector<double> y = {2,4,5,7};
-    /*FlatMatrix<double> y = {
-        {2},
-        {4},
-        {5},
-        {7}
-    };*/
 
     auto XT = ~X;
     auto XTX = XT*X;

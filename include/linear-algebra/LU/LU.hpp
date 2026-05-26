@@ -20,13 +20,13 @@ namespace LinearAlgebra{
     *
     * The decomposition is stored in-place.
     */ 
-    template<typename T>
+    template<typename T, typename MatrixType>
     class LU {
         static_assert(std::is_floating_point_v<T>, 
           "T must be a floating-point type (float or double)");
     private:
         
-        FlatMatrix<T> matrix;
+        MatrixType matrix;
         int signP = 1;
         void elimination(int col);
         void initP() {
@@ -51,22 +51,22 @@ namespace LinearAlgebra{
         void decomposition();
     public:
 
-        LU(const FlatMatrix<T>& m) : matrix(m) { 
+        LU(const MatrixType& m) : matrix(m) { 
             decomposition(); 
         }
 
-        LU(FlatMatrix<T>&& m) : matrix(std::move(m)) { 
+        LU(MatrixType&& m) : matrix(std::move(m)) { 
             decomposition(); 
         }
         T det() const;
-        FlatMatrix<T> inv() const;
+        MatrixType inv() const;
         const std::vector<int>& getP() const{ return P; }
-        const FlatMatrix<T>& getMatrix() const{ return matrix;}
+        const MatrixType& getMatrix() const{ return matrix;}
     };
 
 
-    template<typename T>
-    int LU<T>::pivoting(int col) {
+    template<typename T, typename MatrixType>
+    int LU<T, MatrixType>::pivoting(int col) {
         T pivotVal = std::abs(matrix(col,col));
         int pivot = col;
         int n = matrix.getRows();
@@ -80,8 +80,8 @@ namespace LinearAlgebra{
         return pivot;
     }
 
-    template<typename T>
-    void LU<T>::elimination(int col) {
+    template<typename T, typename MatrixType>
+    void LU<T, MatrixType>::elimination(int col) {
         T pivot = matrix(col,col);
         int n = matrix.getRows();
         for (int i = col+1; i < n; i++)
@@ -96,8 +96,8 @@ namespace LinearAlgebra{
         
     }
 
-    template<typename T>
-    void LU<T>::decomposition() {
+    template<typename T, typename MatrixType>
+    void LU<T, MatrixType>::decomposition() {
         if (matrix.getRows() != matrix.getCols())
         throw std::runtime_error("Matrix must be square for LU decomposition");
         int n = matrix.getRows();
@@ -126,8 +126,8 @@ namespace LinearAlgebra{
      *
      * \returns The determinant of the matrix.
      */
-    template<typename T>
-    T LU<T>::det() const {
+    template<typename T, typename MatrixType>
+    T LU<T, MatrixType>::det() const {
         int n = matrix.getRows();
         T res = T(1);
         for(int i = 0; i < n; i++) {
@@ -137,8 +137,8 @@ namespace LinearAlgebra{
         return res*T(signP);
     }
 
-    template<typename T>
-    void LU<T>::forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const {
+    template<typename T, typename MatrixType>
+    void LU<T, MatrixType>::forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const {
         y[0] = b[0];
         for (int i = 1; i < n; ++i) {
             T sum = 0;
@@ -149,8 +149,8 @@ namespace LinearAlgebra{
         }
     }
 
-    template<typename T>
-    void LU<T>::backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const {
+    template<typename T, typename MatrixType>
+    void LU<T, MatrixType>::backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const {
         for (int i = n-1; i >= 0; --i){
             T sum = 0;
             for (int j = i+1; j < n; ++j) {
@@ -165,10 +165,10 @@ namespace LinearAlgebra{
      *
      * \return The inverse matrix computed from the LU decomposition.
      */
-    template<typename T>
-    FlatMatrix<T> LU<T>::inv() const {
+    template<typename T, typename MatrixType>
+    MatrixType LU<T, MatrixType>::inv() const {
         int n = matrix.getRows();
-        FlatMatrix<T> X(n,n);
+        MatrixType X(n,n);
         std::vector<int> invP = initInvP();
         std::vector<T> b(n), y(n), x(n);
         int prev = invP[0];

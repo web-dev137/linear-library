@@ -3,6 +3,7 @@
 #include<iostream>
 #include <algorithm>
 #include <vector>
+#include "MatrixBase.hpp"
 #include <cassert>
 #include <initializer_list>
 #include <stdexcept>
@@ -12,7 +13,7 @@ namespace LinearAlgebra {
     using ColumnVector = std::vector<T>;
 
     template <typename T>
-    class FlatMatrix {
+    class FlatMatrix:public MatrixBase<FlatMatrix<T>,T> {
     private:
         int cols,rows;
         std::vector<T> flatMatrix;

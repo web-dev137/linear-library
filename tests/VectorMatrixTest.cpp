@@ -24,10 +24,10 @@ protected:
 
     void compare(VectorMatrix<double> res, VectorMatrix<double> expected) {
         ASSERT_EQ(res.getRows(), expected.getRows());
-        ASSERT_EQ(res.getColumns(), expected.getColumns());
+        ASSERT_EQ(res.getCols(), expected.getCols());
 
         for (int i = 0; i < res.getRows(); i++) {
-            for (int j = 0; j < res.getColumns(); j++) {
+            for (int j = 0; j < res.getCols(); j++) {
                 EXPECT_NEAR(res(i,j), expected(i,j), 1e-9);
             }
         }
@@ -35,7 +35,7 @@ protected:
 };
 
 TEST_F(VectorMatrixTest,MatrixCorrect) {
-    EXPECT_EQ(m1.getColumns(),3);
+    EXPECT_EQ(m1.getCols(),3);
     EXPECT_EQ(m1.getRows(),3);
 };
 

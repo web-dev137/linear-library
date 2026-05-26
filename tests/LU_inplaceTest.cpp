@@ -1,23 +1,25 @@
 #include <gtest/gtest.h>
 #include "../include/linear-algebra/LU/LU.hpp"
+#include "../include/linear-algebra/vector_matrix/FlatMatrix.hpp"
+#include "../include/linear-algebra/vector_matrix/VectorMatrix.hpp"
 
 using namespace LinearAlgebra;
 class LU_Inplace_Test : public ::testing::Test
 {
 protected:
     FlatMatrix<double> A;
-    std::unique_ptr<LU<double>> lu;
+    std::unique_ptr<LU<double, FlatMatrix<double>>> lu;
     void SetUp() override {
          A = {
             {2.0, 5.0, 7.0},
             {6.0, 3.0, 4.0},
             {5.0, -2.0, -3.0}
         };
-        lu = std::make_unique<LU<double>>(A);
+        lu = std::make_unique<LU<double, FlatMatrix<double>>>(A);
     }
 
-    template<typename T>
-    void compare(FlatMatrix<T> res, FlatMatrix<T> exp) {
+    template<typename T, typename MatrixType>
+    void compare(MatrixType res, MatrixType exp) {
         int resRows = res.getRows();
         int resCols = res.getCols();
         int expRows = exp.getRows();
@@ -32,27 +34,27 @@ protected:
         }
     }
 
-    template<typename T>
-    FlatMatrix<T> extractL(const FlatMatrix<T>& A) {   
+    template<typename T, typename MatrixType>
+    MatrixType extractL(const MatrixType& A) {   
         int n = A.getRows();
-        FlatMatrix<T> L(n, n);             
+        MatrixType L(n, n);             
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (i > j) {                   
                     L(i, j) = A(i, j);
                 } else if (i == j) {
-                    L(i, j) = T(1.0);          
+                    L(i, j) = T(1);          
                 }
             }
         }
         return L;
     }
 
-    template<typename T>
-    FlatMatrix<T> extractU(const FlatMatrix<T>& A) {
+    template<typename T, typename MatrixType>
+    MatrixType extractU(const MatrixType& A) {
         int n = A.getRows();
-        FlatMatrix<T> U(n, n);
+        MatrixType U(n, n);
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -82,10 +84,10 @@ TEST_F(LU_Inplace_Test,decomposition) {
         }
     }
     auto m = std::move(lu->getMatrix());
-    FlatMatrix<double> L = extractL(m);
-    FlatMatrix<double> U = extractU(m);
+    auto L = extractL<double>(m);
+    auto U = extractU<double>(m);
     auto LUproduct = L*U;
-    compare(PA,LUproduct);
+    compare<double, FlatMatrix<double>>(PA,LUproduct);
 }
 
 TEST_F(LU_Inplace_Test, det) {
@@ -102,5 +104,5 @@ TEST_F(LU_Inplace_Test, inv) {
     
     auto D = lu->inv();
 
-    compare(D,exp);
+    compare<double, FlatMatrix<double>>(D,exp);
 }
