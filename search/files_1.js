@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['flatmatrix_2ehpp_0',['FlatMatrix.hpp',['../FlatMatrix_8hpp.html',1,'']]]
+  ['inversion_2ehpp_0',['Inversion.hpp',['../Inversion_8hpp.html',1,'']]]
 ];

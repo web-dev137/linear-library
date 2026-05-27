@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['flatmatrix_0',['FlatMatrix',['../classLinearAlgebra_1_1FlatMatrix.html',1,'LinearAlgebra']]]
+  ['inversion_0',['Inversion',['../classLinearAlgebra_1_1Inversion.html',1,'LinearAlgebra']]]
 ];

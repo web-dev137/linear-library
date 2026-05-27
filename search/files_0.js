@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['decomposelu_2ehpp_0',['DecomposeLU.hpp',['../DecomposeLU_8hpp.html',1,'']]]
+  ['flatmatrix_2ehpp_0',['FlatMatrix.hpp',['../FlatMatrix_8hpp.html',1,'']]]
 ];
