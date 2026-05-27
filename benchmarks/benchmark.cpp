@@ -2,9 +2,11 @@
 #include <random>
 #include <linear-algebra/LU/DecomposeLU.hpp>
 #include <linear-algebra/LU/LU.hpp>
+#include <linear-algebra/LU/Inversion.hpp>
 #include <linear-algebra/vector_matrix/VectorMatrix.hpp>
 #include <linear-algebra/vector_matrix/FlatMatrix.hpp>
 
+using namespace LinearAlgebra;
 LinearAlgebra::VectorMatrix<double> GenMatrix(int size,int seed) {
     LinearAlgebra::VectorMatrix<double> matrix(size,size);
 
@@ -84,9 +86,10 @@ static void BM_Inv_Flat_Matrix_100_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
         auto Q = GenFlatMatrix<double>(100,12345);
-        auto LU = LinearAlgebra::LU<double>(Q);
+        auto LU = LinearAlgebra::LU<double,FlatMatrix<double>>(Q);
+        auto I = LinearAlgebra::Inversion<double,FlatMatrix<double>>(LU);
         state.ResumeTiming();
-        auto C = LU.inv();
+        auto C = I.inv();
         benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
     }
@@ -112,9 +115,10 @@ static void BM_Inv_Flat_Matrix_200_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
         auto Q = GenFlatMatrix<double>(200,12345);
-        auto LU = LinearAlgebra::LU<double>(Q);
+        auto LU = LinearAlgebra::LU<double,FlatMatrix<double>>(Q);
+        auto I = LinearAlgebra::Inversion<double,FlatMatrix<double>>(LU);
         state.ResumeTiming();
-        auto C = LU.inv();
+        auto C = I.inv();
         benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
     }
@@ -141,9 +145,10 @@ static void BM_Inv_Flat_Matrix_500_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
         auto Q = GenFlatMatrix<double>(500,12345);
-        auto LU = LinearAlgebra::LU<double>(Q);
+        auto LU = LinearAlgebra::LU<double, FlatMatrix<double>>(Q);
+        auto I = LinearAlgebra::Inversion<double,FlatMatrix<double>>(LU);
         state.ResumeTiming();
-        auto C = LU.inv();
+        auto C = I.inv();
         benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
     }
@@ -169,9 +174,10 @@ static void BM_Inv_Flat_Matrix_1000_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
         auto Q = GenFlatMatrix<double>(1000,12345);
-        auto LU = LinearAlgebra::LU<double>(Q);
+        auto LU = LinearAlgebra::LU<double,FlatMatrix<double>>(Q);
+        auto I = LinearAlgebra::Inversion<double,FlatMatrix<double>>(LU);
         state.ResumeTiming();
-        auto C = LU.inv();
+        auto C = I.inv();
         benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
     }
@@ -197,9 +203,10 @@ static void BM_Inv_Flat_Matrix_2000_size(benchmark::State &state) {
     for (auto _:state) {
         state.PauseTiming();
         auto Q = GenFlatMatrix<double>(2000,12345);
-        auto LU = LinearAlgebra::LU<double>(Q);
+        auto LU = LinearAlgebra::LU<double,FlatMatrix<double>>(Q);
+         auto I = LinearAlgebra::Inversion<double,FlatMatrix<double>>(LU);
         state.ResumeTiming();
-        auto C = LU.inv();
+        auto C = I.inv();
         benchmark::DoNotOptimize(C);
         benchmark::ClobberMemory();
     }
