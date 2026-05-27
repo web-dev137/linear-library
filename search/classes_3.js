@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['qr_0',['QR',['../classQR.html',1,'']]]
+  ['lu_0',['LU',['../classLinearAlgebra_1_1LU.html',1,'LinearAlgebra']]]
 ];

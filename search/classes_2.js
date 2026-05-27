@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lu_0',['LU',['../classLinearAlgebra_1_1LU.html',1,'LinearAlgebra']]]
+  ['inversion_0',['Inversion',['../classLinearAlgebra_1_1Inversion.html',1,'LinearAlgebra']]]
 ];
