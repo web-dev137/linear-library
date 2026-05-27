@@ -44,8 +44,6 @@ namespace LinearAlgebra{
             return invP;
         };
         int pivoting(int col);
-        void forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const;
-        void backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const;
         std::vector<int> P; //vector of swap
         static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
         void decomposition();
@@ -59,7 +57,6 @@ namespace LinearAlgebra{
             decomposition(); 
         }
         T det() const;
-        MatrixType inv() const;
         const std::vector<int>& getP() const{ return P; }
         const MatrixType& getMatrix() const{ return matrix;}
     };
@@ -135,62 +132,5 @@ namespace LinearAlgebra{
         }
 
         return res*T(signP);
-    }
-
-    template<typename T, typename MatrixType>
-    void LU<T, MatrixType>::forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const {
-        y[0] = b[0];
-        for (int i = 1; i < n; ++i) {
-            T sum = 0;
-            for (int j = 0; j < i; ++j) {
-                sum += matrix(i,j) * y[j];
-            }
-            y[i] = (b[i] - sum);
-        }
-    }
-
-    template<typename T, typename MatrixType>
-    void LU<T, MatrixType>::backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const {
-        for (int i = n-1; i >= 0; --i){
-            T sum = 0;
-            for (int j = i+1; j < n; ++j) {
-                sum += matrix(i,j) * x[j];
-            }
-            x[i] = (y[i] - sum)/matrix(i,i);
-        }
-    }
-
-    /**
-     * \brief Returns the inverse matrix.
-     *
-     * \return The inverse matrix computed from the LU decomposition.
-     */
-    template<typename T, typename MatrixType>
-    MatrixType LU<T, MatrixType>::inv() const {
-        int n = matrix.getRows();
-        MatrixType X(n,n);
-        std::vector<int> invP = initInvP();
-        std::vector<T> b(n), y(n), x(n);
-        int prev = invP[0];
-        b[prev] = T(1);
-
-        for(int i = 0; i < n; ++i) {
-            int curr = invP[i];
-
-            if (i > 0) {
-                b[prev] = T(0);
-                b[curr] = T(1);
-            }
-
-            forwardSubstitution(y, b, n);
-            backwardSubstitution(x, y, n);
-
-            for (int k = 0; k < n; ++k) {
-                X(k,i) = x[k];
-            }
-
-            prev = curr;
-        }
-        return X;
     }
 }

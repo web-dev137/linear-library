@@ -34,6 +34,12 @@ target_include_directories(LU_lib INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
+add_library(Inv_lib INTERFACE)
+target_link_directories(Inv_lib INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
 add_library(LU_flat_lib INTERFACE)
 target_include_directories(LU_flat_lib INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -55,6 +61,7 @@ add_library(LinearAlgebra::LinearAlgebra ALIAS LinearAlgebra)
 target_link_libraries(LinearAlgebra INTERFACE 
     vector_matrix_lib
     flat_matrix_lib
+    Inv_lib
     LU_lib
     LU_flat_lib
 )
@@ -86,6 +93,7 @@ install(TARGETS
     vector_matrix_lib
     flat_matrix_lib
     LU_lib
+    Inv_lib
     LU_flat_lib
     LinearAlgebra
     EXPORT LinearAlgebraTargets

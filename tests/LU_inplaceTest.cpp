@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../include/linear-algebra/LU/LU.hpp"
+#include "../include/linear-algebra/LU/Inversion.hpp"
 #include "../include/linear-algebra/vector_matrix/FlatMatrix.hpp"
 #include "../include/linear-algebra/vector_matrix/VectorMatrix.hpp"
 
@@ -102,7 +103,8 @@ TEST_F(LU_Inplace_Test, inv) {
         {27.0, -29.0, 24.0}
     };
     
-    auto D = lu->inv();
+    auto inversion = Inversion<double,FlatMatrix<double>>(*lu);
+    auto D = inversion.inv();
 
     compare<double, FlatMatrix<double>>(D,exp);
 }
