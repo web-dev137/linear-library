@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>linear-library: /home/runner/work/linear-library/linear-library/include/linear-algebra/LU/LU.hpp File Reference</title>
+<title>linear-library: /home/runner/work/linear-library/linear-library/include/decompose/LU/LU.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,7 +76,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_267f3145eb3151965d5431c3522aafb1.html">linear-algebra</a></li><li class="navelem"><a class="el" href="dir_32e75768f45319057d6bc6dc5e8cc7a9.html">LU</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_953a5992abb67eb7871346b2ec0105b4.html">decompose</a></li><li class="navelem"><a class="el" href="dir_ab00af3401767793e9fe6bee6fce052c.html">LU</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -86,7 +86,7 @@ $(function() {
   <div class="headertitle"><div class="title">LU.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="FlatMatrix_8hpp_source.html">../vector_matrix/FlatMatrix.hpp</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="FlatMatrix_8hpp_source.html">matrix/FlatMatrix.hpp</a>&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;limits&gt;</code><br />
@@ -96,46 +96,46 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for LU.hpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="LU_8hpp__incl.png" border="0" usemap="#a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2LU_8hpp" alt=""/></div>
-<map name="a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2LU_8hpp" id="a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2LU_8hpp">
-<area shape="rect" title=" " alt="" coords="459,5,646,75"/>
-<area shape="rect" href="FlatMatrix_8hpp.html" title=" " alt="" coords="191,123,415,148"/>
-<area shape="poly" title=" " alt="" coords="464,77,348,120,346,115,462,72"/>
-<area shape="rect" title=" " alt="" coords="5,196,68,221"/>
-<area shape="poly" title=" " alt="" coords="459,56,325,81,252,101,180,125,117,157,65,190,62,186,114,152,178,120,250,96,324,76,458,51"/>
-<area shape="rect" title=" " alt="" coords="439,123,499,148"/>
-<area shape="poly" title=" " alt="" coords="524,77,490,114,486,110,520,73"/>
-<area shape="rect" title=" " alt="" coords="523,123,582,148"/>
-<area shape="poly" title=" " alt="" coords="555,75,555,109,550,109,550,75"/>
-<area shape="rect" title=" " alt="" coords="607,123,699,148"/>
-<area shape="poly" title=" " alt="" coords="591,73,632,111,628,115,587,77"/>
-<area shape="rect" title=" " alt="" coords="723,123,785,148"/>
-<area shape="poly" title=" " alt="" coords="626,72,718,114,716,119,624,77"/>
-<area shape="rect" title=" " alt="" coords="810,123,885,148"/>
-<area shape="poly" title=" " alt="" coords="647,68,799,116,797,121,646,73"/>
-<area shape="rect" title=" " alt="" coords="93,196,173,221"/>
-<area shape="poly" title=" " alt="" coords="277,150,174,193,172,188,275,146"/>
-<area shape="rect" title=" " alt="" coords="197,196,282,221"/>
-<area shape="poly" title=" " alt="" coords="295,150,261,188,257,184,291,147"/>
-<area shape="poly" title=" " alt="" coords="261,151,82,198,81,193,260,145"/>
-<area shape="rect" href="MatrixBase_8hpp.html" title=" " alt="" coords="307,196,431,221"/>
-<area shape="poly" title=" " alt="" coords="316,147,351,184,347,188,312,150"/>
-<area shape="rect" title=" " alt="" coords="455,196,525,221"/>
-<area shape="poly" title=" " alt="" coords="334,146,448,189,446,193,332,151"/>
-<area shape="rect" title=" " alt="" coords="549,196,660,221"/>
-<area shape="poly" title=" " alt="" coords="352,145,543,190,542,195,351,151"/>
-<area shape="rect" title=" " alt="" coords="684,196,771,221"/>
-<area shape="poly" title=" " alt="" coords="381,145,670,193,670,198,380,151"/>
+<div class="center"><img src="LU_8hpp__incl.png" border="0" usemap="#a_2home_2runner_2work_2linear-library_2linear-library_2include_2decompose_2LU_2LU_8hpp" alt=""/></div>
+<map name="a_2home_2runner_2work_2linear-library_2linear-library_2include_2decompose_2LU_2LU_8hpp" id="a_2home_2runner_2work_2linear-library_2linear-library_2include_2decompose_2LU_2LU_8hpp">
+<area shape="rect" title=" " alt="" coords="424,5,647,60"/>
+<area shape="rect" href="FlatMatrix_8hpp.html" title=" " alt="" coords="233,108,397,133"/>
+<area shape="poly" title=" " alt="" coords="469,63,358,105,357,100,467,58"/>
+<area shape="rect" title=" " alt="" coords="5,181,68,207"/>
+<area shape="poly" title=" " alt="" coords="425,57,326,80,223,111,140,144,71,177,69,173,138,139,221,105,324,75,423,52"/>
+<area shape="rect" title=" " alt="" coords="421,108,481,133"/>
+<area shape="poly" title=" " alt="" coords="512,62,474,100,470,96,508,58"/>
+<area shape="rect" title=" " alt="" coords="506,108,565,133"/>
+<area shape="poly" title=" " alt="" coords="538,60,538,94,533,94,533,60"/>
+<area shape="rect" title=" " alt="" coords="589,108,681,133"/>
+<area shape="poly" title=" " alt="" coords="568,58,613,97,609,101,564,62"/>
+<area shape="rect" title=" " alt="" coords="705,108,768,133"/>
+<area shape="poly" title=" " alt="" coords="598,58,698,100,696,105,596,63"/>
+<area shape="rect" title=" " alt="" coords="793,108,867,133"/>
+<area shape="poly" title=" " alt="" coords="626,58,780,102,779,107,625,63"/>
+<area shape="rect" title=" " alt="" coords="93,181,173,207"/>
+<area shape="poly" title=" " alt="" coords="287,136,176,179,174,174,285,131"/>
+<area shape="rect" title=" " alt="" coords="197,181,282,207"/>
+<area shape="poly" title=" " alt="" coords="305,135,264,174,260,170,301,131"/>
+<area shape="poly" title=" " alt="" coords="271,136,82,184,81,179,269,131"/>
+<area shape="rect" href="MatrixBase_8hpp.html" title=" " alt="" coords="306,181,477,207"/>
+<area shape="poly" title=" " alt="" coords="329,131,371,170,367,174,326,135"/>
+<area shape="rect" title=" " alt="" coords="501,181,570,207"/>
+<area shape="poly" title=" " alt="" coords="351,131,489,175,487,180,350,136"/>
+<area shape="rect" title=" " alt="" coords="595,181,705,207"/>
+<area shape="poly" title=" " alt="" coords="370,131,583,176,582,181,369,136"/>
+<area shape="rect" title=" " alt="" coords="729,181,816,207"/>
+<area shape="poly" title=" " alt="" coords="398,130,543,150,716,178,716,184,542,156,397,135"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="LU_8hpp__dep__incl.png" border="0" usemap="#a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2LU_8hppdep" alt=""/></div>
-<map name="a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2LU_8hppdep" id="a_2home_2runner_2work_2linear-library_2linear-library_2include_2linear-algebra_2LU_2LU_8hppdep">
-<area shape="rect" title=" " alt="" coords="5,5,192,75"/>
-<area shape="rect" href="Inversion_8hpp.html" title=" " alt="" coords="5,123,192,192"/>
-<area shape="poly" title=" " alt="" coords="101,89,101,122,96,122,96,89"/>
+<div class="center"><img src="LU_8hpp__dep__incl.png" border="0" usemap="#a_2home_2runner_2work_2linear-library_2linear-library_2include_2decompose_2LU_2LU_8hppdep" alt=""/></div>
+<map name="a_2home_2runner_2work_2linear-library_2linear-library_2include_2decompose_2LU_2LU_8hppdep" id="a_2home_2runner_2work_2linear-library_2linear-library_2include_2decompose_2LU_2LU_8hppdep">
+<area shape="rect" title=" " alt="" coords="27,5,249,60"/>
+<area shape="rect" href="Inversion_8hpp.html" title=" " alt="" coords="5,108,271,163"/>
+<area shape="poly" title=" " alt="" coords="141,74,141,108,135,108,135,74"/>
 </map>
 </div>
 </div>

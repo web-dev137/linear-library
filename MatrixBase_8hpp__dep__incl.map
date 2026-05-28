@@ -1,9 +1,9 @@
-<map id="/home/runner/work/linear&#45;library/linear&#45;library/include/linear&#45;algebra/vector_matrix/MatrixBase.hpp" name="/home/runner/work/linear&#45;library/linear&#45;library/include/linear&#45;algebra/vector_matrix/MatrixBase.hpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,228,75"/>
-<area shape="rect" id="Node000002" href="$FlatMatrix_8hpp.html" title=" " alt="" coords="9,123,225,192"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,89,119,122,114,122,114,89"/>
-<area shape="rect" id="Node000003" href="$LU_8hpp.html" title=" " alt="" coords="23,240,210,309"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="119,206,119,240,114,240,114,206"/>
-<area shape="rect" id="Node000004" href="$Inversion_8hpp.html" title=" " alt="" coords="23,357,210,427"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="119,323,119,357,114,357,114,323"/>
+<map id="/home/runner/work/linear&#45;library/linear&#45;library/include/matrix/MatrixBase.hpp" name="/home/runner/work/linear&#45;library/linear&#45;library/include/matrix/MatrixBase.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="25,5,251,60"/>
+<area shape="rect" id="Node000002" href="$FlatMatrix_8hpp.html" title=" " alt="" coords="29,108,247,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,74,141,108,135,108,135,74"/>
+<area shape="rect" id="Node000003" href="$LU_8hpp.html" title=" " alt="" coords="27,211,249,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="141,176,141,211,135,211,135,176"/>
+<area shape="rect" id="Node000004" href="$Inversion_8hpp.html" title=" " alt="" coords="5,313,271,368"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="141,279,141,313,135,313,135,279"/>
 </map>
