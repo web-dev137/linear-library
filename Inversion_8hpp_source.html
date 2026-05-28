@@ -145,45 +145,48 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = i+1; j &lt; n; ++j) {</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                sum += matrix(i,j) * x[j];</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            }</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            x[i] = (y[i] - sum)/matrix(i,i);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        }</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> MatrixType&gt;</div>
-<div class="foldopen" id="foldopen00063" data-start="{" data-end="}">
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classLinearAlgebra_1_1Inversion.html#a8e9595847a3c01c25b10874cabb0ff3d">   63</a></span>    MatrixType <a class="code hl_function" href="classLinearAlgebra_1_1Inversion.html#a8e9595847a3c01c25b10874cabb0ff3d">Inversion&lt;T, MatrixType&gt;::inv</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        MatrixType X(n,n);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        std::vector&lt;int&gt; invP = initInvP();</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        std::vector&lt;T&gt; b(n), y(n), x(n);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordtype">int</span> prev = invP[0];</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        b[prev] = T(1);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; n; ++i) {</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordtype">int</span> curr = invP[i];</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keywordflow">if</span> (std::abs(matrix(i,i)) &lt; std::numeric_limits&lt;T&gt;::epsilon() * 100) {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Nearly singular matrix at diagonal &quot;</span> + std::to_string(i));</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            }</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            x[i] = (y[i] - sum)/matrix(i,i);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> MatrixType&gt;</div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classLinearAlgebra_1_1Inversion.html#a8e9595847a3c01c25b10874cabb0ff3d">   66</a></span>    MatrixType <a class="code hl_function" href="classLinearAlgebra_1_1Inversion.html#a8e9595847a3c01c25b10874cabb0ff3d">Inversion&lt;T, MatrixType&gt;::inv</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        MatrixType X(n,n);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        std::vector&lt;int&gt; invP = initInvP();</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        std::vector&lt;T&gt; b(n), y(n), x(n);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordtype">int</span> prev = invP[0];</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        b[prev] = T(1);</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keywordflow">if</span> (i &gt; 0) {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                b[prev] = T(0);</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                b[curr] = T(1);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            }</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            forwardSubstitution(y, b, n);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            backwardSubstitution(x, y, n);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; n; ++i) {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordtype">int</span> curr = invP[i];</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="keywordflow">if</span> (i &gt; 0) {</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                b[prev] = T(0);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                b[curr] = T(1);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            }</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; n; ++k) {</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                X(k,i) = x[k];</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            }</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            prev = curr;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        }</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keywordflow">return</span> X;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    }</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            forwardSubstitution(y, b, n);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            backwardSubstitution(x, y, n);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; n; ++k) {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                X(k,i) = x[k];</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            prev = curr;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        }</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <span class="keywordflow">return</span> X;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    }</div>
 </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>}</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>}</div>
 </div>
 <div class="ttc" id="aLU_8hpp_html"><div class="ttname"><a href="LU_8hpp.html">LU.hpp</a></div></div>
 <div class="ttc" id="aclassLinearAlgebra_1_1Inversion_html"><div class="ttname"><a href="classLinearAlgebra_1_1Inversion.html">LinearAlgebra::Inversion</a></div><div class="ttdef"><b>Definition</b> Inversion.hpp:7</div></div>
 <div class="ttc" id="aclassLinearAlgebra_1_1Inversion_html_a69a9bd103aa3d7acd2a78985d38c0185"><div class="ttname"><a href="classLinearAlgebra_1_1Inversion.html#a69a9bd103aa3d7acd2a78985d38c0185">LinearAlgebra::Inversion::Inversion</a></div><div class="ttdeci">Inversion(const LU&lt; T, MatrixType &gt; &amp;lu)</div><div class="ttdef"><b>Definition</b> Inversion.hpp:9</div></div>
-<div class="ttc" id="aclassLinearAlgebra_1_1Inversion_html_a8e9595847a3c01c25b10874cabb0ff3d"><div class="ttname"><a href="classLinearAlgebra_1_1Inversion.html#a8e9595847a3c01c25b10874cabb0ff3d">LinearAlgebra::Inversion::inv</a></div><div class="ttdeci">MatrixType inv() const</div><div class="ttdoc">Returns the inverse matrix.</div><div class="ttdef"><b>Definition</b> Inversion.hpp:63</div></div>
+<div class="ttc" id="aclassLinearAlgebra_1_1Inversion_html_a8e9595847a3c01c25b10874cabb0ff3d"><div class="ttname"><a href="classLinearAlgebra_1_1Inversion.html#a8e9595847a3c01c25b10874cabb0ff3d">LinearAlgebra::Inversion::inv</a></div><div class="ttdeci">MatrixType inv() const</div><div class="ttdoc">Returns the inverse matrix.</div><div class="ttdef"><b>Definition</b> Inversion.hpp:66</div></div>
 <div class="ttc" id="aclassLinearAlgebra_1_1LU_html"><div class="ttname"><a href="classLinearAlgebra_1_1LU.html">LinearAlgebra::LU</a></div><div class="ttdoc">LU decomposition with partial pivoting in-place.</div><div class="ttdef"><b>Definition</b> LU.hpp:24</div></div>
 <div class="ttc" id="anamespaceLinearAlgebra_html"><div class="ttname"><a href="namespaceLinearAlgebra.html">LinearAlgebra</a></div><div class="ttdef"><b>Definition</b> Inversion.hpp:5</div></div>
 </div><!-- fragment --></div><!-- contents -->
