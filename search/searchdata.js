@@ -1,10 +1,10 @@
 var indexSectionsWithContent =
 {
-  0: "cdfgilmoqv~",
-  1: "filmq",
+  0: "cdfgilmo",
+  1: "film",
   2: "l",
-  3: "filmq",
-  4: "dfgiloqv~",
+  3: "film",
+  4: "dfgilo",
   5: "c",
   6: "o"
 };
