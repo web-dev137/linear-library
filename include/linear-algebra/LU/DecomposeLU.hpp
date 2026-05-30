@@ -1,5 +1,5 @@
 #pragma once
-#include "../vector_matrix/VectorMatrix.hpp"
+#include <linear-algebra/vector_matrix/VectorMatrix.hpp>
 #include <vector>
 #include <utility>
 #include <limits>
@@ -14,7 +14,7 @@ namespace LinearAlgebra{
      * PA = LU
      * 
      * Where:
-     *  P is permutation matrix
+     *  P is permutation vector
      *  L is lower triangular with unit diagonal
      *  U is upper triangular
      */ 
@@ -101,9 +101,6 @@ namespace LinearAlgebra{
     }
 
 
-    /**
-     * 
-     */
     template<typename T>
     void DecomposeLU<T>::elimination(int col) {
         int rows = matrix.getRows();

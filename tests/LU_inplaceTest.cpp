@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../include/linear-algebra/LU/LU.hpp"
+#include <linear-algebra/LU/LU.hpp>
 
 using namespace LinearAlgebra;
 class LU_Inplace_Test : public ::testing::Test

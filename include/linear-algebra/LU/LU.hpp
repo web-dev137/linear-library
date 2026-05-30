@@ -1,5 +1,5 @@
 #pragma once
-#include "../vector_matrix/FlatMatrix.hpp"
+#include <linear-algebra/vector_matrix/FlatMatrix.hpp>
 #include <vector>
 #include <utility>
 #include <limits>

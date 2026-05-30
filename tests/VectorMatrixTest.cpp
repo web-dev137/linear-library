@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../include/linear-algebra/vector_matrix/VectorMatrix.hpp"
+#include <linear-algebra/vector_matrix/VectorMatrix.hpp>
 
 using namespace LinearAlgebra;
 
