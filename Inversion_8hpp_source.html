@@ -121,20 +121,20 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            }</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            <span class="keywordflow">return</span> invP;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        };</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordtype">void</span> forwardSubstitution(std::vector&lt;T&gt;&amp; y, <span class="keyword">const</span> std::vector&lt;T&gt;&amp; e, <span class="keywordtype">int</span> n) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordtype">void</span> forwardSubstitution(std::vector&lt;T&gt;&amp; y, <span class="keyword">const</span> std::vector&lt;T&gt;&amp; b, <span class="keywordtype">int</span> n) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordtype">void</span> backwardSubstitution(std::vector&lt;T&gt;&amp; x, <span class="keyword">const</span> std::vector&lt;T&gt;&amp; y, <span class="keywordtype">int</span> n) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    };</div>
 </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> MatrixType&gt;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">void</span> Inversion&lt;T, MatrixType&gt;::forwardSubstitution(std::vector&lt;T&gt;&amp; y, <span class="keyword">const</span> std::vector&lt;T&gt;&amp; e, <span class="keywordtype">int</span> n)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        y[0] = e[0];</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">void</span> Inversion&lt;T, MatrixType&gt;::forwardSubstitution(std::vector&lt;T&gt;&amp; y, <span class="keyword">const</span> std::vector&lt;T&gt;&amp; b, <span class="keywordtype">int</span> n)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        y[0] = b[0];</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; n; ++i) {</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            T sum = 0;</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; i; ++j) {</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                sum += matrix(i,j) * y[j];</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            }</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            y[i] = (e[i] - sum);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            y[i] = (b[i] - sum);</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        }</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    }</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
@@ -157,19 +157,19 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classLinearAlgebra_1_1Inversion.html#a8e9595847a3c01c25b10874cabb0ff3d">   66</a></span>    MatrixType <a class="code hl_function" href="classLinearAlgebra_1_1Inversion.html#a8e9595847a3c01c25b10874cabb0ff3d">Inversion&lt;T, MatrixType&gt;::inv</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        MatrixType X(n,n);</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        std::vector&lt;int&gt; invP = initInvP();</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        std::vector&lt;T&gt; e(n), y(n), x(n);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        std::vector&lt;T&gt; b(n), y(n), x(n);</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordtype">int</span> prev = invP[0];</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        e[prev] = T(1);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        b[prev] = T(1);</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> j = 0; j &lt; n; ++j) {</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordtype">int</span> curr = invP[j];</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="keywordflow">if</span> (j &gt; 0) {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                e[prev] = T(0);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                e[curr] = T(1);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                b[prev] = T(0);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                b[curr] = T(1);</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            }</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            forwardSubstitution(y, e, n);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            forwardSubstitution(y, b, n);</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            backwardSubstitution(x, y, n);</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; n; ++i) {</div>
