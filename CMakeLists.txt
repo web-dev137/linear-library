@@ -22,11 +22,6 @@ FetchContent_MakeAvailable(googletest)
 #====================== GoogleTest End ============================
 
 #====================== Add libraries ============================= 
-add_library(vector_matrix_lib INTERFACE)
-target_include_directories(vector_matrix_lib INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-)
 
 add_library(LU_lib INTERFACE)
 target_include_directories(LU_lib INTERFACE
@@ -46,16 +41,13 @@ target_include_directories(flat_matrix_lib INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(LU_lib INTERFACE vector_matrix_lib)
-target_link_libraries(LU_flat_lib INTERFACE vector_matrix_lib flat_matrix_lib)
+target_link_libraries(LU_flat_lib INTERFACE flat_matrix_lib)
 
 add_library(LinearAlgebra INTERFACE)
 add_library(LinearAlgebra::LinearAlgebra ALIAS LinearAlgebra)
 
-target_link_libraries(LinearAlgebra INTERFACE 
-    vector_matrix_lib
+target_link_libraries(LinearAlgebra INTERFACE
     flat_matrix_lib
-    LU_lib
     LU_flat_lib
 )
 #====================== Add libraries End =========================
@@ -83,9 +75,7 @@ add_subdirectory(tests)
 install(DIRECTORY include/ DESTINATION include)
 include(GNUInstallDirs)
 install(TARGETS
-    vector_matrix_lib
     flat_matrix_lib
-    LU_lib
     LU_flat_lib
     LinearAlgebra
     EXPORT LinearAlgebraTargets

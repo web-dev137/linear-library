@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <decompose/LU/LU.hpp>
 #include <matrix/FlatMatrix.hpp>
-#include <matrix/VectorMatrix.hpp>
 
 using namespace LinearAlgebra;
 class LU_Inplace_Test : public ::testing::Test
