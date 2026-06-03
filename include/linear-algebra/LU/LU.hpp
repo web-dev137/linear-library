@@ -102,7 +102,6 @@ namespace LinearAlgebra{
         throw std::runtime_error("Matrix must be square for LU decomposition");
         int n = matrix.getRows();
         initP();
-        int swapCount = 0;
         for (int k = 0; k < n; ++k) {
             int pivot = pivoting(k);
             if(pivot != k) {
@@ -111,14 +110,13 @@ namespace LinearAlgebra{
                 }
                 
                 std::swap(P[k], P[pivot]);
-                swapCount++;
+                signP = -signP;
             }
             if (std::abs(matrix(k,k)) <= eps) {
                 throw std::runtime_error("Matrix is singular or nearly singular at pivot " + std::to_string(k));
             }
             elimination(k);
         }
-        signP = swapCount % 2 == 0 ? 1 : -1;
     }
 
     /**
@@ -145,7 +143,7 @@ namespace LinearAlgebra{
             for (int j = 0; j < i; ++j) {
                 sum += matrix(i,j) * y[j];
             }
-            y[i] = (b[i] - sum);
+            y[i] = b[i] - sum;
         }
     }
 
