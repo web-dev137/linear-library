@@ -122,9 +122,9 @@ namespace LinearAlgebra {
     FlatMatrix<T> FlatMatrix<T>::operator~() const {
         FlatMatrix result(cols,rows);
 
-        for(int i = 0; i < cols; i++) {
-            for (int j = 0; j < rows; j++) {
-                result(i,j) = flatMatrix[j*cols+i];
+        for(int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result(j,i) = (*this)(i, j);
             }
         }
 
