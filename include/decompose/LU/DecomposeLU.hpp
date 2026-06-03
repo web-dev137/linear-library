@@ -1,5 +1,5 @@
 #pragma once
-#include "../vector_matrix/VectorMatrix.hpp"
+#include <matrix/VectorMatrix.hpp>
 #include <vector>
 #include <utility>
 #include <limits>

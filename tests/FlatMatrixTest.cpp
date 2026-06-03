@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../include/linear-algebra/vector_matrix/FlatMatrix.hpp"
+#include <matrix/FlatMatrix.hpp>
 
 using namespace LinearAlgebra;
 
@@ -88,12 +88,4 @@ TEST_F(FlatMatrixTest, operatorMultiplyVector) {
     ColumnVector<int> v = {1,2,3};
     const auto& res = A*v;
         EXPECT_EQ(exp,res);
-}
-
-TEST(FlatMatrixTest,operatorOstream) {
-    std::vector<int> v = {1, 2, 3, 4, 5, 6};
-    FlatMatrix<int> A(2,3,v);
-    std::ostringstream oss;
-    oss << A;
-    EXPECT_EQ(oss.str(),"1 2 3 \n4 5 6\n");
 }

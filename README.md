@@ -82,8 +82,8 @@ target_compile_features(random_math_app PRIVATE cxx_std_17)
 ## Usage of example
 ```c++
 #include <iostream>
-#include <linear-algebra/LU/LU.hpp>
-#include <linear-algebra/vector_matrix/FlatMatrix.hpp>
+#include <decompose/LU/LU.hpp>
+#include <matrix/FlatMatrix.hpp>
 #include <memory>
 
 int main() {
@@ -101,7 +101,7 @@ int main() {
     auto XT = ~X;
     auto XTX = XT*X;
     auto XTy = XT*y;
-    LU<double> lu = LU<double>(XTX);
+    LU<double> lu = LU<double>(std::move(XTX));
     auto Xinv = lu.inv();
     auto B = Xinv * XTy;
    

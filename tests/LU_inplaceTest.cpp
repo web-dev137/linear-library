@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include "../include/linear-algebra/LU/LU.hpp"
-#include "../include/linear-algebra/vector_matrix/FlatMatrix.hpp"
-#include "../include/linear-algebra/vector_matrix/VectorMatrix.hpp"
+#include <decompose/LU/LU.hpp>
+#include <matrix/FlatMatrix.hpp>
+#include <matrix/VectorMatrix.hpp>
 
 using namespace LinearAlgebra;
 class LU_Inplace_Test : public ::testing::Test

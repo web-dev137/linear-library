@@ -1,5 +1,5 @@
 #pragma once
-#include "../vector_matrix/FlatMatrix.hpp"
+#include <matrix/FlatMatrix.hpp>
 #include <vector>
 #include <utility>
 #include <limits>
@@ -45,6 +45,7 @@ namespace LinearAlgebra{
         };
         int pivoting(int col);
         void forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const;
+        void forwardSubstitution(std::vector<T>& y, int b_pos, int n) const;
         void backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const;
         std::vector<int> P; //vector of swap
         static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
@@ -148,6 +149,19 @@ namespace LinearAlgebra{
     }
 
     template<typename T, typename MatrixType>
+    void LU<T, MatrixType>::forwardSubstitution(std::vector<T>& y, int b_pos, int n) const {
+        y[0] = b_pos==0;
+        for (int i = 1; i < n; ++i) {
+            T sum = 0;
+            T b = (b_pos == i);
+            for (int j = 0; j < i; ++j) {
+                sum += matrix(i,j) * y[j];
+            }
+            y[i] = b - sum;
+        }
+    }
+
+    template<typename T, typename MatrixType>
     void LU<T, MatrixType>::backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const {
         for (int i = n-1; i >= 0; --i){
             T sum = 0;
@@ -168,26 +182,17 @@ namespace LinearAlgebra{
         int n = matrix.getRows();
         MatrixType X(n,n);
         std::vector<int> invP = initInvP();
-        std::vector<T> b(n), y(n), x(n);
-        int prev = invP[0];
-        b[prev] = T(1);
+        std::vector<T>  y(n), x(n);
 
         for(int i = 0; i < n; ++i) {
-            int curr = invP[i];
+            int b_pos = invP[i];
 
-            if (i > 0) {
-                b[prev] = T(0);
-                b[curr] = T(1);
-            }
-
-            forwardSubstitution(y, b, n);
+            forwardSubstitution(y, b_pos, n);
             backwardSubstitution(x, y, n);
 
             for (int k = 0; k < n; ++k) {
                 X(k,i) = x[k];
             }
-
-            prev = curr;
         }
         return X;
     }

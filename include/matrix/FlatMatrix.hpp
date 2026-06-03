@@ -43,34 +43,6 @@ namespace LinearAlgebra {
         }
 
         /**
-         * \brief Constructs a FlatMatrix from given dimensions and a flat data vector.
-         *
-         * Creates a matrix with `r` rows and `c` columns, initialized from a flat vector `m`
-         * stored in row-major order.
-         *
-         * \param r Number of rows (must be > 0).
-         * \param c Number of columns (must be > 0).
-         * \param m Flat vector containing matrix elements in row-major order.
-         *
-         * \throws std::invalid_argument if r == 0 or c == 0.
-         * \throws std::invalid_argument if m.size() != r * c.
-         *
-         * \note The vector `m` is moved into the internal storage (no copy is made).
-         */
-        FlatMatrix(int r,int c,std::vector<T>& m):rows(r),cols(c) {
-            if(r == 0 || c == 0) {
-                throw std::invalid_argument("rows or cols params is 0");
-            }
-
-            int expected = r * c;
-            if(m.size() != expected) {
-                throw std::invalid_argument("wrong size");
-            }
-
-            flatMatrix = std::move(m);
-        }
-
-        /**
          * \brief Constructs a matrix from nested initializer lists.
          *
          * All rows must have the same number of elements.
