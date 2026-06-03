@@ -61,7 +61,9 @@ namespace LinearAlgebra {
         FlatMatrix(std::initializer_list<std::initializer_list<T>> v){
             rows = v.size();
             cols = rows ? v.begin()->size() : 0;
-
+            if(cols == 0) {
+                throw std::invalid_argument("Matrix is empty");
+            }
             flatMatrix.clear();
             flatMatrix.reserve(rows * cols);
 
@@ -242,7 +244,7 @@ namespace LinearAlgebra {
     }
 
     template<typename T>
-    ColumnVector<T> operator*(FlatMatrix<T>& m, ColumnVector<T>& v) {
+    ColumnVector<T> operator*(const FlatMatrix<T>& m, const ColumnVector<T>& v) {
         if(v.size() != m.getCols()) {
             throw std::invalid_argument("vector must be same as columns in matrix");
         }
@@ -258,7 +260,7 @@ namespace LinearAlgebra {
     }
 
     template<typename U>
-    std::ostream& operator<<(std::ostream& os, FlatMatrix<U>& m) {
+    std::ostream& operator<<(std::ostream& os, const FlatMatrix<U>& m) {
         int rows = m.rows;
         int cols = m.cols;
         for(int i =0; i < rows; ++i) {

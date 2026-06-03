@@ -73,7 +73,7 @@ TEST_F(LU_Inplace_Test,decomposition) {
         {1.0/3, -8.0/9, 1.0/27}
     };
 
-    auto P = lu->getP();
+    std::vector<int> P = lu->getP();
 
     int n = A.getRows();
     FlatMatrix<double> PA = A;

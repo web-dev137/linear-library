@@ -67,12 +67,12 @@ namespace LinearAlgebra{
 
 
     template<typename T, typename MatrixType>
-    int LU<T, MatrixType>::pivoting(int col) {
-        T pivotVal = std::abs(matrix(col,col));
-        int pivot = col;
+    int LU<T, MatrixType>::pivoting(int k) {
+        T pivotVal = std::abs(matrix(k,k));
+        int pivot = k;
         int n = matrix.getRows();
-        for (int i = col+1; i < n; i++) { 
-            T val = std::abs(matrix(i,col));
+        for (int i = k+1; i < n; i++) { 
+            T val = std::abs(matrix(i,k));
             if(val > pivotVal) {
                 pivotVal = val;
                 pivot = i;
@@ -82,16 +82,16 @@ namespace LinearAlgebra{
     }
 
     template<typename T, typename MatrixType>
-    void LU<T, MatrixType>::elimination(int col) {
-        T pivot = matrix(col,col);
+    void LU<T, MatrixType>::elimination(int k) {
+        T pivot = matrix(k,k);
         int n = matrix.getRows();
-        for (int i = col+1; i < n; i++)
+        for (int i = k+1; i < n; i++)
         {
-            T factor = matrix(i,col)/pivot;
-            matrix(i,col) = factor;
-            for (int j = col+1; j < n; j++)
+            T factor = matrix(i,k)/pivot;
+            matrix(i,k) = factor;
+            for (int j = k+1; j < n; j++)
             { 
-                matrix(i,j) -= factor * matrix(col,j); 
+                matrix(i,j) -= factor * matrix(k,j); 
             }
         }
         
@@ -167,6 +167,9 @@ namespace LinearAlgebra{
             T sum = 0;
             for (int j = i+1; j < n; ++j) {
                 sum += matrix(i,j) * x[j];
+            }
+            if (std::abs(matrix(i,i)) < std::numeric_limits<T>::epsilon() * 100) {
+                throw std::runtime_error("Nearly singular matrix at diagonal " + std::to_string(i));
             }
             x[i] = (y[i] - sum)/matrix(i,i);
         }

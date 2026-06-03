@@ -2,6 +2,8 @@
 
 template <typename MatrixType, typename T>
 class MatrixBase {
+    static_assert(std::is_arithmetic_v<T>, 
+          "T must be a numeric");
 public:
     int getRows() const{ return matrix().getRows(); }
 
