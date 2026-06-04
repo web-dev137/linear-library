@@ -53,5 +53,9 @@ static void BM_FlatMatrix_Multiply(benchmark::State &state, int size) {
         benchmark::ClobberMemory();
     }
 }
+BENCHMARK_CAPTURE(BM_FlatMatrix_Multiply,100, 100);
+BENCHMARK_CAPTURE(BM_FlatMatrix_Multiply,200, 200);
+BENCHMARK_CAPTURE(BM_FlatMatrix_Multiply,500, 500);
 BENCHMARK_CAPTURE(BM_FlatMatrix_Multiply,1000, 1000);
+BENCHMARK_CAPTURE(BM_FlatMatrix_Multiply,2000, 2000);
 BENCHMARK_MAIN();
