@@ -101,7 +101,7 @@ namespace LinearAlgebra {
 
 
         template<typename U>
-        friend std::ostream& operator<<(std::ostream& os, FlatMatrix<U>& m);
+        friend std::ostream& operator<<(std::ostream& os,const FlatMatrix<U>& m);
 
     };
     
