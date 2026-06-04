@@ -117,7 +117,7 @@ int main() {
     std::cout << "Computing linear regression coefficients "
             << "B0 and B1 using the least squares method B = (X^T X)^-1 X^T y:\n";
 
-    std::cout << "B0 = " << B[0,0] << "\n";
-    std::cout << "B1 = " << B[1,0] << std::endl;
+     std::cout << "B0 = " << B[0] << "\n";
+    std::cout << "B1 = " << B[1] << std::endl;
 }
 ```
