@@ -57,7 +57,7 @@ For windows:
 ```bash
 cmake -B build -S .  -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
 ```
-Fo other:
+For other:
 ```bash
 cmake -B build -S .  -DCMAKE_BUILD_TYPE=Release
 ```

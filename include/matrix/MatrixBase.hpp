@@ -1,5 +1,5 @@
 #pragma once
-
+#include <type_traits>
 template <typename MatrixType, typename T>
 class MatrixBase {
     static_assert(std::is_arithmetic_v<T>, 

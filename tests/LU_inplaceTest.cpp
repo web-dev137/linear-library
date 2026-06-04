@@ -27,7 +27,7 @@ protected:
         ASSERT_EQ(resCols, expCols);
 
         for(int i = 0; i < resRows; i++) {
-            for(int j = 0; j < resRows; j++) {
+            for(int j = 0; j < resCols; j++) {
                 EXPECT_NEAR(res(i,j),exp(i,j),1e-9);
             }
         }

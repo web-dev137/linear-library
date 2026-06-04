@@ -167,7 +167,7 @@ namespace LinearAlgebra {
         int rows = m.getRows();
         int cols = m.getCols();
         FlatMatrix<T> result(rows,cols);
-        const int size = rows * cols;
+        
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 result(i, j) = m(i, j) * scalar;
