@@ -89,3 +89,8 @@ TEST_F(FlatMatrixTest, operatorMultiplyVector) {
     const auto& res = A*v;
         EXPECT_EQ(exp,res);
 }
+
+TEST_F(FlatMatrixTest, EmptyMatrix) {
+    EXPECT_THROW(FlatMatrix<int>(std::vector<std::vector<int>>()), 
+                 std::invalid_argument);
+}

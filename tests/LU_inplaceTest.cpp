@@ -105,3 +105,8 @@ TEST_F(LU_Inplace_Test, inv) {
 
     compare<double, FlatMatrix<double>>(D,exp);
 }
+
+TEST_F(LU_Inplace_Test, SingularMatrix) {
+    FlatMatrix<double> singular = {{1, 2}, {2, 4}};
+    EXPECT_THROW((LU<double, FlatMatrix<double>>(singular)), std::runtime_error);
+}
