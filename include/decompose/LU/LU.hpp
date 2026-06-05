@@ -61,6 +61,7 @@ namespace LinearAlgebra{
         }
         T det() const;
         MatrixType inv() const;
+        ColumnVector<T> solve(const ColumnVector<T>& v) const;
         const std::vector<int>& getP() const{ return P; }
         const MatrixType& getMatrix() const{ return matrix;}
     };
@@ -186,7 +187,6 @@ namespace LinearAlgebra{
         MatrixType X(n,n);
         std::vector<int> invP = initInvP();
         std::vector<T>  y(n), x(n);
-
         for(int i = 0; i < n; ++i) {
             int b_pos = invP[i];
 
@@ -199,4 +199,22 @@ namespace LinearAlgebra{
         }
         return X;
     }
+
+    template<typename T,typename MatrixType>
+    ColumnVector<T> LU<T,MatrixType>::solve(const ColumnVector<T>& v) const {
+        if(v.empty()) {
+            throw std::invalid_argument("vector is empty");
+        }
+        ColumnVector<T> pb(v.size());
+        for (size_t i = 0; i < v.size(); ++i)
+        {
+            pb[i] = v[P[i]];
+        }
+        ColumnVector<T> y(v.size());
+        ColumnVector<T> x(v.size());
+        forwardSubstitution(y,pb,v.size());
+        backwardSubstitution(x,y,v.size());
+        return x;
+    }
+
 }

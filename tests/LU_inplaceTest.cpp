@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <decompose/LU/LU.hpp>
 #include <matrix/FlatMatrix.hpp>
+#include <vector>
 
 using namespace LinearAlgebra;
 class LU_Inplace_Test : public ::testing::Test
@@ -109,4 +110,21 @@ TEST_F(LU_Inplace_Test, inv) {
 TEST_F(LU_Inplace_Test, SingularMatrix) {
     FlatMatrix<double> singular = {{1, 2}, {2, 4}};
     EXPECT_THROW((LU<double, FlatMatrix<double>>(singular)), std::runtime_error);
+}
+
+TEST(LU_Solve_Test, SolveMatrix) {
+    ColumnVector<double> exp = {2.0,1.0,4.0};
+    FlatMatrix<double> mat = {
+        {3.0,2.0,-1.0},
+        {2.0,-1.0,5.0},
+        {1.0,7.0,-1.0}
+    };
+    ColumnVector<double> v = {4.0,23.0,5.0};
+    LU<double, FlatMatrix<double>> luDecomp(std::move(mat));
+    auto res = luDecomp.solve(v);
+    for (int i = 0; i < exp.size(); i++)
+    {
+        EXPECT_NEAR(res[i],exp[i],1e-9);
+    }
+    
 }
