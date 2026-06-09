@@ -48,7 +48,7 @@ namespace LinearAlgebra{
         void forwardSubstitution(std::vector<T>& y, int b_pos, int n) const;
         void backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const;
         std::vector<int> P; //vector of swap
-        static constexpr T eps = std::numeric_limits<T>::epsilon() * static_cast<T>(100);
+        static constexpr T eps = std::numeric_limits<T>::epsilon();
         void decomposition();
     public:
 
