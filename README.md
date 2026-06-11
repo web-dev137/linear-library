@@ -6,7 +6,7 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 
 - **Matrix  class** with intuitive operator overloading
 - Basic operations: transpose of matrix, multiplication,multiplication on scalar
-- Advanced linear algebra methods:
+- **LU class** with linear algebra methods:
   - LU Decomposition+determinant+inversion matrix
   - Other matrix decompositions (in progress)
 - Efficient memory management
