@@ -44,9 +44,9 @@ namespace LinearAlgebra{
             return invP;
         };
         int pivoting(int col);
-        void forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const;
-        void forwardSubstitution(std::vector<T>& y, int b_pos, int n) const;
-        void backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const;
+        void forwardSubstitution(std::vector<T>& y, const std::vector<T>& b) const;
+        void forwardSubstitution(std::vector<T>& y, int b_pos) const;
+        void backwardSubstitution(std::vector<T>& x, const std::vector<T>& y) const;
         std::vector<int> P; //vector of swap
         static constexpr T eps = std::numeric_limits<T>::epsilon();
         void decomposition();
@@ -138,7 +138,8 @@ namespace LinearAlgebra{
     }
 
     template<typename T, typename MatrixType>
-    void LU<T, MatrixType>::forwardSubstitution(std::vector<T>& y, const std::vector<T>& b, int n) const {
+    void LU<T, MatrixType>::forwardSubstitution(std::vector<T>& y, const std::vector<T>& b) const {
+        int n = matrix.getRows();
         y[0] = b[0];
         for (int i = 1; i < n; ++i) {
             T sum = 0;
@@ -150,7 +151,8 @@ namespace LinearAlgebra{
     }
 
     template<typename T, typename MatrixType>
-    void LU<T, MatrixType>::forwardSubstitution(std::vector<T>& y, int b_pos, int n) const {
+    void LU<T, MatrixType>::forwardSubstitution(std::vector<T>& y, int b_pos) const {
+        int n = matrix.getRows();
         y[0] = b_pos==0;
         for (int i = 1; i < n; ++i) {
             T sum = 0;
@@ -163,7 +165,8 @@ namespace LinearAlgebra{
     }
 
     template<typename T, typename MatrixType>
-    void LU<T, MatrixType>::backwardSubstitution(std::vector<T>& x, const std::vector<T>& y, int n) const {
+    void LU<T, MatrixType>::backwardSubstitution(std::vector<T>& x, const std::vector<T>& y) const {
+        int n = matrix.getRows();
         for (int i = n-1; i >= 0; --i){
             T sum = 0;
             for (int j = i+1; j < n; ++j) {
@@ -190,8 +193,8 @@ namespace LinearAlgebra{
         for(int i = 0; i < n; ++i) {
             int b_pos = invP[i];
 
-            forwardSubstitution(y, b_pos, n);
-            backwardSubstitution(x, y, n);
+            forwardSubstitution(y, b_pos);
+            backwardSubstitution(x, y);
 
             for (int k = 0; k < n; ++k) {
                 X(k,i) = x[k];
@@ -212,8 +215,8 @@ namespace LinearAlgebra{
         }
         ColumnVector<T> y(v.size());
         ColumnVector<T> x(v.size());
-        forwardSubstitution(y,pb,v.size());
-        backwardSubstitution(x,y,v.size());
+        forwardSubstitution(y,pb);
+        backwardSubstitution(x,y);
         return x;
     }
 
