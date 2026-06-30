@@ -1,6 +1,6 @@
 # Linear Algebra Library
 
-A lightweight, header-only C++ library for linear algebra operations, focused on vector matrix, and common decompositions.
+A lightweight, header-only C++ library for linear algebra focused on  matrices, and common decompositions.
 
 ## Features
 
