@@ -1,25 +1,21 @@
-add_executable(test_inplace_lu
+add_executable(LUTest
     LU_inplaceTest.cpp
 )
 
-add_executable(test_flat_matrix
+add_executable(FlatMatrixTest
     FlatMatrixTest.cpp
 )
 
-target_link_libraries(test_inplace_lu
-    PRIVATE
-    LU_flat_lib
+target_link_libraries(LUTest PRIVATE
+    LU_lib
     gtest_main
 )
 
-target_link_libraries(test_flat_matrix
-    PRIVATE
-    flat_matrix_lib
+target_link_libraries(FlatMatrixTest PRIVATE
+    matrix_lib
     gtest_main
 )
 
 include(GoogleTest)
-
-
-gtest_discover_tests(test_flat_matrix)
-gtest_discover_tests(test_inplace_lu)
+gtest_discover_tests(LUTest)
+gtest_discover_tests(FlatMatrixTest)

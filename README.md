@@ -20,6 +20,11 @@ A lightweight, header-only C++ library for linear algebra operations, focused on
 - CMake 3.10+
 
 ## Running Tests
+### Build with tests
+```bash
+cmake -B build -S .  -DBUILD_TESTING=ON -G "MinGW Makefiles"
+```
+
 After building, you can run the tests from the build directory
 ```bash
 ctest

@@ -5,22 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-
-#====================== GoogleTest ================================
-include(FetchContent)
-
-FetchContent_Declare(
-    googletest 
-    GIT_REPOSITORY https://github.com/google/googletest.git 
-    GIT_TAG        v1.17.0
-    GIT_SHALLOW TRUE
-)
-
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-FetchContent_MakeAvailable(googletest)
-#====================== GoogleTest End ============================
-
 #====================== Add libraries ============================= 
 
 add_library(LU_lib INTERFACE)
@@ -29,26 +13,20 @@ target_include_directories(LU_lib INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
-add_library(LU_flat_lib INTERFACE)
-target_include_directories(LU_flat_lib INTERFACE
+add_library(matrix_lib INTERFACE)
+target_include_directories(matrix_lib INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
 
-add_library(flat_matrix_lib INTERFACE)
-target_include_directories(flat_matrix_lib INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-)
-
-target_link_libraries(LU_flat_lib INTERFACE flat_matrix_lib)
+target_link_libraries(LU_lib INTERFACE matrix_lib)
 
 add_library(LinearAlgebra INTERFACE)
 add_library(LinearAlgebra::LinearAlgebra ALIAS LinearAlgebra)
 
 target_link_libraries(LinearAlgebra INTERFACE
-    flat_matrix_lib
-    LU_flat_lib
+    matrix_lib
+    LU_lib
 )
 #====================== Add libraries End =========================
 
@@ -67,16 +45,33 @@ if(DOXYGEN_FOUND)
     )
 endif()
 #====================== Tests =====================================
-enable_testing()
-add_subdirectory(tests)
+option(BUILD_TESTING "Build tests" OFF)
+
+if(BUILD_TESTING)
+    enable_testing()
+
+    include(FetchContent)
+
+    FetchContent_Declare(
+        googletest 
+        GIT_REPOSITORY https://github.com/google/googletest.git 
+        GIT_TAG        v1.17.0
+        GIT_SHALLOW TRUE
+    )
+
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+    FetchContent_MakeAvailable(googletest)
+    add_subdirectory(tests)
+endif()
 # ===================== End tests =================================
 
 #====================== Install ===================================
 install(DIRECTORY include/ DESTINATION include)
 include(GNUInstallDirs)
 install(TARGETS
-    flat_matrix_lib
-    LU_flat_lib
+    matrix_lib
+    LU_lib
     LinearAlgebra
     EXPORT LinearAlgebraTargets
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
