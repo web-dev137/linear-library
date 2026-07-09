@@ -4,16 +4,7 @@ A lightweight, header-only C++ library for linear algebra focused on  matrices, 
 
 Article on Habr: https://habr.com/ru/articles/1051974/
 
-## Features
-
-- **Matrix  class** with intuitive operator overloading
-- Basic operations: transpose of matrix, multiplication,multiplication on scalar
-- **LU class** with linear algebra methods:
-  - LU Decomposition+determinant+inversion matrix
-  - Other matrix decompositions (in progress)
-- Efficient memory management
-- CMake build system support
-- Unit tests included
+## Documentation
 - Doxygen documentation(https://web-dev137.github.io/linear-library/annotated.html)
 
 ## Requirements
