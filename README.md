@@ -2,7 +2,6 @@
 
 A lightweight, header-only C++ library for linear algebra focused on  matrices, and common decompositions.
 
-Article on Habr: https://habr.com/ru/articles/1051974/
 
 ## Documentation
 - Doxygen documentation(https://web-dev137.github.io/linear-library/annotated.html)
