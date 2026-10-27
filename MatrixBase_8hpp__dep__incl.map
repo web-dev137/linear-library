@@ -1,7 +1,7 @@
 <map id="/home/runner/work/linear&#45;library/linear&#45;library/include/matrix/MatrixBase.hpp" name="/home/runner/work/linear&#45;library/linear&#45;library/include/matrix/MatrixBase.hpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,232,60"/>
-<area shape="rect" id="Node000002" href="$FlatMatrix_8hpp.html" title=" " alt="" coords="9,108,228,163"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,74,121,108,116,108,116,74"/>
-<area shape="rect" id="Node000003" href="$LU_8hpp.html" title=" " alt="" coords="7,211,230,265"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="121,176,121,211,116,211,116,176"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,231,67"/>
+<area shape="rect" id="Node000002" href="$FlatMatrix_8hpp.html" title=" " alt="" coords="9,115,227,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,80,121,115,115,114,117,85"/>
+<area shape="rect" id="Node000003" href="$LU_8hpp.html" title=" " alt="" coords="7,225,229,286"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="120,190,120,225,116,223,116,194"/>
 </map>
